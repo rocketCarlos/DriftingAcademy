@@ -6,7 +6,6 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="Circuit1" parent="." instance=ExtResource("1_bl13t")]
-scale = Vector2(1.5, 1.5)
 
 [node name="Car" parent="." instance=ExtResource("2_iyx0m")]
 z_index = 1

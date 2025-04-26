@@ -18,3 +18,8 @@
 ## Nice to have
 [] race mode against AI
 [] ghost silhouette for time trial mode
+
+
+# TODO:
+	adjust road size
+	

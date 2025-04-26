@@ -8,7 +8,6 @@ size = Vector2(10, 21)
 
 [node name="Car" type="Node2D"]
 texture_filter = 1
-scale = Vector2(3, 3)
 script = ExtResource("1_yhfra")
 
 [node name="Body" type="CharacterBody2D" parent="."]
@@ -25,3 +24,10 @@ position = Vector2(0, -0.5)
 texture = ExtResource("2_rytg7")
 
 [node name="TEST_CAMERA" type="Camera2D" parent="Body"]
+zoom = Vector2(2, 2)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
