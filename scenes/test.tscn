@@ -9,3 +9,4 @@
 
 [node name="Car" parent="." instance=ExtResource("2_iyx0m")]
 z_index = 1
+position = Vector2(1012, 112)

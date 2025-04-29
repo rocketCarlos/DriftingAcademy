@@ -14,6 +14,10 @@ config/name="DriftingAcademy"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Globals="*res://scenes/globals.gd"
+
 [input]
 
 accelerate={

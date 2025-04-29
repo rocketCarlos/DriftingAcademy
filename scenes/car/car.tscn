@@ -14,13 +14,11 @@ script = ExtResource("1_yhfra")
 motion_mode = 1
 
 [node name="SportsCar" type="CollisionShape2D" parent="Body"]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_x7uf8")
 debug_color = Color(0.739933, 0.379952, 0.702722, 0.42)
 
 [node name="Sprite2D" type="Sprite2D" parent="Body/SportsCar"]
 z_index = -1
-position = Vector2(0, -0.5)
 texture = ExtResource("2_rytg7")
 
 [node name="TEST_CAMERA" type="Camera2D" parent="Body"]

@@ -5,7 +5,11 @@ extends Node2D
 #endregion
 
 #region variables
-const MAX_SPEED = 300.0
+var max_speed: float
+
+const SPEED_ROAD: float = 300.0
+const SPEED_GRASS: float = 150.0
+const SPEED_GRAVEL: float = 100.0
 
 const MAX_ACCEL: float = 1000.0
 const MIN_ACCEL: float = 500.0
@@ -27,6 +31,8 @@ func _physics_process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
 	var mouse_direction = (mouse_position - body.global_position).normalized()
 	var angle = Vector2(0.0, -1.0).angle_to(mouse_direction)
+	
+	
 
 	# -----------------------------------------
 	# manage movement
@@ -40,9 +46,9 @@ func _physics_process(delta: float) -> void:
 		# apply the force to velocity
 		body.velocity += force
 		
-		# Limit speed not to exceed MAX_SPEED
-		if body.velocity.length() >= MAX_SPEED:
-			body.velocity = body.velocity.normalized() * MAX_SPEED
+		# Limit speed not to exceed max_speed
+		if body.velocity.length() >= max_speed:
+			body.velocity = body.velocity.normalized() * max_speed
 			
 		# ---------------------------------------------
 		# manage sprite rotation
