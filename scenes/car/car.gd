@@ -32,8 +32,23 @@ func _physics_process(delta: float) -> void:
 	var mouse_direction = (mouse_position - body.global_position).normalized()
 	var angle = Vector2(0.0, -1.0).angle_to(mouse_direction)
 	
+	# Tile data of the tile the car is in
+	var tile_data = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(body.global_position)))
 	
-
+	var tile_name = tile_data.get_custom_data('tile_name')
+	match tile_name:
+		'road', 'curb':
+			max_speed = SPEED_ROAD
+		'grass', 'gravel_grass': 
+			max_speed = SPEED_GRASS
+		'gravel':
+			max_speed = SPEED_GRAVEL
+		_:
+			max_speed = SPEED_ROAD
+			
+	#TODO: also adjust acceleration based on terrain
+	#TODO: manage speed based on the specific tile each car's wheel is in!
+			
 	# -----------------------------------------
 	# manage movement
 	# -----------------------------------------
