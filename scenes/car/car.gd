@@ -6,22 +6,20 @@ extends Node2D
 
 #region variables
 var max_speed: float
-
 const SPEED_ROAD: float = 300.0
 const SPEED_GRASS: float = 150.0
 const SPEED_GRAVEL: float = 100.0
 
-const MAX_ACCEL: float = 1000.0
-const MIN_ACCEL: float = 500.0
-var accel: float = MIN_ACCEL
+var accel: float
+const ACCEL_ROAD: float = 500.0
+const ACCEL_GRASS: float = 250.0
+const ACCEL_GRAVEL: float = 100.0
 
-const MAX_DEACCEL: float = 1000.0
-const MIN_DEACCEL: float = 100.0
-var deaccel: float = MIN_DEACCEL
-# measures how slippery the surface is. 
-# The higher, the more inertia there is
-# max is 1.0
-var slippery_factor: float = 0.98
+var deaccel: float
+const DEACCEL_ROAD: float = 100.0
+const DEACCEL_GRASS: float = 200.0
+const DEACCEL_GRAVEL: float = 400.0
+
 #endregion
 '''
 IDEAS/TODOS: add dynamic acceleration so that it feels different accelerating from stopped
@@ -39,14 +37,21 @@ func _physics_process(delta: float) -> void:
 	match tile_name:
 		'road', 'curb':
 			max_speed = SPEED_ROAD
+			accel = ACCEL_ROAD
+			deaccel = DEACCEL_ROAD
 		'grass', 'gravel_grass': 
 			max_speed = SPEED_GRASS
+			accel = ACCEL_GRASS
+			deaccel = DEACCEL_GRASS
 		'gravel':
 			max_speed = SPEED_GRAVEL
+			accel = ACCEL_GRAVEL
+			deaccel = DEACCEL_GRAVEL
 		_:
 			max_speed = SPEED_ROAD
+			accel = ACCEL_ROAD
+			deaccel = DEACCEL_ROAD
 			
-	#TODO: also adjust acceleration based on terrain
 	#TODO: manage speed based on the specific tile each car's wheel is in!
 			
 	# -----------------------------------------
@@ -54,8 +59,6 @@ func _physics_process(delta: float) -> void:
 	# -----------------------------------------
 	var force =  Vector2(0.0, 0.0)
 	if Input.is_action_pressed("accelerate"):
-		#TODO: implement dynamic acceleration
-		
 		# the acceleration force input by the player
 		force = accel * mouse_direction * delta
 		# apply the force to velocity
