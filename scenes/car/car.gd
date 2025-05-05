@@ -35,6 +35,8 @@ func _physics_process(delta: float) -> void:
 	
 	var tile_name = tile_data.get_custom_data('tile_name')
 	match tile_name:
+		#TODO: each tile has a "speed score" depending on how much road there is.
+		# speed is calculated based on that score
 		'road', 'curb':
 			max_speed = SPEED_ROAD
 			accel = ACCEL_ROAD
