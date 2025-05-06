@@ -2,6 +2,9 @@ extends Node2D
 
 #region scene nodes
 @onready var body = $Body
+@onready var camera = $Body/TEST_CAMERA
+@onready var ctrl = $Control
+@onready var time_label = $Control/TimeLabel
 #endregion
 
 #region variables
@@ -20,11 +23,12 @@ const DEACCEL_ROAD: float = 100.0
 const DEACCEL_GRASS: float = 200.0
 const DEACCEL_GRAVEL: float = 400.0
 
+var time_elapsed: float = 0.0
 #endregion
-'''
-IDEAS/TODOS: add dynamic acceleration so that it feels different accelerating from stopped
-than the acceleration used in drifting
-'''
+
+func _ready() -> void:
+	Globals.lap_completed.connect(_on_lap_completed)
+
 func _physics_process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
 	var mouse_direction = (mouse_position - body.global_position).normalized()
@@ -37,6 +41,7 @@ func _physics_process(delta: float) -> void:
 	match tile_name:
 		#TODO: each tile has a "speed score" depending on how much road there is.
 		# speed is calculated based on that score
+		#TODO: manage speed based on the specific tile each car's wheel is in!
 		'road', 'curb':
 			max_speed = SPEED_ROAD
 			accel = ACCEL_ROAD
@@ -53,8 +58,6 @@ func _physics_process(delta: float) -> void:
 			max_speed = SPEED_ROAD
 			accel = ACCEL_ROAD
 			deaccel = DEACCEL_ROAD
-			
-	#TODO: manage speed based on the specific tile each car's wheel is in!
 			
 	# -----------------------------------------
 	# manage movement
@@ -88,3 +91,16 @@ func _physics_process(delta: float) -> void:
 				body.velocity = Vector2(0, 0)
 				
 	body.move_and_slide()
+
+func _process(delta: float) -> void:
+	time_elapsed += delta
+	time_label.text = str(time_elapsed).pad_decimals(2)
+	#TODO: refactor code so that main node is the car itself to avoid strange 
+	# logic in .body
+	ctrl.global_position = camera.global_position - ctrl.pivot_offset
+	
+	
+	
+func _on_lap_completed():
+	print(time_label.text)
+	time_elapsed = 0
