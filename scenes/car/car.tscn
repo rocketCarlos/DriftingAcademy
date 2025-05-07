@@ -1,54 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6okt6e314s81"]
+[gd_scene load_steps=4 format=3 uid="uid://b6okt6e314s81"]
 
 [ext_resource type="Script" uid="uid://bfju8h2ylbkyw" path="res://scenes/car/car.gd" id="1_yhfra"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_rytg7"]
-[ext_resource type="FontFile" uid="uid://bxjovs4yggswh" path="res://assets/WenderFont1.ttf" id="3_rytg7"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_x7uf8"]
-font = ExtResource("3_rytg7")
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7uf8"]
 size = Vector2(10, 21)
 
-[node name="Car" type="Node2D"]
+[node name="Car" type="CharacterBody2D"]
 texture_filter = 1
+collision_mask = 2
 script = ExtResource("1_yhfra")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -287.0
-offset_top = -162.0
-pivot_offset = Vector2(287, 162)
-metadata/_edit_group_ = true
-
-[node name="TimeLabel" type="Label" parent="Control"]
-layout_mode = 1
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 21.0
-offset_bottom = 32.0
-label_settings = SubResource("LabelSettings_x7uf8")
-
-[node name="Body" type="CharacterBody2D" parent="."]
-collision_mask = 2
-motion_mode = 1
-
-[node name="SportsCar" type="CollisionShape2D" parent="Body"]
+[node name="SportsCar" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_x7uf8")
 debug_color = Color(0.739933, 0.379952, 0.702722, 0.42)
 
-[node name="Sprite2D" type="Sprite2D" parent="Body/SportsCar"]
+[node name="Sprite2D" type="Sprite2D" parent="SportsCar"]
 z_index = -1
 texture = ExtResource("2_rytg7")
-
-[node name="TEST_CAMERA" type="Camera2D" parent="Body"]
-zoom = Vector2(2, 2)
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
