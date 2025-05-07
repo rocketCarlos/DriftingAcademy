@@ -18,7 +18,7 @@ const DEACCEL_GRAVEL: float = 400.0
 
 #endregion
 
-
+#TODO: add different skins
 func _physics_process(delta: float) -> void:
 	var mouse_position = get_global_mouse_position()
 	var mouse_direction = (mouse_position - global_position).normalized()

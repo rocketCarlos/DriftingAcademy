@@ -8,8 +8,8 @@
 [] sfx
 ### tracks (at least one)
 [] design
-[] colliders
-[] lap registration (including time registration)
+[x] colliders
+[] lap registration (including total time registration)
 ### game
 [] time trial game mode
 [] music
