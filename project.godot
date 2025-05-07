@@ -13,11 +13,16 @@ config_version=5
 config/name="DriftingAcademy"
 run/main_scene="uid://bikjv2tee5c68"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 0)
 config/icon="res://icon.svg"
 
 [autoload]
 
 Globals="*res://scenes/globals.gd"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [input]
 
@@ -26,6 +31,11 @@ accelerate={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(141, 24),"global_position":Vector2(150, 72),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":true,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="car"
+2d_physics/layer_2="road_items"
 
 [rendering]
 
