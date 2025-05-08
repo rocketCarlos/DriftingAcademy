@@ -1,22 +1,39 @@
 extends CharacterBody2D
 
+enum SKIN {
+	BLUE
+}
+
 #region variables
 var max_speed: float
 const SPEED_ROAD: float = 300.0
+const SPEED_CURBS: float = 250.0
 const SPEED_GRASS: float = 150.0
 const SPEED_GRAVEL: float = 100.0
 
 var accel: float
 const ACCEL_ROAD: float = 500.0
+const ACCEL_CURBS: float = 400.0
 const ACCEL_GRASS: float = 250.0
 const ACCEL_GRAVEL: float = 100.0
 
 var deaccel: float
 const DEACCEL_ROAD: float = 100.0
+const DEACCEL_CURBS: float = 150.0
 const DEACCEL_GRASS: float = 200.0
 const DEACCEL_GRAVEL: float = 400.0
 
+var wheels: Array = [null, null, null, null]
+
+var current_skin: SKIN
 #endregion
+
+func _ready() -> void:
+	for i in range(4):
+		match current_skin:
+			SKIN.BLUE:
+				wheels[i] = get_node('Skins/BlueCar/Wheel'+str(i+1))
+	
 
 #TODO: add different skins
 func _physics_process(delta: float) -> void:
@@ -24,30 +41,27 @@ func _physics_process(delta: float) -> void:
 	var mouse_direction = (mouse_position - global_position).normalized()
 	var angle = Vector2(0.0, -1.0).angle_to(mouse_direction)
 	
-	# Tile data of the tile the car is in
-	var tile_data = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(global_position)))
+	# -----------------------------------------
+	# manage terrain resistance
+	# -----------------------------------------
+	var total_resistance = get_wheels_resistance()
 	
-	var tile_name = tile_data.get_custom_data('tile_name')
-	match tile_name:
-		#TODO: each tile has a "speed score" depending on how much road there is.
-		# speed is calculated based on that score
-		#TODO: manage speed based on the specific tile each car's wheel is in!
-		'road', 'curb':
-			max_speed = SPEED_ROAD
-			accel = ACCEL_ROAD
-			deaccel = DEACCEL_ROAD
-		'grass', 'gravel_grass': 
-			max_speed = SPEED_GRASS
-			accel = ACCEL_GRASS
-			deaccel = DEACCEL_GRASS
-		'gravel':
-			max_speed = SPEED_GRAVEL
-			accel = ACCEL_GRAVEL
-			deaccel = DEACCEL_GRAVEL
-		_:
-			max_speed = SPEED_ROAD
-			accel = ACCEL_ROAD
-			deaccel = DEACCEL_ROAD
+	if total_resistance <= 3:
+		max_speed = SPEED_ROAD
+		accel = ACCEL_ROAD
+		deaccel = DEACCEL_ROAD
+	elif total_resistance <= 6:
+		max_speed = SPEED_CURBS
+		accel = ACCEL_CURBS
+		deaccel = DEACCEL_CURBS
+	elif total_resistance <= 8:
+		max_speed = SPEED_GRASS
+		accel = ACCEL_GRASS
+		deaccel = DEACCEL_GRASS
+	else:
+		max_speed = SPEED_GRAVEL
+		accel = ACCEL_GRAVEL
+		deaccel = DEACCEL_GRAVEL
 			
 	# -----------------------------------------
 	# manage movement
@@ -81,3 +95,15 @@ func _physics_process(delta: float) -> void:
 				velocity = Vector2(0, 0)
 				
 	move_and_slide()
+
+#region utility functions
+func get_wheels_resistance():
+	var total = 0
+	for wheel in wheels:
+		# Tile data of the tile the wheel is in
+		var tile_data = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(wheel.global_position)))
+		
+		total += tile_data.get_custom_data('terrain_resistance')
+		
+	return total
+#endregion

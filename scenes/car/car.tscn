@@ -4,17 +4,32 @@
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_rytg7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7uf8"]
-size = Vector2(10, 21)
+size = Vector2(10, 19.5)
 
 [node name="Car" type="CharacterBody2D"]
 texture_filter = 1
 collision_mask = 2
 script = ExtResource("1_yhfra")
 
-[node name="SportsCar" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_x7uf8")
-debug_color = Color(0.739933, 0.379952, 0.702722, 0.42)
+[node name="Skins" type="Node2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="SportsCar"]
+[node name="BlueCar" type="Sprite2D" parent="Skins"]
 z_index = -1
 texture = ExtResource("2_rytg7")
+
+[node name="Wheel1" type="Node2D" parent="Skins/BlueCar"]
+position = Vector2(-6, -5)
+
+[node name="Wheel2" type="Node2D" parent="Skins/BlueCar"]
+position = Vector2(6, -5)
+
+[node name="Wheel3" type="Node2D" parent="Skins/BlueCar"]
+position = Vector2(-6, 6)
+
+[node name="Wheel4" type="Node2D" parent="Skins/BlueCar"]
+position = Vector2(6, 6)
+
+[node name="SportsCar" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.75)
+shape = SubResource("RectangleShape2D_x7uf8")
+debug_color = Color(0.739933, 0.379952, 0.702722, 0.42)
