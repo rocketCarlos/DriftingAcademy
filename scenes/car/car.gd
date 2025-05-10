@@ -94,6 +94,7 @@ func _physics_process(delta: float) -> void:
 			if velocity.length() < 10.0:  # Threshold for stopping
 				velocity = Vector2(0, 0)
 				
+	Globals.car_speeed = velocity.length()
 	move_and_slide()
 
 #region utility functions

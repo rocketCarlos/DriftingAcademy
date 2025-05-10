@@ -66,9 +66,11 @@ render_target_update_mode = 4
 
 [node name="Control" type="Control" parent="UI/SubViewportContainer/SubViewport"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 170.0
-offset_bottom = 108.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TimeLabel" type="Label" parent="UI/SubViewportContainer/SubViewport/Control"]
 layout_mode = 1
@@ -77,4 +79,20 @@ offset_top = 20.0
 offset_right = 86.0
 offset_bottom = 54.0
 text = "time"
+label_settings = SubResource("LabelSettings_j5jx5")
+
+[node name="Speed" type="Label" parent="UI/SubViewportContainer/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_top = -54.0
+offset_right = -16.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Speed"
 label_settings = SubResource("LabelSettings_j5jx5")
