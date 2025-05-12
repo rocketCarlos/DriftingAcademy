@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmtyx5x1hy1oh"]
+
+[ext_resource type="FontFile" uid="uid://bxjovs4yggswh" path="res://assets/WenderFont1.ttf" id="1_64j4u"]
+[ext_resource type="Script" uid="uid://d1gw81f4if0i3" path="res://scenes/text_button/text_button.gd" id="2_iajjo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gpx6k"]
+font = ExtResource("1_64j4u")
+font_size = 48
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TextButton" type="Label"]
+texture_filter = 1
+offset_right = 1.0
+offset_bottom = 36.0
+mouse_filter = 1
+text = "qwqweqwe"
+label_settings = SubResource("LabelSettings_gpx6k")
+script = ExtResource("2_iajjo")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

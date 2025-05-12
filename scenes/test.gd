@@ -1,8 +1,8 @@
 extends Node2D
 
 # TODO: move all labels and UI logic to its own script
-@onready var time_label = $UI/SubViewportContainer/SubViewport/Control/TimeLabel
-@onready var speed_label = $UI/SubViewportContainer/SubViewport/Control/Speed
+@onready var time_label = $UI/SubViewportContainer/SubViewport/RaceUI/TimeLabel
+@onready var speed_label = $UI/SubViewportContainer/SubViewport/RaceUI/Speed
 
 var time_elapsed: float = 0.0
 

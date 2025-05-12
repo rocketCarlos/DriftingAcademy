@@ -1,15 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bikjv2tee5c68"]
+[gd_scene load_steps=7 format=3 uid="uid://bikjv2tee5c68"]
 
 [ext_resource type="PackedScene" uid="uid://gu7b6dlpsosn" path="res://scenes/circuits/circuit_1.tscn" id="1_bl13t"]
 [ext_resource type="Script" uid="uid://dehijf4vgur2x" path="res://scenes/test.gd" id="1_iyx0m"]
 [ext_resource type="PackedScene" uid="uid://b6okt6e314s81" path="res://scenes/car/car.tscn" id="2_iyx0m"]
-[ext_resource type="FontFile" uid="uid://bxjovs4yggswh" path="res://assets/WenderFont1.ttf" id="4_74lek"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_j5jx5"]
-font = ExtResource("4_74lek")
-font_size = 48
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
+[ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="4_j5jx5"]
+[ext_resource type="Texture2D" uid="uid://cx2d8o18ugugq" path="res://assets/key_art/coverpng.png" id="5_j5jx5"]
+[ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="6_lpvoh"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_iyx0m")
@@ -64,7 +60,7 @@ handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="Control" type="Control" parent="UI/SubViewportContainer/SubViewport"]
+[node name="RaceUI" type="Control" parent="UI/SubViewportContainer/SubViewport"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,16 +68,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TimeLabel" type="Label" parent="UI/SubViewportContainer/SubViewport/Control"]
+[node name="TimeLabel" type="Label" parent="UI/SubViewportContainer/SubViewport/RaceUI"]
 layout_mode = 1
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 86.0
 offset_bottom = 54.0
 text = "time"
-label_settings = SubResource("LabelSettings_j5jx5")
+label_settings = ExtResource("4_j5jx5")
 
-[node name="Speed" type="Label" parent="UI/SubViewportContainer/SubViewport/Control"]
+[node name="Speed" type="Label" parent="UI/SubViewportContainer/SubViewport/RaceUI"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -95,4 +91,48 @@ offset_bottom = -18.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Speed"
-label_settings = SubResource("LabelSettings_j5jx5")
+label_settings = ExtResource("4_j5jx5")
+
+[node name="MenuUI" type="Control" parent="UI/SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Sprite2D" parent="UI/SubViewportContainer/SubViewport/MenuUI"]
+texture_filter = 1
+position = Vector2(576, 324)
+scale = Vector2(5.76, 3.24)
+texture = ExtResource("5_j5jx5")
+
+[node name="PlayButton" parent="UI/SubViewportContainer/SubViewport/MenuUI" instance=ExtResource("6_lpvoh")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = 58.485
+offset_right = 54.0
+offset_bottom = 94.485
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+
+[node name="PlayButton2" parent="UI/SubViewportContainer/SubViewport/MenuUI" instance=ExtResource("6_lpvoh")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.5
+offset_top = 119.54
+offset_right = 94.5
+offset_bottom = 155.54
+grow_horizontal = 2
+grow_vertical = 2
+text = "Credits"
