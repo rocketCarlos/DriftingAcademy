@@ -8,7 +8,8 @@ extends Node2D
 
 @onready var game_subviewport = $Game/SubViewportContainer/SubViewport
 
-var time_elapsed: float = 0.0
+var track_time: bool = false
+var elapsed_time: float = 0.0
 
 @export var car: PackedScene
 
@@ -16,17 +17,22 @@ var levels = [preload("res://scenes/circuits/circuit_1.tscn")]
 
 func _ready() -> void:
 	Globals.lap_completed.connect(_on_lap_completed)
+	Globals.first_lap_start.connect(_on_first_lap_start)
 
 func _process(delta: float) -> void:
-	time_elapsed += delta
-	time_label.text = str(time_elapsed).pad_decimals(2)
-	# round to the closes multiple of 5
-	speed_label.text = str(int(round(Globals.car_speeed / 5.0)) * 5)
+	if track_time:
+		elapsed_time += delta
+		time_label.text = str(elapsed_time).pad_decimals(2)
+		# round to the closes multiple of 5
+		speed_label.text = str(int(round(Globals.car_speeed / 5.0)) * 5)
 
 func _on_lap_completed():
 	print(time_label.text)
-	time_elapsed = 0
+	elapsed_time = 0
 
+func _on_first_lap_start() -> void:
+	track_time = true
+	elapsed_time = 0.0
 
 func _on_play_button_button_clicked() -> void:
 	var tween = create_tween()

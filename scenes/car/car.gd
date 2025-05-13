@@ -46,6 +46,7 @@ func _physics_process(delta: float) -> void:
 	# -----------------------------------------
 	var total_resistance = get_wheels_resistance()
 	
+	# TODO: adjust values here to make it easier to go through curbs and slightly through grass
 	if total_resistance <= 3:
 		max_speed = SPEED_ROAD
 		accel = ACCEL_ROAD

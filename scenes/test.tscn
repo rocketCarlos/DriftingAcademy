@@ -57,7 +57,7 @@ offset_left = 20.0
 offset_top = 20.0
 offset_right = 86.0
 offset_bottom = 54.0
-text = "time"
+text = "Cross the finish line to start!"
 label_settings = ExtResource("4_j5jx5")
 
 [node name="Speed" type="Label" parent="UI/SubViewportContainer/SubViewport/RaceUI"]

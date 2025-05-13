@@ -66,4 +66,12 @@ shape = SubResource("SegmentShape2D_xynrp")
 position = Vector2(1141, 48)
 rotation = 1.5708
 
+[node name="InitialColliders" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InitialColliders"]
+build_mode = 1
+polygon = PackedVector2Array(1227, -62, 1062, 0, 1062, 159, 1226, 222, 1058, 222, 1058, -62)
+
 [connection signal="body_shape_entered" from="RaceCheckpoints" to="RaceCheckpoints" method="_on_race_checkpoints_body_shape_entered"]
