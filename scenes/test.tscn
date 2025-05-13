@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://bikjv2tee5c68"]
+[gd_scene load_steps=6 format=3 uid="uid://bikjv2tee5c68"]
 
-[ext_resource type="PackedScene" uid="uid://gu7b6dlpsosn" path="res://scenes/circuits/circuit_1.tscn" id="1_bl13t"]
 [ext_resource type="Script" uid="uid://dehijf4vgur2x" path="res://scenes/test.gd" id="1_iyx0m"]
 [ext_resource type="PackedScene" uid="uid://b6okt6e314s81" path="res://scenes/car/car.tscn" id="2_iyx0m"]
 [ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="4_j5jx5"]
@@ -9,6 +8,7 @@
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_iyx0m")
+car = ExtResource("2_iyx0m")
 
 [node name="Game" type="CanvasLayer" parent="."]
 
@@ -25,23 +25,6 @@ stretch = true
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
-
-[node name="Circuit1" parent="Game/SubViewportContainer/SubViewport" instance=ExtResource("1_bl13t")]
-position = Vector2(26, -4)
-
-[node name="Car" parent="Game/SubViewportContainer/SubViewport" instance=ExtResource("2_iyx0m")]
-z_index = 1
-position = Vector2(1038, 108)
-rotation = 1.5708
-
-[node name="TEST_CAMERA2" type="Camera2D" parent="Game/SubViewportContainer/SubViewport/Car"]
-zoom = Vector2(2, 2)
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -136,3 +119,5 @@ offset_bottom = 155.54
 grow_horizontal = 2
 grow_vertical = 2
 text = "Credits"
+
+[connection signal="button_clicked" from="UI/SubViewportContainer/SubViewport/MenuUI/PlayButton" to="." method="_on_play_button_button_clicked"]
