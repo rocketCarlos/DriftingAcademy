@@ -7,7 +7,7 @@
 [] different skins
 [] sfx
 ### tracks (at least one)
-[] design
+[x] design
 [x] colliders
 [] lap registration (including total time registration)
 ### game
@@ -34,8 +34,4 @@
 	var peak_val = (peak_x ** alpha_accel) * ((1 - peak_x) ** beta_accel)
 	
 	return max_accel * shape / peak_val
-
-
-# TODO:
-	adjust road size
 	
