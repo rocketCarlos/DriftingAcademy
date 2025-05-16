@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbh0hvgriey5t"]
+
+[ext_resource type="Texture2D" uid="uid://cx2d8o18ugugq" path="res://assets/key_art/coverpng.png" id="1_b5e6c"]
+[ext_resource type="Script" uid="uid://dc7ry8lqjc4nj" path="res://scenes/menu/menu_ui.gd" id="1_s6nlw"]
+[ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="2_tner2"]
+
+[node name="MenuUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s6nlw")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(576, 324)
+scale = Vector2(5.76, 3.24)
+texture = ExtResource("1_b5e6c")
+
+[node name="PlayButton" parent="." instance=ExtResource("2_tner2")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = 58.485
+offset_right = 54.0
+offset_bottom = 94.485
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"
+
+[node name="CreditsButton" parent="." instance=ExtResource("2_tner2")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.5
+offset_top = 119.54
+offset_right = 94.5
+offset_bottom = 155.54
+grow_horizontal = 2
+grow_vertical = 2
+text = "Credits"
+
+[connection signal="button_clicked" from="PlayButton" to="." method="_on_play_button_button_clicked"]
+[connection signal="button_clicked" from="CreditsButton" to="." method="_on_credits_button_button_clicked"]

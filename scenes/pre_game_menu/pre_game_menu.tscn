@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgonoh37d21ge"]
+
+[ext_resource type="Script" uid="uid://d4h1vpe7t2lbq" path="res://scenes/pre_game_menu/pre_game_menu.gd" id="1_m747l"]
+[ext_resource type="Texture2D" uid="uid://ddhuoxqehx0xa" path="res://assets/key_art/play-menu.png" id="2_2vxq7"]
+[ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="3_voanb"]
+
+[node name="PreGameMenu" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m747l")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(5.76, 3.24)
+texture = ExtResource("2_2vxq7")
+
+[node name="GoDrift" parent="." instance=ExtResource("3_voanb")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -150.0
+offset_right = 107.0
+offset_bottom = -114.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Go Drift!"
+
+[node name="car_position" type="Node2D" parent="."]
+position = Vector2(288, 293)
+
+[connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]

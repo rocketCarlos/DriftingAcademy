@@ -4,7 +4,7 @@
 ### car
 [x] accelerates
 [X] collides
-[] different skins
+[X] different skins
 [] sfx
 ### tracks (at least one)
 [x] design

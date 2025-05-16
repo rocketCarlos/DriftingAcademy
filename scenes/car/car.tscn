@@ -1,10 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6okt6e314s81"]
+[gd_scene load_steps=10 format=3 uid="uid://b6okt6e314s81"]
 
 [ext_resource type="Script" uid="uid://bfju8h2ylbkyw" path="res://scenes/car/car.gd" id="1_yhfra"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_rytg7"]
+[ext_resource type="Texture2D" uid="uid://dweki23u8fxpn" path="res://assets/cars/f1car.png" id="3_tcn38"]
+[ext_resource type="Texture2D" uid="uid://db42pl3tm743q" path="res://assets/cars/pointy.png" id="4_b3ski"]
+[ext_resource type="Texture2D" uid="uid://f1li3q6unloe" path="res://assets/cars/chev.png" id="5_u0012"]
+[ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="6_b3ski"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7uf8"]
 size = Vector2(10, 19.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s371w"]
+size = Vector2(8, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xs4xl"]
+size = Vector2(10, 22)
 
 [node name="Car" type="CharacterBody2D"]
 z_index = 1
@@ -30,10 +40,80 @@ position = Vector2(-6, 6)
 [node name="Wheel4" type="Node2D" parent="Skins/BlueCar"]
 position = Vector2(6, 6)
 
-[node name="SportsCar" type="CollisionShape2D" parent="."]
+[node name="F1Car" type="Sprite2D" parent="Skins"]
+visible = false
+z_index = -1
+texture = ExtResource("3_tcn38")
+
+[node name="Wheel1" type="Node2D" parent="Skins/F1Car"]
+position = Vector2(-5, -5)
+
+[node name="Wheel2" type="Node2D" parent="Skins/F1Car"]
+position = Vector2(5, -5)
+
+[node name="Wheel3" type="Node2D" parent="Skins/F1Car"]
+position = Vector2(-5, 8)
+
+[node name="Wheel4" type="Node2D" parent="Skins/F1Car"]
+position = Vector2(5, 8)
+
+[node name="PointyCar" type="Sprite2D" parent="Skins"]
+visible = false
+z_index = -1
+texture = ExtResource("4_b3ski")
+
+[node name="Wheel1" type="Node2D" parent="Skins/PointyCar"]
+position = Vector2(-5, -8)
+
+[node name="Wheel2" type="Node2D" parent="Skins/PointyCar"]
+position = Vector2(5, -8)
+
+[node name="Wheel3" type="Node2D" parent="Skins/PointyCar"]
+position = Vector2(-7, 7)
+
+[node name="Wheel4" type="Node2D" parent="Skins/PointyCar"]
+position = Vector2(7, 7)
+
+[node name="ChevCar" type="Sprite2D" parent="Skins"]
+visible = false
+z_index = -1
+texture = ExtResource("5_u0012")
+
+[node name="Wheel1" type="Node2D" parent="Skins/ChevCar"]
+position = Vector2(-5, -5)
+
+[node name="Wheel2" type="Node2D" parent="Skins/ChevCar"]
+position = Vector2(5, -5)
+
+[node name="Wheel3" type="Node2D" parent="Skins/ChevCar"]
+position = Vector2(-5, 7)
+
+[node name="Wheel4" type="Node2D" parent="Skins/ChevCar"]
+position = Vector2(5, 7)
+
+[node name="BlueCar" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 0.75)
 shape = SubResource("RectangleShape2D_x7uf8")
-debug_color = Color(0.739933, 0.379952, 0.702722, 0.42)
+debug_color = Color(0.237001, 0.537813, 0.902935, 0.42)
+
+[node name="F1Car" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_s371w")
+debug_color = Color(0.791831, 0.40637, 0.365096, 0.42)
+
+[node name="PointyCar" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_xs4xl")
+debug_color = Color(0.609777, 0.534793, 0.194396, 0.42)
+
+[node name="ChevCar" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_xs4xl")
+debug_color = Color(0.619246, 0.399804, 0.905219, 0.42)
 
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -43,3 +123,47 @@ drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+
+[node name="SkinSelector" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -12.0
+offset_right = 105.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.36, 0.36)
+
+[node name="Left" parent="SkinSelector" instance=ExtResource("6_b3ski")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -32.5
+offset_right = 33.0
+offset_bottom = 32.5
+grow_vertical = 2
+text = "<"
+
+[node name="Right" parent="SkinSelector" instance=ExtResource("6_b3ski")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -32.5
+offset_right = 0.0
+offset_bottom = 32.5
+grow_horizontal = 0
+grow_vertical = 2
+text = ">"
+
+[connection signal="button_clicked" from="SkinSelector/Left" to="." method="_on_left_button_clicked"]
+[connection signal="button_clicked" from="SkinSelector/Right" to="." method="_on_right_button_clicked"]
