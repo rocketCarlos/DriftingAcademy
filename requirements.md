@@ -9,9 +9,9 @@
 ### tracks (at least one)
 [x] design
 [x] colliders
-[] lap registration (including total time registration)
+[x] lap registration (including total time registration)
 ### game
-[] time trial game mode
+[x] time trial game mode
 [] music
 [] credits section with url to opengameart
 

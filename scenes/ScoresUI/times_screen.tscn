@@ -1,0 +1,177 @@
+[gd_scene load_steps=5 format=3 uid="uid://coj04cyiau4q1"]
+
+[ext_resource type="Texture2D" uid="uid://ddhuoxqehx0xa" path="res://assets/key_art/play-menu.png" id="1_od3gm"]
+[ext_resource type="Script" uid="uid://1lbq3kvl6fx5" path="res://scenes/ScoresUI/times_screen.gd" id="1_yx0he"]
+[ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="2_yx0he"]
+[ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="4_cy6tm"]
+
+[node name="TimesScreen" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yx0he")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_od3gm")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 135.0
+grow_horizontal = 2
+text = "Your Times:"
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimePerLapLabels" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -188.0
+offset_right = -616.0
+offset_bottom = 211.72
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="1" type="Label" parent="TimePerLapLabels"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "1."
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="2" type="Label" parent="TimePerLapLabels"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "2."
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="3" type="Label" parent="TimePerLapLabels"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "3."
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="4" type="Label" parent="TimePerLapLabels"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "4."
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="5" type="Label" parent="TimePerLapLabels"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "5."
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TotalTime" type="Label" parent="TimePerLapLabels"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Total time:"
+label_settings = ExtResource("2_yx0he")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TimePerLapValues" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 615.0
+offset_top = -188.0
+offset_right = -1.0
+offset_bottom = 211.72
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="1" type="Label" parent="TimePerLapValues"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "00.00"
+label_settings = ExtResource("2_yx0he")
+vertical_alignment = 1
+
+[node name="2" type="Label" parent="TimePerLapValues"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "00.00"
+label_settings = ExtResource("2_yx0he")
+vertical_alignment = 1
+
+[node name="3" type="Label" parent="TimePerLapValues"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "00.00"
+label_settings = ExtResource("2_yx0he")
+vertical_alignment = 1
+
+[node name="4" type="Label" parent="TimePerLapValues"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "00.00"
+label_settings = ExtResource("2_yx0he")
+vertical_alignment = 1
+
+[node name="5" type="Label" parent="TimePerLapValues"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "00.00"
+label_settings = ExtResource("2_yx0he")
+vertical_alignment = 1
+
+[node name="TotalTime" type="Label" parent="TimePerLapValues"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "00.00"
+label_settings = ExtResource("2_yx0he")
+vertical_alignment = 1
+
+[node name="PlayAgain" parent="." instance=ExtResource("4_cy6tm")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -522.0
+offset_top = -68.0
+offset_right = -264.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Play again"
+
+[node name="ChooseLevel" parent="." instance=ExtResource("4_cy6tm")]
+layout_mode = 2
+offset_left = 782.0
+offset_top = 578.0
+offset_right = 1094.0
+offset_bottom = 614.0
+text = "Choose level"
+
+[connection signal="button_clicked" from="PlayAgain" to="." method="_on_play_again_button_clicked"]
+[connection signal="button_clicked" from="ChooseLevel" to="." method="_on_choose_level_button_clicked"]

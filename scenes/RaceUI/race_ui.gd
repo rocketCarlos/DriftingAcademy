@@ -3,8 +3,14 @@ extends Control
 @onready var time_label = $TimeLabel
 @onready var speed_label = $Speed
 
+@export var total_laps: int = 5
+var current_lap = 1
+
 var track_time: bool = false
 var elapsed_time: float = 0.0
+var total_time: float = 0.0
+
+var all_times: Array[String]
 
 func _ready() -> void:
 	Globals.lap_completed.connect(_on_lap_completed)
@@ -20,8 +26,16 @@ func _process(delta: float) -> void:
 
 func _on_lap_completed():
 	print(time_label.text)
+	all_times.push_back(time_label.text)
+	total_time += elapsed_time
 	elapsed_time = 0
+	if current_lap == total_laps:
+		Globals.all_laps_completed.emit(all_times, str(total_time).pad_decimals(2))
+		track_time = false
+	else:
+		current_lap += 1
 
 func _on_first_lap_start() -> void:
 	track_time = true
 	elapsed_time = 0.0
+	total_time = 0.0
