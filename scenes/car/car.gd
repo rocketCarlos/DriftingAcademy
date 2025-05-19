@@ -127,7 +127,7 @@ func _process(delta: float) -> void:
 	match current_state:
 		STATE.SKIN_SELECT:
 			skin_selector.show()
-			scale = Vector2(3, 3)
+			scale = Vector2(7, 7)
 			camera.enabled = false
 		STATE.PLAY:
 			scale = Vector2(1, 1)

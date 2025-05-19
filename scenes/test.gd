@@ -46,16 +46,16 @@ func _on_play_button_button_clicked() -> void:
 	car_instance.current_state = car_instance.STATE.SKIN_SELECT
 	
 		
-func _on_pre_game_menu_clicked_go_drift() -> void:
-	await do_screen_transition(pre_game_menu, null)
-	
-	# TODO: level management system
-	var level = levels[0].instantiate()	
-	game_subviewport.add_child(level)
-	car_instance.reparent(level)
-	car_instance.position = level.initial_car_position.position
-	car_instance.current_state = car_instance.STATE.PLAY
-	car_instance.rotation = PI/2
+func _on_pre_game_menu_clicked_go_drift(selected_level: int) -> void:
+	if selected_level < levels.size():
+		# TODO: level management system	
+		await do_screen_transition(pre_game_menu, null)
+		var level = levels[selected_level].instantiate()	
+		game_subviewport.add_child(level)
+		car_instance.reparent(level)
+		car_instance.position = level.initial_car_position.position
+		car_instance.current_state = car_instance.STATE.PLAY
+		car_instance.rotation = PI/2
 	
 #endregion
 	

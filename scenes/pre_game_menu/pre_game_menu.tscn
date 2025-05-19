@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgonoh37d21ge"]
+[gd_scene load_steps=7 format=3 uid="uid://bgonoh37d21ge"]
 
 [ext_resource type="Script" uid="uid://d4h1vpe7t2lbq" path="res://scenes/pre_game_menu/pre_game_menu.gd" id="1_m747l"]
 [ext_resource type="Texture2D" uid="uid://ddhuoxqehx0xa" path="res://assets/key_art/play-menu.png" id="2_2vxq7"]
 [ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="3_voanb"]
+[ext_resource type="PackedScene" uid="uid://dmt2fqbeoy23i" path="res://scenes/LevelPreview/level_preview.tscn" id="4_2vxq7"]
+[ext_resource type="Texture2D" uid="uid://cd2jk5mvubp4k" path="res://assets/circuit-thumbnails/circuit1.png" id="5_la6rw"]
+[ext_resource type="Texture2D" uid="uid://bsiqmasius76x" path="res://assets/circuit-thumbnails/under_construction.png" id="6_hv2dh"]
 
 [node name="PreGameMenu" type="Control"]
 texture_filter = 1
@@ -27,9 +30,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -106.0
-offset_top = -150.0
+offset_top = -118.915
 offset_right = 107.0
-offset_bottom = -114.0
+offset_bottom = -82.915
 grow_horizontal = 2
 grow_vertical = 0
 text = "Go Drift!"
@@ -37,4 +40,16 @@ text = "Go Drift!"
 [node name="car_position" type="Node2D" parent="."]
 position = Vector2(288, 293)
 
+[node name="LevelPreview" parent="." instance=ExtResource("4_2vxq7")]
+layout_mode = 1
+offset_left = 296.0
+offset_top = -24.0
+offset_right = 296.0
+offset_bottom = -24.0
+mouse_filter = 2
+images = Array[Texture]([ExtResource("5_la6rw"), ExtResource("6_hv2dh")])
+level_names = Array[String](["Drifting's Cradle", "Coming soon!"])
+
 [connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]
+
+[editable path="LevelPreview"]
