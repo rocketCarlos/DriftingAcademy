@@ -1,16 +1,12 @@
 extends Node2D
 
-# TODO: move all labels and UI logic to its own script
-@onready var time_label = $UI/SubViewportContainer/SubViewport/RaceUI/TimeLabel
-@onready var speed_label = $UI/SubViewportContainer/SubViewport/RaceUI/Speed
+
+@onready var race_ui = $UI/SubViewportContainer/SubViewport/RaceUI
 
 @onready var main_menu = $UI/SubViewportContainer/SubViewport/MenuUI
 @onready var pre_game_menu = $UI/SubViewportContainer/SubViewport/PreGameMenu
 
 @onready var game_subviewport = $Game/SubViewportContainer/SubViewport
-
-var track_time: bool = false
-var elapsed_time: float = 0.0
 
 @export var car: PackedScene
 var car_instance
@@ -18,26 +14,9 @@ var car_instance
 var levels = [preload("res://scenes/circuits/circuit_1.tscn")]
 
 func _ready() -> void:
-	Globals.lap_completed.connect(_on_lap_completed)
-	Globals.first_lap_start.connect(_on_first_lap_start)
 	car_instance = car.instantiate()
 
-func _process(delta: float) -> void:
-	if track_time:
-		elapsed_time += delta
-		time_label.text = str(elapsed_time).pad_decimals(2)
-		# round to the closes multiple of 5
-		speed_label.text = str(int(round(Globals.car_speeed / 5.0)) * 5)
-
 #region signal functions
-func _on_lap_completed():
-	print(time_label.text)
-	elapsed_time = 0
-
-func _on_first_lap_start() -> void:
-	track_time = true
-	elapsed_time = 0.0
-
 func _on_play_button_button_clicked() -> void:
 	await do_screen_transition(main_menu, pre_game_menu)
 	
@@ -48,9 +27,9 @@ func _on_play_button_button_clicked() -> void:
 		
 func _on_pre_game_menu_clicked_go_drift(selected_level: int) -> void:
 	if selected_level < levels.size():
-		# TODO: level management system	
+		# TODO: level management system
 		await do_screen_transition(pre_game_menu, null)
-		var level = levels[selected_level].instantiate()	
+		var level = levels[selected_level].instantiate()
 		game_subviewport.add_child(level)
 		car_instance.reparent(level)
 		car_instance.position = level.initial_car_position.position

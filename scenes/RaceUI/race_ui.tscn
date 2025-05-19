@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfhxi2tmvyfhm"]
+
+[ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="1_i3wf3"]
+[ext_resource type="Script" uid="uid://calktoknmbx3q" path="res://scenes/RaceUI/race_ui.gd" id="1_tto6j"]
+
+[node name="RaceUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tto6j")
+
+[node name="TimeLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 86.0
+offset_bottom = 54.0
+text = "Cross the finish line to start!"
+label_settings = ExtResource("1_i3wf3")
+
+[node name="Speed" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_top = -54.0
+offset_right = -16.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Speed"
+label_settings = ExtResource("1_i3wf3")
