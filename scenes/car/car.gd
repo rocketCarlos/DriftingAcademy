@@ -67,8 +67,6 @@ func _physics_process(delta: float) -> void:
 			# -----------------------------------------
 			var total_resistance = get_wheels_resistance()
 			
-			# TODO: make changes between max speed smoother. F.e., when going from road to curb,
-			# smoothly slow the car until reaching curb speed, instead of cutting down speed in 1 frame
 			if total_resistance <= 3:
 				max_speed = SPEED_ROAD
 				accel = ACCEL_ROAD

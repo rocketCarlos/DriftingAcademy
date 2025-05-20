@@ -6,6 +6,7 @@ extends Node2D
 @onready var main_menu = $UI/SubViewportContainer/SubViewport/MenuUI
 @onready var pre_game_menu = $UI/SubViewportContainer/SubViewport/PreGameMenu
 @onready var times_menu = $UI/SubViewportContainer/SubViewport/TimesScreen
+@onready var credits_menu = $UI/SubViewportContainer/SubViewport/Credits
 
 @onready var game_subviewport = $Game/SubViewportContainer/SubViewport
 
@@ -77,5 +78,17 @@ func do_screen_transition(prev_menu: Node, new_menu: Node) -> void:
 	if prev_menu:
 		prev_menu.hide()
 		prev_menu.modulate = Color.WHITE
+	
+
+func _on_menu_ui_clicked_credits() -> void:
+	do_screen_transition(main_menu, credits_menu)
+	
+
+func _on_credits_clicked_go_back() -> void:
+	do_screen_transition(credits_menu, main_menu)
+	
+	
+func _on_pre_game_menu_clicked_go_back() -> void:
+	do_screen_transition(pre_game_menu, main_menu)
 	
 #endregion

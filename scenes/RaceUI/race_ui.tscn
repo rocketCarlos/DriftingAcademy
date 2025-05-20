@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://calktoknmbx3q" path="res://scenes/RaceUI/race_ui.gd" id="1_tto6j"]
 
 [node name="RaceUI" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,4 +36,33 @@ offset_bottom = -18.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Speed"
+label_settings = ExtResource("1_i3wf3")
+
+[node name="Lap" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -192.0
+offset_top = 21.0
+offset_right = -102.0
+offset_bottom = 57.0
+grow_horizontal = 0
+text = "Lap:"
+label_settings = ExtResource("1_i3wf3")
+
+[node name="LapCount" type="Label" parent="Lap"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -18.0
+offset_right = 97.0
+offset_bottom = 18.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "1/5"
 label_settings = ExtResource("1_i3wf3")

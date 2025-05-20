@@ -2,6 +2,7 @@ extends Control
 
 @onready var time_label = $TimeLabel
 @onready var speed_label = $Speed
+@onready var lap_label = $Lap/LapCount
 
 @export var total_laps: int = 5
 var current_lap = 1
@@ -35,8 +36,11 @@ func _on_lap_completed():
 		time_label.text = 'Cross the finish line to start!'
 		speed_label.text = '0'
 		current_lap = 1
+		lap_label.text = '1/' + str(total_laps)
 	else:
 		current_lap += 1
+		lap_label.text = str(current_lap) + '/' + str(total_laps)
+		
 
 func _on_first_lap_start() -> void:
 	track_time = true

@@ -102,8 +102,21 @@ mouse_filter = 2
 images = Array[Texture]([ExtResource("5_la6rw"), ExtResource("6_hv2dh")])
 level_names = Array[String](["Drifting's Cradle", "Coming soon!"])
 
+[node name="GoBack" parent="." instance=ExtResource("3_voanb")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -108.0
+offset_top = 29.0
+offset_right = 108.0
+offset_bottom = 65.0
+grow_horizontal = 2
+text = "< Go back"
+
 [connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]
 [connection signal="button_clicked" from="SkinSelector/Left" to="." method="_on_left_button_clicked"]
 [connection signal="button_clicked" from="SkinSelector/Right" to="." method="_on_right_button_clicked"]
+[connection signal="button_clicked" from="GoBack" to="." method="_on_go_back_button_clicked"]
 
 [editable path="LevelPreview"]

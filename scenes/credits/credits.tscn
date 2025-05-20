@@ -1,0 +1,440 @@
+[gd_scene load_steps=11 format=3 uid="uid://3jel2w813t64"]
+
+[ext_resource type="Script" uid="uid://byygvxkt3yke0" path="res://scenes/credits/credits.gd" id="1_8ggla"]
+[ext_resource type="FontFile" uid="uid://bxjovs4yggswh" path="res://assets/WenderFont1.ttf" id="1_8n0nl"]
+[ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="2_c8xcy"]
+[ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="3_c8xcy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8ggla"]
+font = ExtResource("1_8n0nl")
+font_size = 64
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_huu5m"]
+font = ExtResource("1_8n0nl")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_icb2l"]
+font = ExtResource("1_8n0nl")
+font_size = 32
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_17l06"]
+font = ExtResource("1_8n0nl")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_t15ab"]
+font = ExtResource("1_8n0nl")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lwbe5"]
+font = ExtResource("1_8n0nl")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Credits" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8ggla")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.85, 0.85, 0.85, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = 37.0
+offset_right = -42.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Credits" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Credits and attribution notices
+"
+label_settings = SubResource("LabelSettings_8ggla")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColumnSound" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Sound" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Asset
+"
+label_settings = ExtResource("2_c8xcy")
+horizontal_alignment = 1
+
+[node name="Sound2" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "sports cars pixelart sprites"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound3" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "circuit spritesheet pixelart"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound4" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "winning the race"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound5" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "racing car engine sound loops"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound6" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "menu selection click"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound7" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "10 retro rpg menu sounds"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound8" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "75 CC0 breaking falling hit sfx"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Sound9" type="Label" parent="VBoxContainer/HBoxContainer/ColumnSound"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_vertical = 6
+text = "Car tire squal skid loop"
+label_settings = SubResource("LabelSettings_huu5m")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="ColumnAuthor" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Author" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+text = "Author
+"
+label_settings = ExtResource("2_c8xcy")
+horizontal_alignment = 1
+
+[node name="Autor2" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "wender"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor3" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "wender"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor4" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "section31"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor5" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "domasx2"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor6" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "NenadSimic"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor7" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "leohpaz"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor8" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "rubberduck"
+label_settings = SubResource("LabelSettings_icb2l")
+horizontal_alignment = 1
+
+[node name="Autor9" type="Label" parent="VBoxContainer/HBoxContainer/ColumnAuthor"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "audible-edge 
+(Tom Haigh)"
+label_settings = SubResource("LabelSettings_17l06")
+horizontal_alignment = 1
+
+[node name="ColumnLink" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Link" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+layout_mode = 2
+text = "Link
+"
+label_settings = ExtResource("2_c8xcy")
+horizontal_alignment = 1
+
+[node name="Link2" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/sports-cars-pixelart-sprites"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link3" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/circuit-spritesheet-pixelart"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link4" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/winning-the-race"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link5" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/racing-car-engine-sound-loops"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link6" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/menu-selection-click"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link7" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/10-retro-rpg-menu-sounds"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link8" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="Link9" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLink"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://opengameart.org/content/car-tire-squeal-skid-loop"
+label_settings = SubResource("LabelSettings_t15ab")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="ColumnLicense" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="License" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+layout_mode = 2
+text = "License
+"
+label_settings = ExtResource("2_c8xcy")
+horizontal_alignment = 1
+
+[node name="License2" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/publicdomain/zero/1.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License3" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/publicdomain/zero/1.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License4" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/publicdomain/zero/1.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License5" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/publicdomain/zero/1.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License6" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/licenses/by/3.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License7" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/licenses/by/4.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License8" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/publicdomain/zero/1.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="License9" type="Label" parent="VBoxContainer/HBoxContainer/ColumnLicense"]
+custom_minimum_size = Vector2(182, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "https://creativecommons.org/licenses/by/3.0/"
+label_settings = SubResource("LabelSettings_lwbe5")
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="GoBack" parent="." instance=ExtResource("3_c8xcy")]
+modulate = Color(0.07, 1, 0.3645, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 349.0
+offset_top = -57.0
+offset_right = 589.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "< Go back "
+
+[connection signal="button_clicked" from="GoBack" to="." method="_on_go_back_button_clicked"]
