@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bikjv2tee5c68"]
+[gd_scene load_steps=8 format=3 uid="uid://bikjv2tee5c68"]
 
 [ext_resource type="Script" uid="uid://dehijf4vgur2x" path="res://scenes/Game.gd" id="1_s0nni"]
 [ext_resource type="PackedScene" uid="uid://dfhxi2tmvyfhm" path="res://scenes/RaceUI/race_ui.tscn" id="3_kiw3p"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bgonoh37d21ge" path="res://scenes/pre_game_menu/pre_game_menu.tscn" id="5_g4kob"]
 [ext_resource type="PackedScene" uid="uid://coj04cyiau4q1" path="res://scenes/ScoresUI/times_screen.tscn" id="6_aug50"]
 [ext_resource type="PackedScene" uid="uid://3jel2w813t64" path="res://scenes/credits/credits.tscn" id="6_kiw3p"]
+[ext_resource type="AudioStream" uid="uid://bmmhb5ajxqi6r" path="res://sound/music/main_theme.ogg" id="7_kiw3p"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_s0nni")
@@ -55,6 +56,11 @@ visible = false
 
 [node name="Credits" parent="UI/SubViewportContainer/SubViewport" instance=ExtResource("6_kiw3p")]
 visible = false
+
+[node name="MainTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_kiw3p")
+volume_db = -18.0
+autoplay = true
 
 [connection signal="clicked_credits" from="UI/SubViewportContainer/SubViewport/MenuUI" to="." method="_on_menu_ui_clicked_credits"]
 [connection signal="clicked_play" from="UI/SubViewportContainer/SubViewport/MenuUI" to="." method="_on_play_button_button_clicked"]

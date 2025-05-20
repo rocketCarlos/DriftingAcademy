@@ -12,6 +12,9 @@ extends CharacterBody2D
 
 @onready var camera = $Camera
 
+@onready var engine_sound = $Engine
+@onready var crash_sound = $Crash
+
 enum SKIN {
 	BLUE,
 	F1,
@@ -39,6 +42,8 @@ const DEACCEL_GRASS: float = 350.0
 const DEACCEL_GRAVEL: float = 400.0
 
 var wheels: Array = [null, null, null, null]
+
+var last_speed: float
 
 var current_skin: SKIN
 #endregion
@@ -129,8 +134,12 @@ func _physics_process(delta: float) -> void:
 			move_and_slide()
 		
 func _process(delta: float) -> void:
-	pass
-			
+	engine_sound.pitch_scale = 1 + inverse_lerp(0, SPEED_ROAD, velocity.length()) * 1.5
+	
+	if last_speed - velocity.length() > 75.0:
+		crash_sound.play()
+	
+	last_speed = velocity.length()
 
 #region utility functions
 func get_wheels_resistance():

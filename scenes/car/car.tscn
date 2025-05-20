@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6okt6e314s81"]
+[gd_scene load_steps=12 format=3 uid="uid://b6okt6e314s81"]
 
 [ext_resource type="Script" uid="uid://bfju8h2ylbkyw" path="res://scenes/car/car.gd" id="1_yhfra"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_rytg7"]
 [ext_resource type="Texture2D" uid="uid://dweki23u8fxpn" path="res://assets/cars/f1car.png" id="3_tcn38"]
 [ext_resource type="Texture2D" uid="uid://db42pl3tm743q" path="res://assets/cars/pointy.png" id="4_b3ski"]
 [ext_resource type="Texture2D" uid="uid://f1li3q6unloe" path="res://assets/cars/chev.png" id="5_u0012"]
+[ext_resource type="AudioStream" uid="uid://nr4mgu52cnla" path="res://sound/sfx/engine_loop.wav" id="6_b3ski"]
+[ext_resource type="AudioStream" uid="uid://xn84kg1yowgn" path="res://sound/sfx/crash.ogg" id="7_u0012"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7uf8"]
 size = Vector2(10, 19.5)
@@ -14,6 +16,11 @@ size = Vector2(8, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xs4xl"]
 size = Vector2(10, 22)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s371w"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("7_u0012")
 
 [node name="Car" type="CharacterBody2D"]
 z_index = 1
@@ -122,3 +129,12 @@ drag_left_margin = 0.1
 drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
+
+[node name="Engine" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_b3ski")
+volume_db = -16.0
+autoplay = true
+
+[node name="Crash" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_s371w")
+volume_db = -8.0

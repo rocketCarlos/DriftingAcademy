@@ -1,13 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmtyx5x1hy1oh"]
+[gd_scene load_steps=8 format=3 uid="uid://dmtyx5x1hy1oh"]
 
 [ext_resource type="FontFile" uid="uid://bxjovs4yggswh" path="res://assets/WenderFont1.ttf" id="1_64j4u"]
 [ext_resource type="Script" uid="uid://d1gw81f4if0i3" path="res://scenes/text_button/text_button.gd" id="2_iajjo"]
+[ext_resource type="AudioStream" uid="uid://bly0j7rwmipwd" path="res://sound/sfx/hover.wav" id="3_4x5xw"]
+[ext_resource type="AudioStream" uid="uid://vhwbiqi8howq" path="res://sound/sfx/click.ogg" id="4_4x5xw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gpx6k"]
 font = ExtResource("1_64j4u")
 font_size = 48
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4hrvl"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_4x5xw")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fnwuy"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_4x5xw")
 
 [node name="TextButton" type="Label"]
 texture_filter = 1
@@ -17,6 +29,14 @@ mouse_filter = 1
 text = "qwqweqwe"
 label_settings = SubResource("LabelSettings_gpx6k")
 script = ExtResource("2_iajjo")
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_4hrvl")
+volume_db = -2.0
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_fnwuy")
+volume_db = -2.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
