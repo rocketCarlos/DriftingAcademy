@@ -12,3 +12,4 @@ signal all_laps_completed(all_times: Array[String], total_time: String)
 
 var best_lap: float
 var best_total: float
+var car_skin: int

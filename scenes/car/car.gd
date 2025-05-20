@@ -10,8 +10,6 @@ extends CharacterBody2D
 @onready var skin_pointy = $Skins/PointyCar
 @onready var skin_chev = $Skins/ChevCar
 
-@onready var skin_selector = $SkinSelector
-
 @onready var camera = $Camera
 
 enum SKIN {
@@ -47,8 +45,7 @@ var current_skin: SKIN
 
 #region states
 enum STATE {
-	PLAY,
-	SKIN_SELECT
+	PLAY
 }
 
 @export var current_state: STATE
@@ -124,15 +121,7 @@ func _physics_process(delta: float) -> void:
 			move_and_slide()
 		
 func _process(delta: float) -> void:
-	match current_state:
-		STATE.SKIN_SELECT:
-			skin_selector.show()
-			scale = Vector2(7, 7)
-			camera.enabled = false
-		STATE.PLAY:
-			scale = Vector2(1, 1)
-			skin_selector.hide()
-			camera.enabled = true
+	pass
 			
 
 #region utility functions
@@ -184,20 +173,5 @@ func update_skin(new_skin: SKIN) -> void:
 			
 	for i in range(4):
 		wheels[i] = get_node(node_path+str(i+1))
-
-#endregion
-
-#region signal functions
-
-func _on_left_button_clicked() -> void:
-	var skin_values = SKIN.values()
-	var current_idx = skin_values.find(current_skin)
-	update_skin(skin_values[(current_idx + skin_values.size() - 1) % skin_values.size()])
-
-
-func _on_right_button_clicked() -> void:
-	var skin_values = SKIN.values()
-	var current_idx = skin_values.find(current_skin)
-	update_skin(skin_values[(current_idx + 1) % skin_values.size()])
 
 #endregion

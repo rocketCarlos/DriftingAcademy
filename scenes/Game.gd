@@ -9,24 +9,15 @@ extends Node2D
 
 @onready var game_subviewport = $Game/SubViewportContainer/SubViewport
 
-
-@export var car: PackedScene
-var car_instance
-
 var levels = [preload("res://scenes/circuits/circuit_1.tscn")]
 var current_level: int
 
 func _ready() -> void:
-	car_instance = car.instantiate()
 	Globals.all_laps_completed.connect(_on_all_laps_completed)
 
 #region signal functions
 func _on_play_button_button_clicked() -> void:
 	await do_screen_transition(main_menu, pre_game_menu)
-	
-	pre_game_menu.add_child(car_instance)
-	car_instance.position = pre_game_menu.car_position.position
-	car_instance.current_state = car_instance.STATE.SKIN_SELECT
 	
 		
 func _on_pre_game_menu_clicked_go_drift(selected_level: int) -> void:
@@ -36,10 +27,6 @@ func _on_pre_game_menu_clicked_go_drift(selected_level: int) -> void:
 		await do_screen_transition(pre_game_menu, null)
 		var level = levels[selected_level].instantiate()
 		game_subviewport.add_child(level)
-		car_instance.reparent(level)
-		car_instance.position = level.initial_car_position.position
-		car_instance.current_state = car_instance.STATE.PLAY
-		car_instance.rotation = PI/2
 	
 	
 func _on_all_laps_completed(all_times: Array[String], total_time: String) -> void:
@@ -56,13 +43,12 @@ func _on_all_laps_completed(all_times: Array[String], total_time: String) -> voi
 
 func _on_times_screen_clicked_choose_level() -> void:
 	await do_screen_transition(times_menu, pre_game_menu)
-	#TODO: manage car instances	
-	car_instance.position = pre_game_menu.car_position.position
-	car_instance.current_state = car_instance.STATE.SKIN_SELECT
 
 
 func _on_times_screen_clicked_play_again() -> void:
-	_on_pre_game_menu_clicked_go_drift(current_level)
+	await do_screen_transition(times_menu, null)
+	var level = levels[current_level].instantiate()
+	game_subviewport.add_child(level)
 	
 #endregion
 	

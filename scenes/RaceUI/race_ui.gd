@@ -32,6 +32,9 @@ func _on_lap_completed():
 	if current_lap == total_laps:
 		Globals.all_laps_completed.emit(all_times, str(total_time).pad_decimals(2))
 		track_time = false
+		time_label.text = 'Cross the finish line to start!'
+		speed_label.text = '0'
+		current_lap = 1
 	else:
 		current_lap += 1
 

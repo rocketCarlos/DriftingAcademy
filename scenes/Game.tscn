@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bikjv2tee5c68"]
+[gd_scene load_steps=6 format=3 uid="uid://bikjv2tee5c68"]
 
 [ext_resource type="Script" uid="uid://dehijf4vgur2x" path="res://scenes/Game.gd" id="1_s0nni"]
-[ext_resource type="PackedScene" uid="uid://b6okt6e314s81" path="res://scenes/car/car.tscn" id="2_aug50"]
 [ext_resource type="PackedScene" uid="uid://dfhxi2tmvyfhm" path="res://scenes/RaceUI/race_ui.tscn" id="3_kiw3p"]
 [ext_resource type="PackedScene" uid="uid://dbh0hvgriey5t" path="res://scenes/menu/menu_ui.tscn" id="4_400sg"]
 [ext_resource type="PackedScene" uid="uid://bgonoh37d21ge" path="res://scenes/pre_game_menu/pre_game_menu.tscn" id="5_g4kob"]
@@ -9,7 +8,6 @@
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_s0nni")
-car = ExtResource("2_aug50")
 
 [node name="Game" type="CanvasLayer" parent="."]
 

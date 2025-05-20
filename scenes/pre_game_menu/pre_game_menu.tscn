@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bgonoh37d21ge"]
+[gd_scene load_steps=8 format=3 uid="uid://bgonoh37d21ge"]
 
 [ext_resource type="Script" uid="uid://d4h1vpe7t2lbq" path="res://scenes/pre_game_menu/pre_game_menu.gd" id="1_m747l"]
 [ext_resource type="Texture2D" uid="uid://ddhuoxqehx0xa" path="res://assets/key_art/play-menu.png" id="2_2vxq7"]
 [ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="3_voanb"]
 [ext_resource type="PackedScene" uid="uid://dmt2fqbeoy23i" path="res://scenes/LevelPreview/level_preview.tscn" id="4_2vxq7"]
+[ext_resource type="Texture2D" uid="uid://f1li3q6unloe" path="res://assets/cars/chev.png" id="4_hv2dh"]
 [ext_resource type="Texture2D" uid="uid://cd2jk5mvubp4k" path="res://assets/circuit-thumbnails/circuit1.png" id="5_la6rw"]
 [ext_resource type="Texture2D" uid="uid://bsiqmasius76x" path="res://assets/circuit-thumbnails/under_construction.png" id="6_hv2dh"]
 
@@ -37,8 +38,59 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Go Drift!"
 
-[node name="car_position" type="Node2D" parent="."]
-position = Vector2(288, 293)
+[node name="SkinSelector" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 103.0
+offset_top = -174.0
+offset_right = 465.0
+offset_bottom = 120.0
+grow_vertical = 2
+
+[node name="Left" parent="SkinSelector" instance=ExtResource("3_voanb")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -29.0
+offset_right = 33.0
+offset_bottom = 18.0
+grow_vertical = 2
+text = "<"
+
+[node name="Right" parent="SkinSelector" instance=ExtResource("3_voanb")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -32.5
+offset_right = 0.0
+offset_bottom = 32.5
+grow_horizontal = 0
+grow_vertical = 2
+text = ">"
+
+[node name="TextureRect" type="TextureRect" parent="SkinSelector"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(7.5, 7.5)
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("4_hv2dh")
 
 [node name="LevelPreview" parent="." instance=ExtResource("4_2vxq7")]
 layout_mode = 1
@@ -51,5 +103,7 @@ images = Array[Texture]([ExtResource("5_la6rw"), ExtResource("6_hv2dh")])
 level_names = Array[String](["Drifting's Cradle", "Coming soon!"])
 
 [connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]
+[connection signal="button_clicked" from="SkinSelector/Left" to="." method="_on_left_button_clicked"]
+[connection signal="button_clicked" from="SkinSelector/Right" to="." method="_on_right_button_clicked"]
 
 [editable path="LevelPreview"]
