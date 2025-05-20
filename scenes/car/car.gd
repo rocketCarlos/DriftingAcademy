@@ -22,7 +22,7 @@ enum SKIN {
 #region variables
 var max_speed: float
 const SPEED_ROAD: float = 300.0
-const SPEED_CURBS: float = 250.0
+const SPEED_CURBS: float = 200.0
 const SPEED_GRASS: float = 150.0
 const SPEED_GRAVEL: float = 100.0
 
@@ -33,9 +33,9 @@ const ACCEL_GRASS: float = 250.0
 const ACCEL_GRAVEL: float = 100.0
 
 var deaccel: float
-const DEACCEL_ROAD: float = 100.0
-const DEACCEL_CURBS: float = 150.0
-const DEACCEL_GRASS: float = 200.0
+const DEACCEL_ROAD: float = 275.0
+const DEACCEL_CURBS: float = 300.0
+const DEACCEL_GRASS: float = 350.0
 const DEACCEL_GRAVEL: float = 400.0
 
 var wheels: Array = [null, null, null, null]
@@ -91,14 +91,24 @@ func _physics_process(delta: float) -> void:
 			# -----------------------------------------
 			var force =  Vector2(0.0, 0.0)
 			if Input.is_action_pressed("accelerate"):
+				var prev_velocity_length = velocity.length()
 				# the acceleration force input by the player
 				force = accel * mouse_direction * delta
 				# apply the force to velocity
 				velocity += force
 				
 				# Limit speed not to exceed max_speed
+				# If exceeding max_speed, use prev_velocity_length to smoothlty
+				# reduce velocity until max_speed is reached
 				if velocity.length() >= max_speed:
-					velocity = velocity.normalized() * max_speed
+					if prev_velocity_length > max_speed:
+						# apply smooth deaccel
+						velocity = velocity.normalized() * prev_velocity_length - velocity.normalized() * deaccel * delta
+						if velocity.length() < max_speed:
+							# correct if speed is decreased too much
+							velocity = velocity.normalized() * max_speed
+					else:
+						velocity = velocity.normalized() * max_speed
 					
 				# ---------------------------------------------
 				# manage sprite rotation
