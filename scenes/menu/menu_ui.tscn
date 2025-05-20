@@ -16,7 +16,7 @@ script = ExtResource("1_s6nlw")
 [node name="Background" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(576, 324)
-scale = Vector2(5.76, 3.24)
+scale = Vector2(3.24, 3.24)
 texture = ExtResource("1_b5e6c")
 
 [node name="PlayButton" parent="." instance=ExtResource("2_tner2")]
