@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgonoh37d21ge"]
+[gd_scene load_steps=9 format=3 uid="uid://bgonoh37d21ge"]
 
 [ext_resource type="Script" uid="uid://d4h1vpe7t2lbq" path="res://scenes/pre_game_menu/pre_game_menu.gd" id="1_m747l"]
 [ext_resource type="Texture2D" uid="uid://ddhuoxqehx0xa" path="res://assets/key_art/play-menu.png" id="2_2vxq7"]
 [ext_resource type="PackedScene" uid="uid://dmtyx5x1hy1oh" path="res://scenes/text_button/text_button.tscn" id="3_voanb"]
 [ext_resource type="PackedScene" uid="uid://dmt2fqbeoy23i" path="res://scenes/LevelPreview/level_preview.tscn" id="4_2vxq7"]
 [ext_resource type="Texture2D" uid="uid://f1li3q6unloe" path="res://assets/cars/chev.png" id="4_hv2dh"]
+[ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="4_ln8ux"]
 [ext_resource type="Texture2D" uid="uid://cd2jk5mvubp4k" path="res://assets/circuit-thumbnails/circuit1.png" id="5_la6rw"]
 [ext_resource type="Texture2D" uid="uid://bsiqmasius76x" path="res://assets/circuit-thumbnails/under_construction.png" id="6_hv2dh"]
 
@@ -44,9 +45,9 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 103.0
-offset_top = -174.0
+offset_top = -170.0
 offset_right = 465.0
-offset_bottom = 120.0
+offset_bottom = 124.0
 grow_vertical = 2
 
 [node name="Left" parent="SkinSelector" instance=ExtResource("3_voanb")]
@@ -54,11 +55,12 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -29.0
+offset_top = -3.0
 offset_right = 33.0
-offset_bottom = 18.0
+offset_bottom = 33.0
 grow_vertical = 2
 text = "<"
+label_settings = ExtResource("4_ln8ux")
 
 [node name="Right" parent="SkinSelector" instance=ExtResource("3_voanb")]
 layout_mode = 1
@@ -68,12 +70,13 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -33.0
-offset_top = -32.5
+offset_top = -3.0
 offset_right = 0.0
-offset_bottom = 32.5
+offset_bottom = 33.0
 grow_horizontal = 0
 grow_vertical = 2
 text = ">"
+label_settings = ExtResource("4_ln8ux")
 
 [node name="TextureRect" type="TextureRect" parent="SkinSelector"]
 layout_mode = 1
@@ -113,6 +116,7 @@ offset_right = 108.0
 offset_bottom = 65.0
 grow_horizontal = 2
 text = "< Go back"
+label_settings = ExtResource("4_ln8ux")
 
 [connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]
 [connection signal="button_clicked" from="SkinSelector/Left" to="." method="_on_left_button_clicked"]

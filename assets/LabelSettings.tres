@@ -1,6 +1,6 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d25n4716373ex"]
 
-[ext_resource type="FontFile" uid="uid://bxjovs4yggswh" path="res://assets/WenderFont1.ttf" id="1_6ajit"]
+[ext_resource type="FontFile" uid="uid://bnpj2hvawy3av" path="res://assets/WenderFont2.ttf" id="1_6ajit"]
 
 [resource]
 font = ExtResource("1_6ajit")

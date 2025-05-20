@@ -429,12 +429,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 349.0
-offset_top = -57.0
-offset_right = 589.0
-offset_bottom = 8.0
+offset_left = 343.0
+offset_top = -40.0
+offset_right = 577.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "< Go back "
+label_settings = ExtResource("2_c8xcy")
 
 [connection signal="button_clicked" from="GoBack" to="." method="_on_go_back_button_clicked"]

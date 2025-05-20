@@ -5,15 +5,15 @@
 [x] accelerates
 [X] collides
 [X] different skins
-[] sfx
+[x] sfx
 ### tracks (at least one)
 [x] design
 [x] colliders
 [x] lap registration (including total time registration)
 ### game
 [x] time trial game mode
-[] music
-[] credits section with url to opengameart
+[x] music
+[x] credits section with url to opengameart
 
 ## Nice to have
 [] race mode against AI
