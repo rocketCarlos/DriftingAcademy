@@ -37,6 +37,7 @@ func _on_lap_completed():
 		speed_label.text = '0'
 		current_lap = 1
 		lap_label.text = '1/' + str(total_laps)
+		all_times = []
 	else:
 		current_lap += 1
 		lap_label.text = str(current_lap) + '/' + str(total_laps)
