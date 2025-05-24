@@ -5,5 +5,5 @@
 [resource]
 font = ExtResource("1_6ajit")
 font_size = 48
-outline_size = 2
+outline_size = 6
 outline_color = Color(0, 0, 0, 1)

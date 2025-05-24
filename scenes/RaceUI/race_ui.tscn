@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfhxi2tmvyfhm"]
+[gd_scene load_steps=5 format=3 uid="uid://dfhxi2tmvyfhm"]
 
 [ext_resource type="LabelSettings" uid="uid://d25n4716373ex" path="res://assets/LabelSettings.tres" id="1_i3wf3"]
 [ext_resource type="Script" uid="uid://calktoknmbx3q" path="res://scenes/RaceUI/race_ui.gd" id="1_tto6j"]
+[ext_resource type="FontFile" uid="uid://bnpj2hvawy3av" path="res://assets/WenderFont2.ttf" id="3_k0628"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u2ssu"]
+font = ExtResource("3_k0628")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="RaceUI" type="Control"]
 texture_filter = 1
@@ -66,3 +72,17 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "1/5"
 label_settings = ExtResource("1_i3wf3")
+
+[node name="RestartInfo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = -47.0
+offset_right = 183.0
+offset_bottom = -20.0
+grow_vertical = 0
+text = "Press R to restart the circuit"
+label_settings = SubResource("LabelSettings_u2ssu")
+autowrap_mode = 3

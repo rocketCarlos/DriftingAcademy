@@ -10,6 +10,8 @@ signal first_lap_start
 
 signal all_laps_completed(all_times: Array[String], total_time: String)
 
+signal level_restart
+
 var best_lap: float
 var best_total: float
 var car_skin: int

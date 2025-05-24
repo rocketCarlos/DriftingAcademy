@@ -18,12 +18,25 @@ func _ready() -> void:
 	Globals.first_lap_start.connect(_on_first_lap_start)
 
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("Restart"):
+		restart()
+		Globals.level_restart.emit()
+	
 	if track_time:
 		elapsed_time += delta
 		time_label.text = str(elapsed_time).pad_decimals(2)
 		if Globals.car_speeed > 300:
 			Globals.car_speeed = 300
 		speed_label.text = str(ceili(Globals.car_speeed))
+
+func restart() -> void:
+	track_time = false
+	time_label.text = 'Cross the finish line to start!'
+	speed_label.text = '0'
+	current_lap = 1
+	lap_label.text = '1/' + str(total_laps)
+	all_times = []
+
 
 func _on_lap_completed():
 	print(time_label.text)
@@ -32,12 +45,7 @@ func _on_lap_completed():
 	elapsed_time = 0
 	if current_lap == total_laps:
 		Globals.all_laps_completed.emit(all_times, str(total_time).pad_decimals(2))
-		track_time = false
-		time_label.text = 'Cross the finish line to start!'
-		speed_label.text = '0'
-		current_lap = 1
-		lap_label.text = '1/' + str(total_laps)
-		all_times = []
+		restart()
 	else:
 		current_lap += 1
 		lap_label.text = str(current_lap) + '/' + str(total_laps)
