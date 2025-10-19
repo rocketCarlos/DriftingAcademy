@@ -15,7 +15,7 @@ func _ready() -> void:
 	car.update_skin(Globals.car_skin)
 	car_initial_position = car.position
 	car_initial_rotation = car.rotation
-	
+
 
 func _on_first_lap_start() -> void:
 	initial_colliders.process_mode = Node.PROCESS_MODE_DISABLED
@@ -28,4 +28,3 @@ func _on_level_restart() -> void:
 	car.position = car_initial_position
 	car.rotation = car_initial_rotation
 	car.velocity = Vector2.ZERO
-	

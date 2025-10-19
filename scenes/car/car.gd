@@ -58,20 +58,20 @@ enum STATE {
 
 func _ready() -> void:
 	update_skin(SKIN.BLUE)
-	
+
 
 func _physics_process(delta: float) -> void:
 	match current_state:
-		STATE.PLAY:	
+		STATE.PLAY:
 			var mouse_position = get_global_mouse_position()
 			var mouse_direction = (mouse_position - global_position).normalized()
 			var angle = Vector2(0.0, -1.0).angle_to(mouse_direction)
-			
+
 			# -----------------------------------------
 			# manage terrain resistance
 			# -----------------------------------------
 			var total_resistance = get_wheels_resistance()
-			
+
 			if total_resistance <= 3:
 				max_speed = SPEED_ROAD
 				accel = ACCEL_ROAD
@@ -88,7 +88,7 @@ func _physics_process(delta: float) -> void:
 				max_speed = SPEED_GRAVEL
 				accel = ACCEL_GRAVEL
 				deaccel = DEACCEL_GRAVEL
-					
+
 			# -----------------------------------------
 			# manage movement
 			# -----------------------------------------
@@ -99,7 +99,7 @@ func _physics_process(delta: float) -> void:
 				force = accel * mouse_direction * delta
 				# apply the force to velocity
 				velocity += force
-				
+
 				# Limit speed not to exceed max_speed
 				# If exceeding max_speed, use prev_velocity_length to smoothlty
 				# reduce velocity until max_speed is reached
@@ -112,7 +112,7 @@ func _physics_process(delta: float) -> void:
 							velocity = velocity.normalized() * max_speed
 					else:
 						velocity = velocity.normalized() * max_speed
-					
+
 				# ---------------------------------------------
 				# manage sprite rotation
 				# ---------------------------------------------
@@ -122,23 +122,23 @@ func _physics_process(delta: float) -> void:
 				# 2. Adjust rotation to simulate drifting
 				var mouse_angle = velocity.angle_to(mouse_direction)
 				rotation = final_rotation + 2*mouse_angle/3
-				
+
 			else:
 				if velocity.length() > 0:
 					velocity -= velocity.normalized() * deaccel * delta
 					# Prevent overshooting and stop when speed is very low
 					if velocity.length() < 10.0:  # Threshold for stopping
 						velocity = Vector2(0, 0)
-						
+
 			Globals.car_speeed = velocity.length()
 			move_and_slide()
-		
+
 func _process(delta: float) -> void:
 	engine_sound.pitch_scale = 1 + inverse_lerp(0, SPEED_ROAD, velocity.length()) * 1.5
-	
+
 	if last_speed - velocity.length() > 75.0:
 		crash_sound.play()
-	
+
 	last_speed = velocity.length()
 
 #region utility functions
@@ -147,11 +147,11 @@ func get_wheels_resistance():
 	for wheel in wheels:
 		# Tile data of the tile the wheel is in
 		var tile_data = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(wheel.global_position)))
-		
+
 		total += tile_data.get_custom_data('terrain_resistance')
-		
+
 	return total
-	
+
 func update_skin(new_skin: SKIN) -> void:
 	match current_skin:
 		SKIN.BLUE:
@@ -166,9 +166,9 @@ func update_skin(new_skin: SKIN) -> void:
 		SKIN.CHEV:
 			hitbox_chev.disabled = true
 			skin_chev.hide()
-	
+
 	current_skin = new_skin
-	
+
 	var node_path = ''
 	match new_skin:
 		SKIN.BLUE:
@@ -187,7 +187,7 @@ func update_skin(new_skin: SKIN) -> void:
 			node_path = 'Skins/ChevCar/Wheel'
 			hitbox_chev.disabled = false
 			skin_chev.show()
-			
+
 	for i in range(4):
 		wheels[i] = get_node(node_path+str(i+1))
 
