@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dw24sbxjgn3pe"]
+
+[ext_resource type="Script" uid="uid://dtsp37gf1hk3p" path="res://components/circuits/utils/race-checkpoints/race_checkpoints.gd" id="1_ipr5m"]
+
+[node name="RaceCheckpoints" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_ipr5m")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_race_checkpoints_body_shape_entered"]

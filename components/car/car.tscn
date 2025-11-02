@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://b6okt6e314s81"]
+
+[ext_resource type="Script" uid="uid://cigewcuyyvues" path="res://components/car/car.gd" id="1_yhfra"]
+[ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="4_wq8g5"]
+[ext_resource type="AudioStream" uid="uid://nr4mgu52cnla" path="res://assets/sfx/car/engine_loop.wav" id="6_b3ski"]
+[ext_resource type="AudioStream" uid="uid://xn84kg1yowgn" path="res://assets/sfx/car/crash.ogg" id="7_u0012"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s371w"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("7_u0012")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wq8g5"]
+size = Vector2(11, 20.5)
+
+[node name="Car" type="CharacterBody2D"]
+z_index = 1
+texture_filter = 1
+collision_mask = 2
+script = ExtResource("1_yhfra")
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+
+[node name="Engine" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_b3ski")
+volume_db = -16.0
+autoplay = true
+
+[node name="Crash" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_s371w")
+volume_db = -8.0
+
+[node name="Skin" type="Sprite2D" parent="."]
+texture = ExtResource("4_wq8g5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.25)
+shape = SubResource("RectangleShape2D_wq8g5")
+
+[node name="Wheel1" type="Node2D" parent="."]
+
+[node name="Wheel2" type="Node2D" parent="."]
+
+[node name="Wheel3" type="Node2D" parent="."]
+
+[node name="Wheel4" type="Node2D" parent="."]

@@ -1,0 +1,106 @@
+[gd_scene load_steps=9 format=3 uid="uid://rp6ii0m0p1x"]
+
+[ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="1_p1mmk"]
+[ext_resource type="Script" uid="uid://dgiep7lyupysq" path="res://services/skin-holder/SkinHolder.gd" id="1_w7f4e"]
+[ext_resource type="Texture2D" uid="uid://dweki23u8fxpn" path="res://assets/cars/f1car.png" id="2_w7f4e"]
+[ext_resource type="Texture2D" uid="uid://db42pl3tm743q" path="res://assets/cars/pointy.png" id="3_uokqn"]
+[ext_resource type="Texture2D" uid="uid://f1li3q6unloe" path="res://assets/cars/chev.png" id="4_w84qa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1mmk"]
+size = Vector2(10, 19.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7f4e"]
+size = Vector2(8, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uokqn"]
+size = Vector2(10, 22)
+
+[node name="SkinHolder" type="Node2D"]
+script = ExtResource("1_w7f4e")
+
+[node name="Blue" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("1_p1mmk")
+
+[node name="Wheel1" type="Node2D" parent="Blue"]
+position = Vector2(-6, -5)
+
+[node name="Wheel2" type="Node2D" parent="Blue"]
+position = Vector2(6, -5)
+
+[node name="Wheel3" type="Node2D" parent="Blue"]
+position = Vector2(-6, 6)
+
+[node name="Wheel4" type="Node2D" parent="Blue"]
+position = Vector2(6, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blue"]
+position = Vector2(0, 0.75)
+shape = SubResource("RectangleShape2D_p1mmk")
+debug_color = Color(0.237001, 0.537813, 0.902935, 0.42)
+
+[node name="F1" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture = ExtResource("2_w7f4e")
+
+[node name="Wheel1" type="Node2D" parent="F1"]
+position = Vector2(-5, -5)
+
+[node name="Wheel2" type="Node2D" parent="F1"]
+position = Vector2(5, -5)
+
+[node name="Wheel3" type="Node2D" parent="F1"]
+position = Vector2(-5, 8)
+
+[node name="Wheel4" type="Node2D" parent="F1"]
+position = Vector2(5, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="F1"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_w7f4e")
+debug_color = Color(0.791831, 0.40637, 0.365096, 0.42)
+
+[node name="Pointy" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture = ExtResource("3_uokqn")
+
+[node name="Wheel1" type="Node2D" parent="Pointy"]
+position = Vector2(-5, -8)
+
+[node name="Wheel2" type="Node2D" parent="Pointy"]
+position = Vector2(5, -8)
+
+[node name="Wheel3" type="Node2D" parent="Pointy"]
+position = Vector2(-7, 7)
+
+[node name="Wheel4" type="Node2D" parent="Pointy"]
+position = Vector2(7, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pointy"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_uokqn")
+debug_color = Color(0.609777, 0.534793, 0.194396, 0.42)
+
+[node name="Chev" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture = ExtResource("4_w84qa")
+
+[node name="Wheel1" type="Node2D" parent="Chev"]
+position = Vector2(-5, -5)
+
+[node name="Wheel2" type="Node2D" parent="Chev"]
+position = Vector2(5, -5)
+
+[node name="Wheel3" type="Node2D" parent="Chev"]
+position = Vector2(-5, 7)
+
+[node name="Wheel4" type="Node2D" parent="Chev"]
+position = Vector2(5, 7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chev"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_uokqn")
+debug_color = Color(0.619246, 0.399804, 0.905219, 0.42)

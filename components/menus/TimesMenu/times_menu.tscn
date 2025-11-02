@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://djs0lutrxdt14"]
+
+[ext_resource type="Script" uid="uid://b4i28pme3b7vv" path="res://components/menus/TimesMenu/times_menu.gd" id="1_kmeix"]
+[ext_resource type="Texture2D" uid="uid://itqkn2bva6nq" path="res://assets/ui/play-menu.png" id="2_4gxy7"]
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/LabelSettings.tres" id="3_2vh25"]
+[ext_resource type="PackedScene" uid="uid://vggdum0ykhwl" path="res://components/menus/TimesMenu/times_row.tscn" id="4_cgf7o"]
+[ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="5_kty6d"]
+
+[node name="TimesMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kmeix")
+times_row_scene = ExtResource("4_cgf7o")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4gxy7")
+expand_mode = 2
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_top = 42.105
+offset_right = 42.0
+offset_bottom = 65.10504
+grow_horizontal = 2
+text = "Your Times"
+label_settings = ExtResource("3_2vh25")
+
+[node name="TimesContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -195.5
+offset_right = 350.0
+offset_bottom = 195.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TimesRow" parent="TimesContainer" instance=ExtResource("4_cgf7o")]
+layout_mode = 2
+
+[node name="PlayAgain" parent="." instance=ExtResource("5_kty6d")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = -70.0
+offset_right = 309.0
+offset_bottom = -34.0
+grow_vertical = 0
+text = "Play again!"
+
+[node name="ChooseLevel" parent="." instance=ExtResource("5_kty6d")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -312.0
+offset_top = -70.0
+offset_right = -45.0
+offset_bottom = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Choose level"
+
+[connection signal="button_clicked" from="PlayAgain" to="." method="_on_play_again_button_clicked"]
+[connection signal="button_clicked" from="ChooseLevel" to="." method="_on_choose_level_button_clicked"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bca7sctwvxlpg"]
+
+[ext_resource type="Script" uid="uid://dek8uk6vi7dsx" path="res://components/ui/text-button/TextButton.gd" id="1_hhi3p"]
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/LabelSettings.tres" id="1_mjfwy"]
+[ext_resource type="AudioStream" uid="uid://vhwbiqi8howq" path="res://assets/sfx/ui/click.ogg" id="3_jd8f3"]
+[ext_resource type="AudioStream" uid="uid://bly0j7rwmipwd" path="res://assets/sfx/ui/hover.wav" id="4_kuv34"]
+
+[node name="TextButton" type="Label"]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 40.0
+offset_bottom = 23.0
+mouse_filter = 1
+text = "helloooo"
+label_settings = ExtResource("1_mjfwy")
+script = ExtResource("1_hhi3p")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+pivot_offset = Vector2(108, 18)
+text = "helloooo"
+label_settings = ExtResource("1_mjfwy")
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jd8f3")
+
+[node name="Hover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_kuv34")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

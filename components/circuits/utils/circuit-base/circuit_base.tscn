@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b63vgf7vlp7ys"]
+
+[ext_resource type="Script" uid="uid://dlnrre818plta" path="res://components/circuits/utils/circuit-base/circuit_base.gd" id="1_tdoex"]
+[ext_resource type="PackedScene" uid="uid://dw24sbxjgn3pe" path="res://components/circuits/utils/race-checkpoints/race_checkpoints.tscn" id="2_8jp8p"]
+
+[node name="CircuitBase" type="Node2D"]
+script = ExtResource("1_tdoex")
+
+[node name="RoadLayout" type="TileMapLayer" parent="."]
+
+[node name="DecorationLayout" type="TileMapLayer" parent="RoadLayout"]
+
+[node name="StartingGrid" type="Node2D" parent="."]
+
+[node name="RaceCheckpoints" parent="." instance=ExtResource("2_8jp8p")]
+
+[node name="InitialColliders" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0

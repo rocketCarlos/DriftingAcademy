@@ -1,9 +1,0 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d25n4716373ex"]
-
-[ext_resource type="FontFile" uid="uid://bnpj2hvawy3av" path="res://assets/WenderFont2.ttf" id="1_6ajit"]
-
-[resource]
-font = ExtResource("1_6ajit")
-font_size = 48
-outline_size = 6
-outline_color = Color(0, 0, 0, 1)
