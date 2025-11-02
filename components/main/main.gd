@@ -80,10 +80,12 @@ func _on_race_ended() -> void:
 	Router.redirect_to.emit(Router.ROUTE_NAME.TIMES_MENU) # current menu is now times_menu
 	current_menu.populate_times(time_info)
 	# save game
-	# TODO: only if better than best time!
-	SaveManager.save_time_trial(
-		SaveManager.TimeTrialCircuitSaveData.new(circuit_instance.name, time_info)
-	)
+	if (SaveManager.current_save and
+		time_info.reduce(func(accum, number): return accum + number) <
+		SaveManager.current_save.get_total_time()):
+		SaveManager.save_time_trial(
+			SaveManager.TimeTrialCircuitSaveData.new(circuit_instance.name, time_info)
+		)
 	circuit_instance = null
 
 

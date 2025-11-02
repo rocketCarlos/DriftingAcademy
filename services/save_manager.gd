@@ -20,6 +20,9 @@ class TimeTrialCircuitSaveData:
 			"times": lap_times
 		}
 
+	func get_total_time() -> float:
+		return lap_times.reduce(func(accum, number): return accum + number)
+
 func _ready() -> void:
 	var dir_access = DirAccess.open(SAVE_ROOT)
 	dir_access.make_dir_recursive(TIME_TRIAL_SAVE_PATH)
@@ -50,6 +53,7 @@ func load_time_trial(circuit_name: String) -> TimeTrialCircuitSaveData:
 		)
 		return null
 	# explicit conversion to Array[float] because casting json.data.get("times") as Arary[float] won't work
+	# TODO: ask in forum?
 	var time_data: Array[float] = []
 	for value in json.data.get("times"):
 		time_data.push_back(value as float)

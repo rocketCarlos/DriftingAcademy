@@ -10,12 +10,22 @@ func _ready() -> void:
 
 func populate_times(times: Array[float]) -> void:
 	var times_container = get_node("TimesContainer")
+
+	var title_row = times_row_scene.instantiate()
+	title_row.get_node("LapNumber").text = "LAP"
+	title_row.get_node("Value").text = "TIME"
+	title_row.get_node("Value2").text = "BEST"
+	times_container.add_child(title_row)
+
 	var i: int = 1
 	var acc: float = 0
 	for record in times:
 		var row = times_row_scene.instantiate()
 		row.get_node("LapNumber").text = str(i) + "."
 		row.get_node("Value").text = str(record)
+		if SaveManager.current_save:
+			row.get_node("Value2").text = str(SaveManager.current_save.lap_times[i-1])
+
 		times_container.add_child(row)
 		acc += record
 		i += 1
@@ -23,6 +33,8 @@ func populate_times(times: Array[float]) -> void:
 	var total_time = times_row_scene.instantiate()
 	total_time.get_node("LapNumber").text = "Total time:"
 	total_time.get_node("Value").text = str(acc)
+	if SaveManager.current_save:
+		total_time.get_node("Value2").text = str(SaveManager.current_save.get_total_time())
 	times_container.add_child(total_time)
 
 
