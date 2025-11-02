@@ -62,6 +62,7 @@ func _on_load_current_circuit() -> void:
 
 	# instantiate selected circuit
 	circuit_instance = CircuitHolder.get_and_initialize_current_circuit()
+	SaveManager.load_time_trial(circuit_instance.name)
 	# intialize car and instantiate it in the current circuit
 	instantiate_and_initialize_car(circuit_instance)
 	game_subviewport.add_child(circuit_instance)

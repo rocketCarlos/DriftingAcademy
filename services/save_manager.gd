@@ -3,6 +3,8 @@ extends Node
 const SAVE_ROOT = "user://"
 const TIME_TRIAL_SAVE_PATH = "time_trial/"
 
+var current_save: TimeTrialCircuitSaveData
+
 class TimeTrialCircuitSaveData:
 	var circuit_name: String
 	var lap_times: Array[float]
@@ -11,6 +13,7 @@ class TimeTrialCircuitSaveData:
 	func _init(circuit_name: String, lap_times: Array[float]) -> void:
 		self.circuit_name = circuit_name
 		self.lap_times = lap_times
+
 
 	func to_dict() -> Dictionary:
 		return {
@@ -36,7 +39,7 @@ func load_time_trial(circuit_name: String) -> TimeTrialCircuitSaveData:
 		return null
 
 	var save_file = FileAccess.open(savefile_name, FileAccess.READ)
-	var json_string = save_file.get_line()
+	var json_string = save_file.get_as_text()
 	var json = JSON.new()
 
 	# Check if there is any error while parsing the JSON string, skip in case of failure.
@@ -46,5 +49,10 @@ func load_time_trial(circuit_name: String) -> TimeTrialCircuitSaveData:
 			"JSON Parse Error (", savefile_name, "): ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line()
 		)
 		return null
+	# explicit conversion to Array[float] because casting json.data.get("times") as Arary[float] won't work
+	var time_data: Array[float] = []
+	for value in json.data.get("times"):
+		time_data.push_back(value as float)
+	current_save = TimeTrialCircuitSaveData.new(circuit_name, time_data)
 
-	return json.data
+	return current_save
