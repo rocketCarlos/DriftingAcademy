@@ -1,5 +1,5 @@
 extends Control
-
+#TODO: show highscore of levels?
 @onready var skin_preview = $SkinSelector/SkinPreview
 @onready var circuit_preview = $CircuitSelector/CircuitPreview
 

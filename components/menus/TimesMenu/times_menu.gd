@@ -1,12 +1,23 @@
 extends Control
 
-#TODO: load highscore of current level. Maybe also show it in level selector?
-
 @export var times_row_scene: PackedScene
 @onready var times_row_preview = $TimesContainer/TimesRow
+@onready var new_record_label = $NewRecord
 
 func _ready() -> void:
 	times_row_preview.queue_free()
+
+	new_record_label.scale = Vector2(0.8, 0.8)
+	while true:
+		var tween = create_tween()
+		tween.tween_property(new_record_label, "scale", Vector2(1.3, 1.3), 0.5)
+		tween.tween_property(new_record_label, "scale", Vector2(0.8, 0.8), 0.5)
+		await tween.finished
+
+
+func _process(delta: float) -> void:
+	new_record_label.pivot_offset = new_record_label.size / 2.0
+
 
 func populate_times(times: Array[float]) -> void:
 	var times_container = get_node("TimesContainer")
@@ -25,6 +36,8 @@ func populate_times(times: Array[float]) -> void:
 		row.get_node("Value").text = str(record)
 		if SaveManager.current_save:
 			row.get_node("Value2").text = str(SaveManager.current_save.lap_times[i-1])
+		else:
+			row.get_node("Value2").text = str(record)
 
 		times_container.add_child(row)
 		acc += record
@@ -35,7 +48,14 @@ func populate_times(times: Array[float]) -> void:
 	total_time.get_node("Value").text = str(acc)
 	if SaveManager.current_save:
 		total_time.get_node("Value2").text = str(SaveManager.current_save.get_total_time())
+	else:
+		total_time.get_node("Value2").text = str(acc)
 	times_container.add_child(total_time)
+
+	if SaveManager.current_save and SaveManager.current_save.get_total_time() > acc:
+		new_record_label.show()
+	else:
+		new_record_label.hide()
 
 
 func _on_play_again_button_clicked() -> void:

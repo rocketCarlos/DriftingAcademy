@@ -15,10 +15,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vupem")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(576, 324)
-scale = Vector2(5.76, 3.24)
+[node name="Sprite2D" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_uxk64")
 
 [node name="SkinSelector" type="Control" parent="."]
