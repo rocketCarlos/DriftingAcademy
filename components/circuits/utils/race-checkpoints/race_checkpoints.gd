@@ -3,13 +3,11 @@ extends Area2D
 """
 Race Checkpoints
 
-Use this scene to manage checkpoints in a circuit. To do so, instantiate this scene in a circuit
-and then add CollishionShape2D nodes as children of this node. Each child will be considered a
-checkpoint and will be used to compute completed laps. The first node will be considered the
-start/finish line
+Use this scene to manage checkpoints in a circuit. To do so, add CollishionShape2D nodes as children
+of this node. Each child will be considered a checkpoint and will be used to compute completed laps.
+The first node will be considered the start/finish line
 """
 # TODO: think about what happens when more than 1 car is racing: we have to check the progress for each car
-
 
 var finish_line_start: bool = true # whether it is the first time the player crosses the finish line
 var total_checkpoints: int

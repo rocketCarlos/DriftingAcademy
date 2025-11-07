@@ -7,7 +7,6 @@ Step to add a new circuit:
 
 	Note: see circuit_base for info on creating circuits
 """
-#TODO: add checks in ready
 
 signal load_current_circuit
 

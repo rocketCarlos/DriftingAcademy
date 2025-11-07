@@ -7,18 +7,9 @@ extends Node2D
 enum DIRECTION {LEFT, RIGHT, UP, DOWN}
 @export var initial_car_rotation: DIRECTION = DIRECTION.RIGHT
 
-#TODO: the undermentioned things
 """
-Idea: find onready var through code in the ready function. Add functionality here to standarize
-things like:
-	- check that the circuit has a road layout (and obstacles?)
-	- check that the circuit has checkpoints
-	- optionally check that initial colliders exist?
-	- manage restarting
-	- manage cars possible initial positions
-
-
-Circuit base -> use this as the base node for any circuit.
+Circuit base -> use this as the base node for any circuit. You should rename the root node to get
+better error traces
 
 USAGE:
 	1. Add a tileset to RoadLayout and ObstaclesLayout nodes and draw the circuit
@@ -45,6 +36,26 @@ func _ready() -> void:
 	Globals.circuit_tileset = circuit_tileset
 	Globals.race_started.connect(_on_race_started)
 	Globals.race_restarted.connect(_on_race_restarted)
+
+	# node structure checks
+	if not starting_grid.get_child_count() > 0:
+		push_error("No grid positions found for this circuit")
+	else:
+		var i = 1
+		for child in starting_grid.get_children():
+			if child.name != str(i):
+				push_warning("Circuit's starting grid positions should be named after their index, not ", child.name)
+			i += 1
+
+	if not initial_colliders.get_child_count() > 0:
+		push_error("No CollisionPolygon2D found for initial colliders")
+	else:
+		for child in initial_colliders.get_children():
+			if not child.is_class("CollisionPolygon2D"):
+				push_warning("Found an initial collider that is not a CollisionShape2D instance: ",
+				child,
+				". Node class is ", child.get_class())
+
 
 """
 Returns the position coordinates of the given position of the StartingGrid
