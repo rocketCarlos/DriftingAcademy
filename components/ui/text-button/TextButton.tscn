@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bca7sctwvxlpg"]
 
 [ext_resource type="Script" uid="uid://dek8uk6vi7dsx" path="res://components/ui/text-button/TextButton.gd" id="1_hhi3p"]
-[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/LabelSettings.tres" id="1_mjfwy"]
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="1_mjfwy"]
 [ext_resource type="AudioStream" uid="uid://vhwbiqi8howq" path="res://assets/sfx/ui/click.ogg" id="3_jd8f3"]
 [ext_resource type="AudioStream" uid="uid://bly0j7rwmipwd" path="res://assets/sfx/ui/hover.wav" id="4_kuv34"]
 [ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="4_mh4ua"]

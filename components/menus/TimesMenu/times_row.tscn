@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://vggdum0ykhwl"]
 
-[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/LabelSettings.tres" id="1_r6xo1"]
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="1_r6xo1"]
 
 [node name="TimesRow" type="HBoxContainer"]
 anchors_preset = 5

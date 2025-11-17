@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b4b7wjspog7em"]
 
-[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/LabelSettings.tres" id="1_7gec4"]
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="1_7gec4"]
 [ext_resource type="Script" uid="uid://dgbdfkd6aq0a0" path="res://components/ui/RaceHUD/race_hud.gd" id="1_mno8g"]
 [ext_resource type="FontFile" uid="uid://ds238wktkms30" path="res://assets/label-settings/WenderFont2.ttf" id="2_mno8g"]
 

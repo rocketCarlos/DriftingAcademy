@@ -20,7 +20,7 @@ signal button_clicked
 	set(value):
 		hover = value
 		SoundHover.stram = hover
-@export var custom_label_settings: LabelSettings = preload("res://assets/label-settings/LabelSettings.tres"):
+@export var custom_label_settings: LabelSettings = preload("res://assets/label-settings/default-font.tres"):
 	set(value):
 		custom_label_settings = value
 		label_settings = custom_label_settings
