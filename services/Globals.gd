@@ -15,6 +15,7 @@ var current_gamemode: GAME_MODE
 Node references
 """
 var circuit_tileset: Node
+var car: Node
 
 """
 Info variables

@@ -46,6 +46,7 @@ func _on_lap_completed():
 	total_time += elapsed_time
 	elapsed_time = 0
 	if current_lap == total_laps:
+		# TODO: let circuit manage total laps and race ended signal
 		Globals.race_ended.emit()
 	else:
 		current_lap += 1

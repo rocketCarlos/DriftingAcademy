@@ -3,6 +3,7 @@ extends Node2D
 @onready var circuit_tileset = $RoadLayout
 @onready var initial_colliders = $InitialColliders
 @onready var starting_grid = $StartingGrid
+@onready var ghost = $Ghost
 
 enum DIRECTION {LEFT, RIGHT, UP, DOWN}
 @export var initial_car_rotation: DIRECTION = DIRECTION.RIGHT
@@ -85,6 +86,9 @@ func get_initial_rotation() -> float:
 
 func _on_race_started() -> void:
 	initial_colliders.process_mode = Node.PROCESS_MODE_DISABLED
+	ghost.show()
+	ghost.start()
 
 func _on_race_restarted() -> void:
 	initialize()
+	ghost.hide()

@@ -76,15 +76,22 @@ func _on_race_restarted() -> void:
 
 func _on_race_ended() -> void:
 	# get time from current menu because the menu while racing is the race_hud
+	# TODO: move time saving to other scene so that it is independent from current menu
 	var time_info = current_menu.all_times
 	Router.redirect_to.emit(Router.ROUTE_NAME.TIMES_MENU) # current menu is now times_menu
 	current_menu.populate_times(time_info)
 	# save game
-	if (SaveManager.current_save and
+	if (
+		(SaveManager.current_save and
 		time_info.reduce(func(accum, number): return accum + number) <
-		SaveManager.current_save.get_total_time()):
+		SaveManager.current_save.get_total_time())
+		or
+		not SaveManager.current_save
+		or
+		(SaveManager.current_save and time_info.size() != SaveManager.current_save.lap_times.size())
+		):
 		SaveManager.save_time_trial(
-			SaveManager.TimeTrialCircuitSaveData.new(circuit_instance.name, time_info)
+			SaveManager.TimeTrialCircuitSaveData.new(circuit_instance.name, time_info, GhostRecorder.samples)
 		)
 	circuit_instance = null
 
