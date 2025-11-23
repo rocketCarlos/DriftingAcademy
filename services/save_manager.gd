@@ -60,6 +60,8 @@ func load_time_trial(circuit_name: String) -> TimeTrialCircuitSaveData:
 	var time_data: Array[float] = []
 	for value in json.data.get("times"):
 		time_data.push_back(value as float)
-	current_save = TimeTrialCircuitSaveData.new(circuit_name, time_data, json.data.get("ghost_samples"))
+
+	var samples = json.data.get("ghost_samples")
+	current_save = TimeTrialCircuitSaveData.new(circuit_name, time_data, samples if samples else [])
 
 	return current_save
