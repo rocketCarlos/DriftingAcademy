@@ -23,6 +23,7 @@ SkinHolder="*res://services/skin-holder/SkinHolder.tscn"
 CircuitHolder="*res://services/circuit-holder/circuit_holder.tscn"
 SaveManager="*res://services/save_manager.gd"
 AudioService="*res://services/audio-service/audio_service.tscn"
+GhostRecorder="*res://services/ghost_recorder.gd"
 
 [debug]
 

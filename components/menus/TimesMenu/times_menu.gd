@@ -34,7 +34,7 @@ func populate_times(times: Array[float]) -> void:
 		var row = times_row_scene.instantiate()
 		row.get_node("LapNumber").text = str(i) + "."
 		row.get_node("Value").text = str(record)
-		if SaveManager.current_save:
+		if SaveManager.current_save and i-1 < SaveManager.current_save.lap_times.size():
 			row.get_node("Value2").text = str(SaveManager.current_save.lap_times[i-1])
 		else:
 			row.get_node("Value2").text = str(record)
@@ -52,7 +52,11 @@ func populate_times(times: Array[float]) -> void:
 		total_time.get_node("Value2").text = str(acc)
 	times_container.add_child(total_time)
 
-	if SaveManager.current_save and SaveManager.current_save.get_total_time() > acc:
+	if (
+		(SaveManager.current_save and SaveManager.current_save.get_total_time() > acc)
+		or
+		(SaveManager.current_save.lap_times.size() != times.size())
+		):
 		new_record_label.show()
 	else:
 		new_record_label.hide()

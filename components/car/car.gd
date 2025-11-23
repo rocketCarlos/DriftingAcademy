@@ -37,6 +37,7 @@ enum STATE {
 
 func _ready() -> void:
 	wheels = find_children("Wheel?")
+	Globals.car = self
 
 func _physics_process(delta: float) -> void:
 	match current_state:
