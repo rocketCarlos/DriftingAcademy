@@ -14,6 +14,9 @@ func _ready() -> void:
 	Globals.race_restarted.connect(_on_race_started)
 	Globals.race_ended.connect(_on_race_ended)
 
+	if not Globals.car:
+		queue_free()
+
 
 func _process(delta):
 	if not recording:

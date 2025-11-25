@@ -7,8 +7,11 @@ var timer: float = 0.0
 
 
 func _ready() -> void:
-	samples = SaveManager.current_save.ghost_samples
-	if samples.size() == 0:
+	if SaveManager.current_save:
+		samples = SaveManager.current_save.ghost_samples
+		if samples.size() == 0:
+			hide()
+	else:
 		hide()
 
 

@@ -11,16 +11,17 @@ const SPEED_GRASS: float = 150.0
 const SPEED_GRAVEL: float = 100.0
 
 var accel: float
-const ACCEL_ROAD: float = 500.0
-const ACCEL_CURBS: float = 400.0
-const ACCEL_GRASS: float = 250.0
-const ACCEL_GRAVEL: float = 100.0
+const ACCEL_ROAD: float = 8.5
+const ACCEL_CURBS: float = 6.8
+const ACCEL_GRASS: float = 4.25
+const ACCEL_GRAVEL: float = 1.7
 
 var deaccel: float
-const DEACCEL_ROAD: float = 275.0
-const DEACCEL_CURBS: float = 300.0
-const DEACCEL_GRASS: float = 350.0
-const DEACCEL_GRAVEL: float = 400.0
+const DEACCEL_ROAD: float = 4.675
+const DEACCEL_CURBS: float = 5.1
+const DEACCEL_GRASS: float = 5.95
+const DEACCEL_GRAVEL: float = 6.8
+
 
 var wheels: Array[Node] = [null, null, null, null]
 
@@ -39,7 +40,7 @@ func _ready() -> void:
 	wheels = find_children("Wheel?")
 	Globals.car = self
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	match current_state:
 		STATE.PLAY:
 			var mouse_position = get_global_mouse_position()
@@ -75,7 +76,7 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_pressed("accelerate"):
 				var prev_velocity_length = velocity.length()
 				# the acceleration force input by the player
-				force = accel * mouse_direction * delta
+				force = accel * mouse_direction
 				# apply the force to velocity
 				velocity += force
 
@@ -85,7 +86,7 @@ func _physics_process(delta: float) -> void:
 				if velocity.length() >= max_speed:
 					if prev_velocity_length > max_speed:
 						# apply smooth deaccel
-						velocity = velocity.normalized() * prev_velocity_length - velocity.normalized() * deaccel * delta
+						velocity = velocity.normalized() * prev_velocity_length - velocity.normalized() * deaccel
 						if velocity.length() < max_speed:
 							# correct if speed is decreased too much
 							velocity = velocity.normalized() * max_speed
@@ -104,7 +105,7 @@ func _physics_process(delta: float) -> void:
 
 			else:
 				if velocity.length() > 0:
-					velocity -= velocity.normalized() * deaccel * delta
+					velocity -= velocity.normalized() * deaccel
 					# Prevent overshooting and stop when speed is very low
 					if velocity.length() < 10.0:  # Threshold for stopping
 						velocity = Vector2(0, 0)
