@@ -1,104 +1,308 @@
-[gd_scene load_steps=4 format=3 uid="uid://by01b6oxn6l0r"]
+[gd_scene load_steps=24 format=3 uid="uid://by01b6oxn6l0r"]
 
 [ext_resource type="PackedScene" uid="uid://cu0ud7us0w8n" path="res://components/circuits/driftings-cradle/driftings_cradle.tscn" id="1_cbv5l"]
 [ext_resource type="PackedScene" uid="uid://ccfgi5gd1l23n" path="res://components/bot/bot.tscn" id="2_vy0lq"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_vy0lq"]
-radius = 68.117546
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_vy0lq"]
+a = Vector2(0, -60)
+b = Vector2(0, 174)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_whjrq"]
+a = Vector2(58, -103)
+b = Vector2(269, -23)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_npgmm"]
+a = Vector2(122, -166)
+b = Vector2(151, 117)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_qhd8b"]
+a = Vector2(-185, -153)
+b = Vector2(-11, 132)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_r2drt"]
+a = Vector2(-223, -63)
+b = Vector2(84, -63)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_h8rj8"]
+a = Vector2(-223, -63)
+b = Vector2(146, -70)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rr4da"]
+a = Vector2(-138, 117)
+b = Vector2(59, -96)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_auf4e"]
+a = Vector2(-43, 127)
+b = Vector2(-130, -161)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_1sirr"]
+a = Vector2(-25, -14)
+b = Vector2(-262, -98)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_fax4n"]
+a = Vector2(-19, -7)
+b = Vector2(-278, -14)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_vqwla"]
+a = Vector2(-19, -7)
+b = Vector2(-278, -14)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gmwlt"]
+a = Vector2(2, 13)
+b = Vector2(-450, 13)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_elbfr"]
+a = Vector2(73, 269)
+b = Vector2(-369, -66)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_f0vls"]
+a = Vector2(-185, 279)
+b = Vector2(-195, -72)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_x36yf"]
+a = Vector2(-185, 279)
+b = Vector2(-195, -72)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4a4xb"]
+a = Vector2(-385, 142)
+b = Vector2(-124, -15)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_pcuur"]
+a = Vector2(-428, 91)
+b = Vector2(-112, 91)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_vlupg"]
+a = Vector2(-395, -75)
+b = Vector2(-157, 91)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_i7py7"]
+a = Vector2(-298, 82)
+b = Vector2(-74, -21)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_k4bp1"]
+a = Vector2(-435, 275)
+b = Vector2(-177, 62)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4gsuv"]
+a = Vector2(-126, -37)
+b = Vector2(200, -37)
 
 [node name="DriftingsCradle" instance=ExtResource("1_cbv5l")]
+
+[node name="InitialColliders" parent="." index="3"]
+visible = false
 
 [node name="BotPoints" type="Node2D" parent="." index="5"]
 
 [node name="1" type="Area2D" parent="BotPoints" index="0" groups=["BotPoints"]]
-position = Vector2(-47, -479)
+position = Vector2(261, -457)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/1" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(-23, -76)
+shape = SubResource("SegmentShape2D_vy0lq")
+debug_color = Color(0.8014347, 0.022490537, 0.99999994, 0.41960785)
 
 [node name="2" type="Area2D" parent="BotPoints" index="1" groups=["BotPoints"]]
-position = Vector2(383, -407)
+position = Vector2(320, -320)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/2" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(-45, 122)
+shape = SubResource("SegmentShape2D_whjrq")
+debug_color = Color(0.86423904, 0.0006095278, 0.86640763, 0.41960785)
 
 [node name="3" type="Area2D" parent="BotPoints" index="2" groups=["BotPoints"]]
-position = Vector2(228, -282)
+position = Vector2(208, -254)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/3" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(-116, 139)
+shape = SubResource("SegmentShape2D_npgmm")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="4" type="Area2D" parent="BotPoints" index="3" groups=["BotPoints"]]
-position = Vector2(87, -183)
+position = Vector2(1, -95)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/4" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(77, -24)
+shape = SubResource("SegmentShape2D_qhd8b")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="5" type="Area2D" parent="BotPoints" index="4" groups=["BotPoints"]]
-position = Vector2(-9, -47)
+position = Vector2(-59, -27)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/5" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(-7, 46)
+shape = SubResource("SegmentShape2D_r2drt")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="6" type="Area2D" parent="BotPoints" index="5" groups=["BotPoints"]]
-position = Vector2(42, 83)
+position = Vector2(-63, 70)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/6" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(-3, 50)
+shape = SubResource("SegmentShape2D_h8rj8")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="7" type="Area2D" parent="BotPoints" index="6" groups=["BotPoints"]]
-position = Vector2(153, 158)
+position = Vector2(14, 105)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/7" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(-3, 50)
+shape = SubResource("SegmentShape2D_rr4da")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="8" type="Area2D" parent="BotPoints" index="7" groups=["BotPoints"]]
-position = Vector2(351, 132)
+position = Vector2(309, 140)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/8" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(107, 85)
+shape = SubResource("SegmentShape2D_auf4e")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="9" type="Area2D" parent="BotPoints" index="8" groups=["BotPoints"]]
-position = Vector2(578, -65)
+position = Vector2(668, -189)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/9" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(222, 84)
+shape = SubResource("SegmentShape2D_1sirr")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="10" type="Area2D" parent="BotPoints" index="9" groups=["BotPoints"]]
-position = Vector2(675, -257)
+position = Vector2(676, -346)
 collision_layer = 4
 collision_mask = 0
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/10" index="0"]
-shape = SubResource("CircleShape2D_vy0lq")
+position = Vector2(240, 56)
+shape = SubResource("SegmentShape2D_fax4n")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="11" type="Area2D" parent="BotPoints" index="10" groups=["BotPoints"]]
+position = Vector2(896, -291)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/11" index="0"]
+position = Vector2(304, 36)
+shape = SubResource("SegmentShape2D_vqwla")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="12" type="Area2D" parent="BotPoints" index="11" groups=["BotPoints"]]
+position = Vector2(954, 228)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/12" index="0"]
+position = Vector2(235, -45)
+shape = SubResource("SegmentShape2D_gmwlt")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="13" type="Area2D" parent="BotPoints" index="12" groups=["BotPoints"]]
+position = Vector2(826, 359)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/13" index="0"]
+position = Vector2(235, -45)
+shape = SubResource("SegmentShape2D_elbfr")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="14" type="Area2D" parent="BotPoints" index="13" groups=["BotPoints"]]
+position = Vector2(477, 449)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/14" index="0"]
+position = Vector2(202, -19)
+shape = SubResource("SegmentShape2D_f0vls")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="15" type="Area2D" parent="BotPoints" index="14" groups=["BotPoints"]]
+position = Vector2(-61, 464)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/15" index="0"]
+position = Vector2(202, -19)
+shape = SubResource("SegmentShape2D_x36yf")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="16" type="Area2D" parent="BotPoints" index="15" groups=["BotPoints"]]
+position = Vector2(-422, 100)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/16" index="0"]
+position = Vector2(212, 3)
+shape = SubResource("SegmentShape2D_4a4xb")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="17" type="Area2D" parent="BotPoints" index="16" groups=["BotPoints"]]
+position = Vector2(-432, -42)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/17" index="0"]
+position = Vector2(206, -26)
+shape = SubResource("SegmentShape2D_pcuur")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="18" type="Area2D" parent="BotPoints" index="17" groups=["BotPoints"]]
+position = Vector2(-658, -25)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/18" index="0"]
+position = Vector2(148, -42)
+shape = SubResource("SegmentShape2D_vlupg")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="19" type="Area2D" parent="BotPoints" index="18" groups=["BotPoints"]]
+position = Vector2(-735, 345)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/19" index="0"]
+position = Vector2(148, -42)
+shape = SubResource("SegmentShape2D_i7py7")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="20" type="Area2D" parent="BotPoints" index="19" groups=["BotPoints"]]
+position = Vector2(-851, 417)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/20" index="0"]
+position = Vector2(148, -42)
+shape = SubResource("SegmentShape2D_k4bp1")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
+
+[node name="21" type="Area2D" parent="BotPoints" index="20" groups=["BotPoints"]]
+position = Vector2(-1007, -221)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/21" index="0"]
+position = Vector2(-56, 20)
+shape = SubResource("SegmentShape2D_4gsuv")
+debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="Bot" parent="." index="6" instance=ExtResource("2_vy0lq")]
-position = Vector2(-498, -474)
+position = Vector2(-254, -484)

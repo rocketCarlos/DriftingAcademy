@@ -142,4 +142,4 @@ func set_skin(new_skin: Node) -> void:
 
 
 func _on_points_detector_area_entered(area: Area2D) -> void:
-	current_point = current_point + 1 if current_point + 1 < points.size() else current_point
+	current_point = (current_point + 1) % points.size()
