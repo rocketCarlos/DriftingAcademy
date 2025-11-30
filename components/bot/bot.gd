@@ -36,16 +36,26 @@ enum STATE {
 #endregion
 
 var current_point = 0
+var input_tween: Tween = null
+@export var debug: bool = false
 func _ready() -> void:
 	wheels = find_children("Wheel?")
 	points = get_tree().get_nodes_in_group("BotPoints")
+	current_point = 0
+	virtual_input = points[current_point].position
+
+	if not debug:
+		$VirtualInputDebug.hide()
 
 func _physics_process(_delta: float) -> void:
+	if debug:
+		$VirtualInputDebug.global_position = virtual_input
+
+
 	if points.size() == 0:
 		points = get_tree().get_nodes_in_group("BotPoints")
 		return
 
-	virtual_input = points[current_point].position
 	var mouse_direction = (virtual_input-global_position).normalized()
 	var angle = Vector2(0.0, -1.0).angle_to(mouse_direction)
 
@@ -143,3 +153,30 @@ func set_skin(new_skin: Node) -> void:
 
 func _on_points_detector_area_entered(area: Area2D) -> void:
 	current_point = (current_point + 1) % points.size()
+	if input_tween:
+		input_tween.kill()
+
+	input_tween = create_tween()
+
+	var new_virtual_position = points[current_point].position
+	var interpolation_time: float
+	var min_interpolation: float = 0.2
+	var max_interpolation: float = 1
+
+	interpolation_time = (
+		clampf(
+			lerpf(
+				min_interpolation,
+				max_interpolation,
+				inverse_lerp(0.0, 1500.0, virtual_input.distance_to(new_virtual_position))
+			),
+			min_interpolation,
+			max_interpolation
+		)
+	)
+
+	(input_tween
+		.tween_property(self, "virtual_input", new_virtual_position, interpolation_time)
+		.set_trans(Tween.TRANS_LINEAR)
+		.set_ease(Tween.EASE_OUT)
+	)

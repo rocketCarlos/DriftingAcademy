@@ -60,8 +60,8 @@ a = Vector2(-185, 279)
 b = Vector2(-195, -72)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_x36yf"]
-a = Vector2(-185, 279)
-b = Vector2(-195, -72)
+a = Vector2(7, 277)
+b = Vector2(1, -53)
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_4a4xb"]
 a = Vector2(-385, 142)
@@ -154,7 +154,7 @@ position = Vector2(-3, 50)
 shape = SubResource("SegmentShape2D_h8rj8")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
-[node name="7" type="Area2D" parent="BotPoints" index="6" groups=["BotPoints"]]
+[node name="7" type="Area2D" parent="BotPoints" index="6"]
 position = Vector2(14, 105)
 collision_layer = 4
 collision_mask = 0
@@ -162,6 +162,7 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/7" index="0"]
 position = Vector2(-3, 50)
 shape = SubResource("SegmentShape2D_rr4da")
+disabled = true
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="8" type="Area2D" parent="BotPoints" index="7" groups=["BotPoints"]]
@@ -185,12 +186,12 @@ shape = SubResource("SegmentShape2D_1sirr")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="10" type="Area2D" parent="BotPoints" index="9" groups=["BotPoints"]]
-position = Vector2(676, -346)
+position = Vector2(681, -413)
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/10" index="0"]
-position = Vector2(240, 56)
+position = Vector2(234, 166)
 shape = SubResource("SegmentShape2D_fax4n")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
@@ -205,12 +206,12 @@ shape = SubResource("SegmentShape2D_vqwla")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="12" type="Area2D" parent="BotPoints" index="11" groups=["BotPoints"]]
-position = Vector2(954, 228)
+position = Vector2(989, 229)
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/12" index="0"]
-position = Vector2(235, -45)
+position = Vector2(195, -44)
 shape = SubResource("SegmentShape2D_gmwlt")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
@@ -225,22 +226,22 @@ shape = SubResource("SegmentShape2D_elbfr")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="14" type="Area2D" parent="BotPoints" index="13" groups=["BotPoints"]]
-position = Vector2(477, 449)
+position = Vector2(475, 477)
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/14" index="0"]
-position = Vector2(202, -19)
+position = Vector2(205, -55)
 shape = SubResource("SegmentShape2D_f0vls")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="15" type="Area2D" parent="BotPoints" index="14" groups=["BotPoints"]]
-position = Vector2(-61, 464)
+position = Vector2(-79, 477)
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BotPoints/15" index="0"]
-position = Vector2(202, -19)
+position = Vector2(37, -35)
 shape = SubResource("SegmentShape2D_x36yf")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 

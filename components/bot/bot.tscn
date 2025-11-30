@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccfgi5gd1l23n"]
+[gd_scene load_steps=7 format=3 uid="uid://ccfgi5gd1l23n"]
 
 [ext_resource type="Script" uid="uid://bo5pwxgep71f6" path="res://components/bot/bot.gd" id="1_0u5lq"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_8r03p"]
@@ -9,10 +9,16 @@ size = Vector2(11, 20.5)
 [sub_resource type="CircleShape2D" id="CircleShape2D_0u5lq"]
 radius = 19.697716
 
+[sub_resource type="Gradient" id="Gradient_0u5lq"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8r03p"]
+gradient = SubResource("Gradient_0u5lq")
+
 [node name="Bot" type="CharacterBody2D"]
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_0u5lq")
+debug = true
 
 [node name="Skin" type="Sprite2D" parent="."]
 texture = ExtResource("2_8r03p")
@@ -40,5 +46,11 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PointsDetector"]
 shape = SubResource("CircleShape2D_0u5lq")
+
+[node name="VirtualInputDebug" type="Sprite2D" parent="."]
+modulate = Color(1, 0.39, 0.39, 1)
+position = Vector2(32.000004, -6.4999995)
+scale = Vector2(0.046874996, 10.999999)
+texture = SubResource("GradientTexture1D_8r03p")
 
 [connection signal="area_entered" from="PointsDetector" to="." method="_on_points_detector_area_entered"]
