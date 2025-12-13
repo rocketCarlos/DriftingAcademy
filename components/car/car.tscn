@@ -16,7 +16,9 @@ size = Vector2(11, 20.5)
 [node name="Car" type="CharacterBody2D"]
 z_index = 1
 texture_filter = 1
-collision_mask = 2
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_yhfra")
 
 [node name="Camera" type="Camera2D" parent="."]

@@ -122,7 +122,17 @@ func _physics_process(_delta: float) -> void:
 	#		if velocity.length() < 10.0:  # Threshold for stopping
 	#			velocity = Vector2(0, 0)
 
-	move_and_slide()
+	var collision = move_and_collide(velocity*_delta)
+	if collision:
+		if collision.get_collider().has_method('bounce'):
+			collision.get_collider().bounce(velocity)
+		# bouncing effect is higher depending on the relative speed between colliding objects
+		var relative_velocity = velocity - collision.get_collider_velocity()
+		velocity = (relative_velocity.bounce(collision.get_normal()) * Globals.BOUNCE_FACTOR)
+
+
+func bounce(origin_vel: Vector2) -> void:
+	velocity += origin_vel * Globals.BOUNCE_FACTOR
 
 #region utility functions
 func get_wheels_resistance():

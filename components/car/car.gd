@@ -110,8 +110,26 @@ func _physics_process(_delta: float) -> void:
 					if velocity.length() < 10.0:  # Threshold for stopping
 						velocity = Vector2(0, 0)
 
+			"""
+			VER SI MOVE AND SLIDE O MOVE AND COLLIDE
+			SI MOVE AND COLLIDE, VER SI HACER LOOP CON REMINDER
+			REVISAR LÓGICA DE CHOQUE: REALMENTE ES NECESARIO AÑADIR LA VELOCIDAD DEL OBJETO CON EL
+			QUE SE COLISIONA? HAY ALGUNA FORMA MEJOR?
+			"""
 			Globals.car_speeed = velocity.length()
-			move_and_slide()
+			var collision = move_and_collide(velocity*_delta)
+			if collision:
+				if collision.get_collider().has_method('bounce'):
+					collision.get_collider().bounce(velocity)
+				else:
+					# bouncing effect is higher depending on the relative speed between colliding objects
+					var relative_velocity = velocity - collision.get_collider_velocity()
+					velocity = (relative_velocity.bounce(collision.get_normal()) * Globals.BOUNCE_FACTOR)
+
+
+func bounce(origin_vel: Vector2) -> void:
+	velocity += origin_vel * Globals.BOUNCE_FACTOR
+
 
 func _process(_delta: float) -> void:
 	engine_sound.pitch_scale = 1 + inverse_lerp(0, SPEED_ROAD, velocity.length()) * 1.5
@@ -127,8 +145,8 @@ func get_wheels_resistance():
 	for wheel in wheels:
 		# Tile data of the tile the wheel is in
 		var tile_data = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(wheel.global_position)))
-
-		total += tile_data.get_custom_data('terrain_resistance')
+		if tile_data:
+			total += tile_data.get_custom_data('terrain_resistance')
 
 	return total
 

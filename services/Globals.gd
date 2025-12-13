@@ -4,6 +4,11 @@ Script to hold global variables, signal and node references
 """
 
 """
+Constants
+"""
+const BOUNCE_FACTOR: float = 0.4 # 0 = inelastic collision, 1 = perfect elastic collision
+
+"""
 Game state enums
 """
 enum GAME_MODE {
