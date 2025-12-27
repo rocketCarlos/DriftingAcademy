@@ -36,6 +36,11 @@ func _process(delta: float) -> void:
 
 
 func start() -> void:
+	if samples.size() > 0:
+		show()
+	else:
+		hide()
+		
 	process_samples = true
 	timer = 0.0
 	current_sample_index = 0
