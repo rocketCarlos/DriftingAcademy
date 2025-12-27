@@ -14,9 +14,6 @@ func _ready() -> void:
 	Globals.race_restarted.connect(_on_race_started)
 	Globals.race_ended.connect(_on_race_ended)
 
-	if not Globals.car:
-		queue_free()
-
 
 func _process(delta):
 	if not recording:
@@ -31,10 +28,11 @@ func _process(delta):
 	run_time += delta
 
 func _on_race_started() -> void:
-	recording = true
-	samples.clear()
-	time_accum = 9999999.0 # big number to record the 0.0 sample
-	run_time = 0.0
+	if Globals.car:
+		recording = true
+		samples.clear()
+		time_accum = 9999999.0 # big number to record the 0.0 sample
+		run_time = 0.0
 
 
 func _on_race_ended():
