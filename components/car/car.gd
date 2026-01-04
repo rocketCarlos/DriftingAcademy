@@ -26,6 +26,9 @@ const DEACCEL_GRAVEL: float = 6.8
 var wheels: Array[Node] = [null, null, null, null]
 
 var last_speed: float
+
+# to guarantee collisions are only counted once per frame
+var already_collided_with: Dictionary[Object, Variant]
 #endregion
 
 #region states
@@ -40,7 +43,9 @@ func _ready() -> void:
 	wheels = find_children("Wheel?")
 	Globals.car = self
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	already_collided_with.clear()
+	
 	match current_state:
 		STATE.PLAY:
 			var mouse_position = get_global_mouse_position()
@@ -80,18 +85,7 @@ func _physics_process(_delta: float) -> void:
 				# apply the force to velocity
 				velocity += force
 
-				# Limit speed not to exceed max_speed
-				# If exceeding max_speed, use prev_velocity_length to smoothlty
-				# reduce velocity until max_speed is reached
-				if velocity.length() >= max_speed:
-					if prev_velocity_length > max_speed:
-						# apply smooth deaccel
-						velocity = velocity.normalized() * prev_velocity_length - velocity.normalized() * deaccel
-						if velocity.length() < max_speed:
-							# correct if speed is decreased too much
-							velocity = velocity.normalized() * max_speed
-					else:
-						velocity = velocity.normalized() * max_speed
+				adjust_velocity(prev_velocity_length)
 
 				# ---------------------------------------------
 				# manage sprite rotation
@@ -102,7 +96,7 @@ func _physics_process(_delta: float) -> void:
 				# 2. Adjust rotation to simulate drifting
 				var mouse_angle = velocity.angle_to(mouse_direction)
 				rotation = final_rotation + 2*mouse_angle/3
-
+			
 			else:
 				if velocity.length() > 0:
 					velocity -= velocity.normalized() * deaccel
@@ -110,25 +104,43 @@ func _physics_process(_delta: float) -> void:
 					if velocity.length() < 10.0:  # Threshold for stopping
 						velocity = Vector2(0, 0)
 
-			"""
-			VER SI MOVE AND SLIDE O MOVE AND COLLIDE
-			SI MOVE AND COLLIDE, VER SI HACER LOOP CON REMINDER
-			REVISAR LÓGICA DE CHOQUE: REALMENTE ES NECESARIO AÑADIR LA VELOCIDAD DEL OBJETO CON EL
-			QUE SE COLISIONA? HAY ALGUNA FORMA MEJOR?
-			"""
 			Globals.car_speeed = velocity.length()
-			var collision = move_and_collide(velocity*_delta)
-			if collision:
+			var collision: KinematicCollision2D = move_and_collide(velocity*delta)
+			if collision and not already_collided_with.has(collision.get_collider()):
 				if collision.get_collider().has_method('bounce'):
-					collision.get_collider().bounce(velocity)
-				else:
-					# bouncing effect is higher depending on the relative speed between colliding objects
 					var relative_velocity = velocity - collision.get_collider_velocity()
-					velocity = (relative_velocity.bounce(collision.get_normal()) * Globals.BOUNCE_FACTOR)
+					collision.get_collider().bounce(relative_velocity, self)
+					#velocity = velocity * (1 - Globals.BOUNCE_FACTOR) SI ESTO, PONER EL ALREADY COLLIDED
+					bounce(-relative_velocity, collision.get_collider())
+				else: 
+					# if energy is not transmitted to another object, bouncing is grater
+					var local_bounce_factor = Globals.BOUNCE_FACTOR * 3
+					velocity = (velocity.bounce(collision.get_normal()) * local_bounce_factor)
 
 
-func bounce(origin_vel: Vector2) -> void:
-	velocity += origin_vel * Globals.BOUNCE_FACTOR
+
+func bounce(origin_vel: Vector2, origin_object: Object) -> void:
+	if not already_collided_with.has(origin_object):
+		already_collided_with[origin_object] = true
+		var prev_vel = velocity.length()
+		velocity += origin_vel * Globals.BOUNCE_FACTOR
+		
+		adjust_velocity(prev_vel)
+
+
+func adjust_velocity(prev_velocity_length: float) -> void:
+	# Limit speed not to exceed max_speed
+	# If exceeding max_speed, use prev_velocity_length to smoothlty
+	# reduce velocity until max_speed is reached
+	if velocity.length() >= max_speed:
+		if prev_velocity_length > max_speed:
+			# apply smooth deaccel
+			velocity = velocity.normalized() * prev_velocity_length - velocity.normalized() * deaccel
+			if velocity.length() < max_speed:
+				# correct if speed is decreased too much
+				velocity = velocity.normalized() * max_speed
+		else:
+			velocity = velocity.normalized() * max_speed
 
 
 func _process(_delta: float) -> void:

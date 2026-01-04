@@ -25,6 +25,9 @@ var last_speed: float
 
 var virtual_input: Vector2
 var points: Array
+
+# to guarantee collisions are only counted once per frame
+var already_collided_with: Dictionary[Object, Variant]
 #endregion
 
 #region states
@@ -48,6 +51,8 @@ func _ready() -> void:
 		$VirtualInputDebug.hide()
 
 func _physics_process(_delta: float) -> void:
+	already_collided_with.clear()
+	
 	if debug:
 		$VirtualInputDebug.global_position = virtual_input
 
@@ -92,6 +97,41 @@ func _physics_process(_delta: float) -> void:
 	# apply the force to velocity
 	velocity += force
 
+	adjust_velocity(prev_velocity_length)
+
+	# ---------------------------------------------
+	# manage sprite rotation
+	# ---------------------------------------------
+	#TODO: implement realistic rotation (avoid car doing a 180 in a single frame)
+	# 1. Point towards the velocity vector
+	var final_rotation = Vector2(0.0, -1.0).angle_to(velocity)
+	# 2. Adjust rotation to simulate drifting
+	var mouse_angle = velocity.angle_to(mouse_direction)
+	rotation = final_rotation + 2*mouse_angle/3
+
+	var collision: KinematicCollision2D = move_and_collide(velocity*_delta)
+	if collision and not already_collided_with.has(collision.get_collider()):
+		if collision.get_collider().has_method('bounce'):
+			var relative_velocity = velocity - collision.get_collider_velocity()
+			collision.get_collider().bounce(relative_velocity, self)
+			#velocity = velocity * (1 - Globals.BOUNCE_FACTOR) SI ESTO, PONER EL ALREADY COLLIDED
+			bounce(-relative_velocity, collision.get_collider())
+		else: 
+			# if energy is not transmitted to another object, bouncing is grater
+			var local_bounce_factor = Globals.BOUNCE_FACTOR * 3
+			velocity = (velocity.bounce(collision.get_normal()) * local_bounce_factor)
+
+
+func bounce(origin_vel: Vector2, origin_object: Object) -> void:
+	if not already_collided_with.has(origin_object):
+		already_collided_with[origin_object] = true
+		var prev_vel = velocity.length()
+		velocity += origin_vel * Globals.BOUNCE_FACTOR
+		
+		adjust_velocity(prev_vel)
+
+
+func adjust_velocity(prev_velocity_length: float) -> void:
 	# Limit speed not to exceed max_speed
 	# If exceeding max_speed, use prev_velocity_length to smoothlty
 	# reduce velocity until max_speed is reached
@@ -104,35 +144,6 @@ func _physics_process(_delta: float) -> void:
 				velocity = velocity.normalized() * max_speed
 		else:
 			velocity = velocity.normalized() * max_speed
-
-	# ---------------------------------------------
-	# manage sprite rotation
-	# ---------------------------------------------
-	#TODO: implement realistic rotation (avoid car doing a 180 in a single frame)
-	# 1. Point towards the velocity vector
-	var final_rotation = Vector2(0.0, -1.0).angle_to(velocity)
-	# 2. Adjust rotation to simulate drifting
-	var mouse_angle = velocity.angle_to(mouse_direction)
-	rotation = final_rotation + 2*mouse_angle/3
-
-	#else:
-	#	if velocity.length() > 0:
-	#		velocity -= velocity.normalized() * deaccel
-	#		# Prevent overshooting and stop when speed is very low
-	#		if velocity.length() < 10.0:  # Threshold for stopping
-	#			velocity = Vector2(0, 0)
-
-	var collision = move_and_collide(velocity*_delta)
-	if collision:
-		if collision.get_collider().has_method('bounce'):
-			collision.get_collider().bounce(velocity)
-		# bouncing effect is higher depending on the relative speed between colliding objects
-		var relative_velocity = velocity - collision.get_collider_velocity()
-		velocity = (relative_velocity.bounce(collision.get_normal()) * Globals.BOUNCE_FACTOR)
-
-
-func bounce(origin_vel: Vector2) -> void:
-	velocity += origin_vel * Globals.BOUNCE_FACTOR
 
 #region utility functions
 func get_wheels_resistance():
