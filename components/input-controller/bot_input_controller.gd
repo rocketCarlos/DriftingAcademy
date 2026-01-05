@@ -44,7 +44,7 @@ func _on_points_detector_area_entered(_area: Area2D) -> void:
 	)
 
 	(input_tween
-		.tween_property(self, "virtual_input", new_virtual_position, interpolation_time)
+		.tween_property(self, "input", new_virtual_position, interpolation_time)
 		.set_trans(Tween.TRANS_LINEAR)
 		.set_ease(Tween.EASE_OUT)
 	)

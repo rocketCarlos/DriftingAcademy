@@ -1,5 +1,7 @@
 extends Node
 
+var disable_acceleration: bool = false
+
 var max_speed: float
 const SPEED_ROAD: float = 300.0
 const SPEED_CURBS: float = 200.0
@@ -18,14 +20,10 @@ const DEACCEL_CURBS: float = 5.1
 const DEACCEL_GRASS: float = 5.95
 const DEACCEL_GRAVEL: float = 6.8
 
-
 var wheels: Array[Node] = [null, null, null, null]
-
-var last_speed: float
 
 # to guarantee collisions are only counted once per frame
 var already_collided_with: Dictionary[Object, Variant]
-
 
 var body: CharacterBody2D
 var input_provider: InputControllerBase
@@ -80,33 +78,36 @@ func _physics_process(delta: float) -> void:
 	# -----------------------------------------
 	# manage movement
 	# -----------------------------------------
-	var force =  Vector2(0.0, 0.0)
-	# if Input.is_action_pressed("accelerate"):
-	var prev_velocity_length = body.velocity.length()
-	# the acceleration force input by the player
-	force = accel * mouse_direction
-	# apply the force to velocity
-	body.velocity += force
+	if not disable_acceleration:
+		var force =  Vector2(0.0, 0.0)
+		# if Input.is_action_pressed("accelerate"):
+		var prev_velocity_length = body.velocity.length()
+		# the acceleration force input by the player
+		force = accel * mouse_direction
+		# apply the force to velocity
+		body.velocity += force
 
-	adjust_velocity(prev_velocity_length)
+		adjust_velocity(prev_velocity_length)
 
-	# ---------------------------------------------
-	# manage sprite rotation
-	# ---------------------------------------------
-	#TODO: implement realistic rotation (avoid car doing a 180 in a single frame)
-	# 1. Point towards the velocity vector
-	var final_rotation = Vector2(0.0, -1.0).angle_to(body.velocity)
-	# 2. Adjust rotation to simulate drifting
-	var mouse_angle = body.velocity.angle_to(mouse_direction)
-	body.rotation = final_rotation + 2*mouse_angle/3
+		# ---------------------------------------------
+		# manage sprite rotation
+		# ---------------------------------------------
+		#TODO: implement realistic rotation (avoid car doing a 180 in a single frame)
+		# 1. Point towards the velocity vector
+		var final_rotation = Vector2(0.0, -1.0).angle_to(body.velocity)
+		# 2. Adjust rotation to simulate drifting
+		var mouse_angle = body.velocity.angle_to(mouse_direction)
+		body.rotation = final_rotation + 2*mouse_angle/3
 
 	var collision: KinematicCollision2D = body.move_and_collide(body.velocity*delta)
 	if collision and not already_collided_with.has(collision.get_collider()):
-		if collision.get_collider().has_method('bounce'):
+		if collision.get_collider().has_method('bounce'): # CAMBIAR ESTO PORQUE AHORA EL METODO LO TIENE EL CONTROLLER Y NO EL COLLIDER
 			var relative_velocity = body.velocity - collision.get_collider_velocity()
 			collision.get_collider().bounce(relative_velocity, self)
 			#velocity = velocity * (1 - Globals.BOUNCE_FACTOR) SI ESTO, PONER EL ALREADY COLLIDED
 			bounce(-relative_velocity, collision.get_collider())
+			# LA NUEVA IDEA ES SETEAR UN REBOTE MIN Y MAX FIJO SEGUN VELOCIDAD
+			# Y EL BOUNCE DEL OBJETO NO DEBERIA SER -RELATIVE, SINO EL VECTOR REFLEJADO 
 		else: 
 			# if energy is not transmitted to another object, bouncing is grater
 			var local_bounce_factor = Globals.BOUNCE_FACTOR * 3
