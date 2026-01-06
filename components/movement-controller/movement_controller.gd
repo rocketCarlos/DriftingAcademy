@@ -108,7 +108,6 @@ func _physics_process(delta: float) -> void:
 
 	var collision: KinematicCollision2D = body.move_and_collide(body.velocity*delta)
 	if collision and not already_collided_with.has(collision.get_collider()):
-		
 		if collision.get_collider() is CharacterBody2D and collision.get_collider().get_node('MovementController'):
 			var relative_velocity = body.velocity - collision.get_collider_velocity()
 			var computed_collision = relative_velocity.normalized() * clampf(relative_velocity.length(), MIN_BOUNCE, MAX_BOUNCE)
