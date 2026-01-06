@@ -2,6 +2,7 @@ extends Node
 
 var disable_acceleration: bool = false
 
+#region velocity related
 var max_speed: float
 const SPEED_ROAD: float = 300.0
 const SPEED_CURBS: float = 200.0
@@ -19,11 +20,17 @@ const DEACCEL_ROAD: float = 4.675
 const DEACCEL_CURBS: float = 5.1
 const DEACCEL_GRASS: float = 5.95
 const DEACCEL_GRAVEL: float = 6.8
+#endregion
 
 var wheels: Array[Node] = [null, null, null, null]
 
+#region physics related
 # to guarantee collisions are only counted once per frame
 var already_collided_with: Dictionary[Object, Variant]
+const BOUNCE_FACTOR: float = 0.35 # 0 = inelastic collision, 1 = perfect elastic collision
+const MAX_BOUNCE: float = 120.0
+const MIN_BOUNCE: float = 25.0
+#endregion
 
 var body: CharacterBody2D
 var input_provider: InputControllerBase
@@ -101,25 +108,23 @@ func _physics_process(delta: float) -> void:
 
 	var collision: KinematicCollision2D = body.move_and_collide(body.velocity*delta)
 	if collision and not already_collided_with.has(collision.get_collider()):
-		if collision.get_collider().has_method('bounce'): # CAMBIAR ESTO PORQUE AHORA EL METODO LO TIENE EL CONTROLLER Y NO EL COLLIDER
+		
+		if collision.get_collider() is CharacterBody2D and collision.get_collider().get_node('MovementController'):
 			var relative_velocity = body.velocity - collision.get_collider_velocity()
-			collision.get_collider().bounce(relative_velocity, self)
-			#velocity = velocity * (1 - Globals.BOUNCE_FACTOR) SI ESTO, PONER EL ALREADY COLLIDED
-			bounce(-relative_velocity, collision.get_collider())
-			# LA NUEVA IDEA ES SETEAR UN REBOTE MIN Y MAX FIJO SEGUN VELOCIDAD
-			# Y EL BOUNCE DEL OBJETO NO DEBERIA SER -RELATIVE, SINO EL VECTOR REFLEJADO 
+			var computed_collision = relative_velocity.normalized() * clampf(relative_velocity.length(), MIN_BOUNCE, MAX_BOUNCE)
+			collision.get_collider().get_node('MovementController').make_collision(computed_collision, self)
+			make_collision(computed_collision.bounce(collision.get_normal()), collision.get_collider())
+			
 		else: 
-			# if energy is not transmitted to another object, bouncing is grater
-			var local_bounce_factor = Globals.BOUNCE_FACTOR * 3
-			body.velocity = (body.velocity.bounce(collision.get_normal()) * local_bounce_factor)
+			body.velocity = (body.velocity.bounce(collision.get_normal()) * BOUNCE_FACTOR)
 			
 			
 #region utility functions
-func bounce(origin_vel: Vector2, origin_object: Object) -> void:
+func make_collision(origin_vel: Vector2, origin_object: Object) -> void:
 	if not already_collided_with.has(origin_object):
 		already_collided_with[origin_object] = true
 		var prev_vel = body.velocity.length()
-		body.velocity += origin_vel * Globals.BOUNCE_FACTOR
+		body.velocity += origin_vel
 		
 		adjust_velocity(prev_vel)
 
