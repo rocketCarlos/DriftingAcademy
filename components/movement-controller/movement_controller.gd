@@ -42,22 +42,22 @@ func _ready() -> void:
 	if not body:
 		push_error('Movement controller: Parent not found')
 	if not body is CharacterBody2D:
-		push_error('Movement Controller: parent is not a CharaterBody') 
-	
+		push_error('Movement Controller: parent is not a CharaterBody')
+
 	input_provider = get_node(input_provider_path)
 	if not input_provider:
 		push_error('Movement Controller: input provider not found')
-		
+
 	if not input_provider is InputControllerBase:
 		push_error('Movement Controller: input provider is not an InputControllerBase')
-		
+
 	wheels = body.find_children("Wheel?")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	already_collided_with.clear()
-	
+
 	var mouse_direction = (input_provider.get_input()-body.global_position).normalized()
 
 	# -----------------------------------------
@@ -113,18 +113,18 @@ func _physics_process(delta: float) -> void:
 			var computed_collision = relative_velocity.normalized() * clampf(relative_velocity.length(), MIN_BOUNCE, MAX_BOUNCE)
 			collision.get_collider().get_node('MovementController').make_collision(computed_collision, self)
 			make_collision(computed_collision.bounce(collision.get_normal()), collision.get_collider())
-			
-		else: 
+
+		else:
 			body.velocity = (body.velocity.bounce(collision.get_normal()) * BOUNCE_FACTOR)
-			
-			
+
+
 #region utility functions
 func make_collision(origin_vel: Vector2, origin_object: Object) -> void:
 	if not already_collided_with.has(origin_object):
 		already_collided_with[origin_object] = true
 		var prev_vel = body.velocity.length()
 		body.velocity += origin_vel
-		
+
 		adjust_velocity(prev_vel)
 
 
@@ -151,5 +151,5 @@ func get_wheels_resistance():
 		total += tile_data.get_custom_data('terrain_resistance')
 
 	return total
-	
+
 #endregion

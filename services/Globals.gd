@@ -9,8 +9,14 @@ Game state enums
 """
 enum GAME_MODE {
 	TIME_TRIAL,
+	VS_MACHINE
 }
 var current_gamemode: GAME_MODE
+
+const GAMEMODE_LABELS: Dictionary[GAME_MODE, String] = {
+	GAME_MODE.TIME_TRIAL: "Time trial",
+	GAME_MODE.VS_MACHINE: "Vs. machine"
+}
 
 """
 Node references
@@ -23,7 +29,8 @@ Info variables
 """
 var car_speeed: float = 0
 const total_laps_gamemode: Dictionary[GAME_MODE, int] = {
-	GAME_MODE.TIME_TRIAL: 4
+	GAME_MODE.TIME_TRIAL: 4,
+	GAME_MODE.VS_MACHINE: 0
 }
 
 """

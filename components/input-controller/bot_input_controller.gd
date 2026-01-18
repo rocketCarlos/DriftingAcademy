@@ -13,12 +13,12 @@ func _ready() -> void:
 
 	if not debug:
 		$VirtualInputDebug.hide()
-	
+
 func _physics_process(_delta: float) -> void:
 	if debug:
 		$VirtualInputDebug.global_position = input
-		
-		
+
+
 func _on_points_detector_area_entered(_area: Area2D) -> void:
 	current_point = (current_point + 1) % points.size()
 	if input_tween:

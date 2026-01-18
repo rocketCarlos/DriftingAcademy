@@ -40,7 +40,7 @@ func start() -> void:
 		show()
 	else:
 		hide()
-		
+
 	process_samples = true
 	timer = 0.0
 	current_sample_index = 0
