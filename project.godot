@@ -33,6 +33,10 @@ gdscript/warnings/unused_signal=0
 
 window/stretch/mode="viewport"
 
+[global_group]
+
+BotPoints="BotPoints to follow"
+
 [input]
 
 click={
@@ -55,6 +59,7 @@ accelerate={
 
 2d_physics/layer_1="car"
 2d_physics/layer_2="road_items"
+2d_physics/layer_3="bot_detection"
 
 [rendering]
 

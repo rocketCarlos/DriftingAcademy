@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6okt6e314s81"]
+[gd_scene load_steps=9 format=3 uid="uid://b6okt6e314s81"]
 
 [ext_resource type="Script" uid="uid://cigewcuyyvues" path="res://components/car/car.gd" id="1_yhfra"]
+[ext_resource type="PackedScene" uid="uid://dfkaap3lxani1" path="res://components/movement-controller/movement_controller.tscn" id="2_o583d"]
+[ext_resource type="Script" uid="uid://b84woegrb4g2r" path="res://components/input-controller/user_input_controller.gd" id="3_d807o"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="4_wq8g5"]
 [ext_resource type="AudioStream" uid="uid://nr4mgu52cnla" path="res://assets/sfx/car/engine_loop.wav" id="6_b3ski"]
 [ext_resource type="AudioStream" uid="uid://xn84kg1yowgn" path="res://assets/sfx/car/crash.ogg" id="7_u0012"]
@@ -16,8 +18,17 @@ size = Vector2(11, 20.5)
 [node name="Car" type="CharacterBody2D"]
 z_index = 1
 texture_filter = 1
-collision_mask = 2
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_yhfra")
+
+[node name="MovementController" parent="." instance=ExtResource("2_o583d")]
+input_provider_path = NodePath("../UserInputController")
+
+[node name="UserInputController" type="Node" parent="."]
+script = ExtResource("3_d807o")
+metadata/_custom_type_script = "uid://b84woegrb4g2r"
 
 [node name="Camera" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

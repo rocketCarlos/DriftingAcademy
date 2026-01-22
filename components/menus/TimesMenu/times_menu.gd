@@ -53,7 +53,9 @@ func populate_times(times: Array[float]) -> void:
 	times_container.add_child(total_time)
 
 	if (
-		(SaveManager.current_save and SaveManager.current_save.get_total_time() > acc)
+		(not SaveManager.current_save)
+		or
+		(SaveManager.current_save.get_total_time() > acc)
 		or
 		(SaveManager.current_save.lap_times.size() != times.size())
 		):

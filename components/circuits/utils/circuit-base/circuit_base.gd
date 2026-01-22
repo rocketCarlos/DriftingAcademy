@@ -86,7 +86,6 @@ func get_initial_rotation() -> float:
 
 func _on_race_started() -> void:
 	initial_colliders.process_mode = Node.PROCESS_MODE_DISABLED
-	ghost.show()
 	ghost.start()
 
 func _on_race_restarted() -> void:

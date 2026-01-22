@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://2tay2q5qwrem"]
+
+[ext_resource type="Script" uid="uid://r84vqgpep4me" path="res://components/input-controller/bot_input_controller.gd" id="1_f278x"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f278x"]
+radius = 19.697716
+
+[sub_resource type="Gradient" id="Gradient_0u5lq"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f278x"]
+gradient = SubResource("Gradient_0u5lq")
+
+[node name="BotInputController" type="Node2D"]
+script = ExtResource("1_f278x")
+
+[node name="PointsDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PointsDetector"]
+shape = SubResource("CircleShape2D_f278x")
+
+[node name="VirtualInputDebug" type="Sprite2D" parent="."]
+modulate = Color(1, 0.39, 0.39, 1)
+position = Vector2(32.000004, -6.4999995)
+scale = Vector2(0.046874996, 10.999999)
+texture = SubResource("GradientTexture1D_f278x")
+
+[connection signal="area_entered" from="PointsDetector" to="." method="_on_points_detector_area_entered"]

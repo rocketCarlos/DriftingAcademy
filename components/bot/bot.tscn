@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://ccfgi5gd1l23n"]
+
+[ext_resource type="Script" uid="uid://bo5pwxgep71f6" path="res://components/bot/bot.gd" id="1_0u5lq"]
+[ext_resource type="PackedScene" uid="uid://dfkaap3lxani1" path="res://components/movement-controller/movement_controller.tscn" id="2_6a5r5"]
+[ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_8r03p"]
+[ext_resource type="PackedScene" uid="uid://2tay2q5qwrem" path="res://components/input-controller/bot_input_controller.tscn" id="3_6a5r5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6a5r5"]
+size = Vector2(11, 20.5)
+
+[node name="Bot" type="CharacterBody2D"]
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_0u5lq")
+
+[node name="MovementController" parent="." instance=ExtResource("2_6a5r5")]
+input_provider_path = NodePath("../BotInputController")
+
+[node name="BotInputController" parent="." instance=ExtResource("3_6a5r5")]
+debug = true
+
+[node name="Skin" type="Sprite2D" parent="."]
+texture = ExtResource("2_8r03p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.25)
+shape = SubResource("RectangleShape2D_6a5r5")
+
+[node name="Wheel1" type="Node2D" parent="."]
+
+[node name="Wheel2" type="Node2D" parent="."]
+
+[node name="Wheel3" type="Node2D" parent="."]
+position = Vector2(5, 6)
+
+[node name="Wheel4" type="Node2D" parent="."]
+position = Vector2(-5, 6)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(5, -6)
+
+[editable path="BotInputController"]

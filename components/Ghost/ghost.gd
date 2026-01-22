@@ -7,8 +7,11 @@ var timer: float = 0.0
 
 
 func _ready() -> void:
-	samples = SaveManager.current_save.ghost_samples
-	if samples.size() == 0:
+	if SaveManager.current_save:
+		samples = SaveManager.current_save.ghost_samples
+		if samples.size() == 0:
+			hide()
+	else:
 		hide()
 
 
@@ -33,6 +36,11 @@ func _process(delta: float) -> void:
 
 
 func start() -> void:
+	if samples.size() > 0:
+		show()
+	else:
+		hide()
+
 	process_samples = true
 	timer = 0.0
 	current_sample_index = 0

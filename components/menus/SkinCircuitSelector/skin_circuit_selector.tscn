@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://1udkdnfvon3y"]
+[gd_scene load_steps=7 format=3 uid="uid://1udkdnfvon3y"]
 
 [ext_resource type="Texture2D" uid="uid://itqkn2bva6nq" path="res://assets/ui/play-menu.png" id="1_uxk64"]
 [ext_resource type="Script" uid="uid://dktdi13xky6gw" path="res://components/menus/SkinCircuitSelector/skin_circuit_selector.gd" id="1_vupem"]
 [ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="2_vupem"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="3_0k5p6"]
 [ext_resource type="Texture2D" uid="uid://7reln3ydib10" path="res://assets/circuit-previews/under_construction.png" id="5_vbimx"]
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="6_n6lnb"]
 
 [node name="SkinCircuitSelector" type="Control"]
 layout_mode = 3
@@ -93,7 +94,6 @@ offset_right = -32.524048
 offset_bottom = 151.0
 grow_horizontal = 0
 grow_vertical = 2
-metadata/_edit_group_ = true
 
 [node name="CircuitPreview" type="TextureRect" parent="CircuitSelector"]
 layout_mode = 1
@@ -140,6 +140,51 @@ grow_vertical = 2
 text = ">"
 horizontal_alignment = 2
 
+[node name="GameModeSelector" type="Control" parent="CircuitSelector"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -201.01248
+offset_top = -11.095
+offset_right = 201.01205
+offset_bottom = 36.905
+grow_horizontal = 2
+metadata/_edit_group_ = true
+
+[node name="PreviousGameMode" parent="CircuitSelector/GameModeSelector" instance=ExtResource("2_vupem")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 27.0
+offset_bottom = 0.0
+grow_vertical = 2
+text = "<"
+
+[node name="Gamemode" type="Label" parent="CircuitSelector/GameModeSelector"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "gamemode"
+label_settings = ExtResource("6_n6lnb")
+horizontal_alignment = 1
+
+[node name="NextGameMode" parent="CircuitSelector/GameModeSelector" instance=ExtResource("2_vupem")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 2
+text = ">"
+
 [node name="Back" parent="." instance=ExtResource("2_vupem")]
 layout_mode = 1
 anchors_preset = 5
@@ -171,5 +216,7 @@ text = "Go Drift!"
 [connection signal="button_clicked" from="SkinSelector/NextSkin" to="." method="_on_next_skin_button_clicked"]
 [connection signal="button_clicked" from="CircuitSelector/PreviousCircuit" to="." method="_on_previous_circuit_button_clicked"]
 [connection signal="button_clicked" from="CircuitSelector/NextCircuit" to="." method="_on_next_circuit_button_clicked"]
+[connection signal="button_clicked" from="CircuitSelector/GameModeSelector/PreviousGameMode" to="." method="_on_previous_game_mode_button_clicked"]
+[connection signal="button_clicked" from="CircuitSelector/GameModeSelector/NextGameMode" to="." method="_on_next_game_mode_button_clicked"]
 [connection signal="button_clicked" from="Back" to="." method="_on_back_button_clicked"]
 [connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]
