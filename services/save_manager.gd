@@ -8,16 +8,19 @@ var current_save: TimeTrialCircuitSaveData
 class TimeTrialCircuitSaveData:
 	var circuit_name: String
 	var lap_times: Array[float]
-	# var ghost_data: Something to build ghost mode from, probably an array of (position, rotation) tuples
+	# TODO: find some way to type this as Array[Dictionary] without errors in the load save function
+	var ghost_samples: Array
 
-	func _init(circuit_name: String, lap_times: Array[float]) -> void:
+	func _init(circuit_name: String, lap_times: Array[float], ghost_samples: Array) -> void:
 		self.circuit_name = circuit_name
 		self.lap_times = lap_times
+		self.ghost_samples = ghost_samples
 
 
 	func to_dict() -> Dictionary:
 		return {
-			"times": lap_times
+			"times": lap_times,
+			"ghost_samples": ghost_samples
 		}
 
 	func get_total_time() -> float:
@@ -52,11 +55,13 @@ func load_time_trial(circuit_name: String) -> TimeTrialCircuitSaveData:
 			"JSON Parse Error (", savefile_name, "): ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line()
 		)
 		return null
-	# explicit conversion to Array[float] because casting json.data.get("times") as Arary[float] won't work
+	# explicit conversion to Array[float] because casting json.data.get("times") as Array[float] won't work
 	# TODO: ask in forum?
 	var time_data: Array[float] = []
 	for value in json.data.get("times"):
 		time_data.push_back(value as float)
-	current_save = TimeTrialCircuitSaveData.new(circuit_name, time_data)
+
+	var samples = json.data.get("ghost_samples")
+	current_save = TimeTrialCircuitSaveData.new(circuit_name, time_data, samples if samples else [])
 
 	return current_save

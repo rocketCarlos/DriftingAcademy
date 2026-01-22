@@ -23,6 +23,7 @@ SkinHolder="*res://services/skin-holder/SkinHolder.tscn"
 CircuitHolder="*res://services/circuit-holder/circuit_holder.tscn"
 SaveManager="*res://services/save_manager.gd"
 AudioService="*res://services/audio-service/audio_service.tscn"
+GhostRecorder="*res://services/ghost_recorder.gd"
 
 [debug]
 
@@ -31,6 +32,10 @@ gdscript/warnings/unused_signal=0
 [display]
 
 window/stretch/mode="viewport"
+
+[global_group]
+
+BotPoints="BotPoints to follow"
 
 [input]
 
@@ -54,6 +59,7 @@ accelerate={
 
 2d_physics/layer_1="car"
 2d_physics/layer_2="road_items"
+2d_physics/layer_3="bot_detection"
 
 [rendering]
 

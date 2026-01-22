@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://hleyvdqfqeep"]
+
+[ext_resource type="Script" uid="uid://b84woegrb4g2r" path="res://components/input-controller/user_input_controller.gd" id="1_8xl7g"]
+
+[node name="UserInputController" type="Node"]
+script = ExtResource("1_8xl7g")
+metadata/_custom_type_script = "uid://chuwppryye1j5"
