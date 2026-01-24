@@ -37,6 +37,6 @@ const total_laps_gamemode: Dictionary[GAME_MODE, int] = {
 Flow control signals
 """
 signal race_restarted
-signal lap_completed
-signal race_started
+signal lap_completed(object: Node2D)
+signal race_started(object: Node2D)
 signal race_ended
