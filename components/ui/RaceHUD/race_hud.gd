@@ -40,23 +40,25 @@ func restart() -> void:
 	all_times = []
 
 
-func _on_lap_completed():
-	print(time_label.text)
-	all_times.push_back(float(time_label.text))
-	total_time += elapsed_time
-	elapsed_time = 0
-	if current_lap == total_laps:
-		# TODO: let circuit manage total laps and race ended signal
-		Globals.race_ended.emit()
-	else:
-		current_lap += 1
-		lap_label.text = str(current_lap) + '/' + str(total_laps)
+func _on_lap_completed(object: Node2D):
+	if object == Globals.car:
+		print(time_label.text)
+		all_times.push_back(float(time_label.text))
+		total_time += elapsed_time
+		elapsed_time = 0
+		if current_lap == total_laps:
+			# TODO: let circuit manage total laps and race ended signal
+			Globals.race_ended.emit()
+		else:
+			current_lap += 1
+			lap_label.text = str(current_lap) + '/' + str(total_laps)
 
 
-func _on_race_started() -> void:
-	track_time = true
-	elapsed_time = 0.0
-	total_time = 0.0
+func _on_race_started(object: Node2D) -> void:
+	if object == Globals.car:
+		track_time = true
+		elapsed_time = 0.0
+		total_time = 0.0
 
 
 func _on_race_restarted() -> void:

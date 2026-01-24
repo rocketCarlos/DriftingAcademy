@@ -11,7 +11,7 @@ var run_time: float = 0.0
 
 func _ready() -> void:
 	Globals.race_started.connect(_on_race_started)
-	Globals.race_restarted.connect(_on_race_started)
+	Globals.race_restarted.connect(_on_race_restarted)
 	Globals.race_ended.connect(_on_race_ended)
 
 
@@ -27,8 +27,11 @@ func _process(delta):
 
 	run_time += delta
 
-func _on_race_started() -> void:
-	if Globals.car:
+func _on_race_restarted():
+	_on_race_started(null)
+
+func _on_race_started(_object: Node2D) -> void:
+	if Globals.car and Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
 		recording = true
 		samples.clear()
 		time_accum = 9999999.0 # big number to record the 0.0 sample
