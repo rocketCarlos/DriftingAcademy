@@ -146,7 +146,7 @@ func get_wheels_resistance():
 	var total = 0
 	for wheel in wheels:
 		# Tile data of the tile the wheel is in
-		var tile_data = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(wheel.global_position)))
+		var tile_data: TileData = Globals.circuit_tileset.get_cell_tile_data(Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(wheel.global_position)))
 
 		total += tile_data.get_custom_data('terrain_resistance')
 
