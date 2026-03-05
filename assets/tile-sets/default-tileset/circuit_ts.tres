@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dq8qx8e3ba3np"]
+[gd_resource type="TileSet" format=3 uid="uid://dq8qx8e3ba3np"]
 
 [ext_resource type="Texture2D" uid="uid://cpwyr32wdh3rv" path="res://assets/tile-sets/default-tileset/circuit1.png" id="1_iy3xc"]
 

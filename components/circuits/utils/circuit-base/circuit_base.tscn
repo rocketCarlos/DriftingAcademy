@@ -1,23 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://b63vgf7vlp7ys"]
+[gd_scene format=3 uid="uid://b63vgf7vlp7ys"]
 
 [ext_resource type="Script" uid="uid://dlnrre818plta" path="res://components/circuits/utils/circuit-base/circuit_base.gd" id="1_tdoex"]
 [ext_resource type="PackedScene" uid="uid://dw24sbxjgn3pe" path="res://components/circuits/utils/race-checkpoints/race_checkpoints.tscn" id="2_8jp8p"]
 [ext_resource type="PackedScene" uid="uid://e6qc8ysahfe1" path="res://components/Ghost/ghost.tscn" id="3_rf66w"]
 
-[node name="CircuitBase" type="Node2D"]
+[node name="CircuitBase" type="Node2D" unique_id=1659019825]
 script = ExtResource("1_tdoex")
 
-[node name="RoadLayout" type="TileMapLayer" parent="."]
+[node name="RoadLayout" type="TileMapLayer" parent="." unique_id=1840842846]
 
-[node name="DecorationLayout" type="TileMapLayer" parent="RoadLayout"]
+[node name="DecorationLayout" type="TileMapLayer" parent="RoadLayout" unique_id=1497755437]
 
-[node name="StartingGrid" type="Node2D" parent="."]
+[node name="StartingGrid" type="Node2D" parent="." unique_id=898708410]
 
-[node name="RaceCheckpoints" parent="." instance=ExtResource("2_8jp8p")]
+[node name="RaceCheckpoints" parent="." unique_id=746751811 instance=ExtResource("2_8jp8p")]
 
-[node name="InitialColliders" type="StaticBody2D" parent="."]
+[node name="InitialColliders" type="StaticBody2D" parent="." unique_id=1782132436]
 collision_layer = 2
 collision_mask = 0
 
-[node name="Ghost" parent="." instance=ExtResource("3_rf66w")]
+[node name="Ghost" parent="." unique_id=315714770 instance=ExtResource("3_rf66w")]
 visible = false

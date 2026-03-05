@@ -1,11 +1,10 @@
 @tool
 extends Node2D
 
-@export_tool_button("compute_progress") var compute_progress = _compute_progress
-# tileset coordinate -> progress value
-@export_storage var progress_record: Dictionary[Vector2i, int] = {}
-var computing: bool = false
-
+@export_tool_button("Computar pesos") var compute_progress_button = _compute_progress_wrapper
+var _computing: bool = false
+# tileset coordinate -> distance to end
+@export_storage var progress_record: Dictionary[Vector2i, float] = {}
 
 @onready var circuit_tileset = $RoadLayout
 @onready var initial_colliders = $InitialColliders
@@ -68,38 +67,51 @@ func _ready() -> void:
 					". Node class is ", child.get_class())
 
 
+func _validate_property(property: Dictionary):
+	if property.name == "compute_progress_button":
+		property.usage = PROPERTY_USAGE_EDITOR
+		property.hint_string = "Computar pesos"
+		if _computing:
+			property.usage |= PROPERTY_USAGE_READ_ONLY
+			property.hint_string = "Computando pesos..."
+
+
+func _compute_progress_wrapper() -> void:
+	_computing = true
+	print('doing')
+	notify_property_list_changed()
+	await _compute_progress()
+	_computing = false
+	print('no doing')
+	notify_property_list_changed()
+
 func _compute_progress() -> void:
-	# TODO: use Toggle the property by toggling PROPERTY_USAGE_READ_ONLY flag in Object::_validate_property(). Use Object::notify_property_list_changed() to refresh the inspector which will invoke _validate_property()
-	if not computing:
-		computing = true
-		var starting_line = race_checkpoints.get_child(0)
-		if not starting_line:
-			push_error("No starting line detected!")
-			computing = false
-			return
+	var starting_line = race_checkpoints.get_child(0)
+	if not starting_line:
+		push_error("_compute_progress: No starting line detected!")
+		return
 
-		if not starting_line is CollisionShape2D:
-			push_error("Starting line (", starting_line, ") must be a CollisionShape2D!")
-			computing = false
-			return
+	if not starting_line is CollisionShape2D:
+		push_error("Starting line (", starting_line, ") must be a CollisionShape2D!")
+		return
 
-		var starting_rectangle: Rect2 = (starting_line as CollisionShape2D).shape.get_rect()
+	var starting_rectangle: Rect2 = (starting_line as CollisionShape2D).shape.get_rect()
 
-		# assuming the starting line is a straight vertical line, we can define as starting cells
-		# every cell between the uppermost cell and the undermost cell
-		var beginning_tile = (
-			circuit_tileset.get_cell_tile_data(
-				circuit_tileset.local_to_map(
-					circuit_tileset.to_local(
-						starting_line.global_position + starting_rectangle.position
-					)
+	# assuming the starting line is a straight line, we can define as starting cells
+	# every cell between the beggining and the end of the starting rectangle positions
+	var beginning_tile = (
+		circuit_tileset.get_cell_tile_data(
+			circuit_tileset.local_to_map(
+				circuit_tileset.to_local(
+					starting_line.global_position + starting_rectangle.position
 				)
 			)
 		)
+	)
 
-		computing = false
-	else:
-		print('wait for the function to end!')
+	await get_tree().create_timer(5).timeout
+
+	var label = Label.new()
 
 
 
