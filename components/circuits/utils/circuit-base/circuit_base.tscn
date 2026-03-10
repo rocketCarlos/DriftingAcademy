@@ -6,6 +6,7 @@
 
 [node name="CircuitBase" type="Node2D" unique_id=1659019825]
 script = ExtResource("1_tdoex")
+ATLAS_ID = null
 
 [node name="RoadLayout" type="TileMapLayer" parent="." unique_id=1840842846]
 
