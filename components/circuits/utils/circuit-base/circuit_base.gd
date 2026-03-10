@@ -14,6 +14,8 @@ var _computing: bool = false
 
 enum DIRECTION {LEFT, RIGHT, UP, DOWN}
 @export var initial_car_rotation: DIRECTION = DIRECTION.RIGHT
+@export_range(0, 100, 1, "or_greater") var ATLAS_ID: int = 0
+@export var ATLAS_FINISH_COORDS: Vector2i = Vector2i(6, 0)
 
 """
 Circuit base -> use this as the base node for any circuit. You should rename the root node to get
@@ -78,43 +80,54 @@ func _validate_property(property: Dictionary):
 
 func _compute_progress_wrapper() -> void:
 	_computing = true
-	print('doing')
 	notify_property_list_changed()
-	await _compute_progress()
+	_compute_progress()
 	_computing = false
-	print('no doing')
 	notify_property_list_changed()
 
 func _compute_progress() -> void:
-	var starting_line = race_checkpoints.get_child(0)
-	if not starting_line:
-		push_error("_compute_progress: No starting line detected!")
-		return
+	var finish_cells: Array[Vector2i] = circuit_tileset.get_used_cells_by_id(ATLAS_ID, ATLAS_FINISH_COORDS)
 
-	if not starting_line is CollisionShape2D:
-		push_error("Starting line (", starting_line, ") must be a CollisionShape2D!")
-		return
+	# we need to add as finish cells those in the same axis with a different atlas coords
+	# this is, those "grass cells" outside the road that are also on the finish line axis
+	# this assumes all finish cells share the same X or Y coord (no diagonal finish lines)
+	# also assumes this finish axis encounters an obstacle before another road
+	var finish_axis_direction: DIRECTION = DIRECTION.UP if finish_cells[0].y == finish_cells[1].y else DIRECTION.RIGHT
 
-	var starting_rectangle: Rect2 = (starting_line as CollisionShape2D).shape.get_rect()
-
-	# assuming the starting line is a straight line, we can define as starting cells
-	# every cell between the beggining and the end of the starting rectangle positions
-	var beginning_tile = (
-		circuit_tileset.get_cell_tile_data(
-			circuit_tileset.local_to_map(
-				circuit_tileset.to_local(
-					starting_line.global_position + starting_rectangle.position
-				)
-			)
-		)
+	finish_cells.append_array(
+		_get_finish_cells_in_direction(finish_cells[0],
+		Vector2i(1, 0) if finish_axis_direction == DIRECTION.RIGHT else Vector2i(0, -1))
+	)
+	finish_cells.append_array(
+		_get_finish_cells_in_direction(finish_cells[0],
+		Vector2i(-1, 0) if finish_axis_direction == DIRECTION.RIGHT else Vector2i(0, 1))
 	)
 
-	await get_tree().create_timer(5).timeout
+	# inicializar set de celdas con los vecinos apropiados de la meta (los que van en el sentido
+	# de las vueltas.
+	# asignar peso de 1 a todas esas celdas
+	# inicializar cola de celdas por registrar
+	# loop:
+	# si celda en set, ignorar
+	# si no, añadir a set con peso +1 de su padre.
+	# DEFINIR BIEN :D
 
-	var label = Label.new()
 
+func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i) -> Array[Vector2i]:
+	var done: bool = false
+	var current_cell = starting_cell
+	while not done:
+		var next_cell = current_cell + direction
+		# comprobar el id de la celda
+		# si es meta, ignorar y seguir
+		# si no es meta, comprobar si tiene obstáculo encima
+		# si obstáculo, ingorar y done = true
+		# si no obstáculo, añadir a finish_cells
 
+	return []
 
+func _get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
+	return []
 
 """
 Returns the position coordinates of the given position of the StartingGrid
