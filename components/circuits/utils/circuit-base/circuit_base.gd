@@ -3,10 +3,14 @@ extends Node2D
 
 @export_tool_button("Computar pesos") var compute_progress_button = _compute_progress_wrapper
 var _computing: bool = false
+var _progress_thread: Thread
+signal _thread_ended
 # tileset coordinate -> distance to end
 @export_storage var progress_record: Dictionary[Vector2i, float] = {}
 
+
 @onready var circuit_tileset = $RoadLayout
+@onready var decoration_tileset = $RoadLayout/DecorationLayout
 @onready var initial_colliders = $InitialColliders
 @onready var starting_grid = $StartingGrid
 @onready var race_checkpoints = $RaceCheckpoints
@@ -81,18 +85,21 @@ func _validate_property(property: Dictionary):
 func _compute_progress_wrapper() -> void:
 	_computing = true
 	notify_property_list_changed()
-	_compute_progress()
+	_progress_thread = Thread.new()
+	_progress_thread.start(_compute_progress)
+	await _thread_ended
+	var result = _progress_thread.wait_to_finish()
 	_computing = false
 	notify_property_list_changed()
 
 func _compute_progress() -> void:
 	var finish_cells: Array[Vector2i] = circuit_tileset.get_used_cells_by_id(ATLAS_ID, ATLAS_FINISH_COORDS)
 
-	# we need to add as finish cells those in the same axis with a different atlas coords
+	# we need to add as finish cells those in the same axis with different atlas coords
 	# this is, those "grass cells" outside the road that are also on the finish line axis
 	# this assumes all finish cells share the same X or Y coord (no diagonal finish lines)
 	# also assumes this finish axis encounters an obstacle before another road
-	var finish_axis_direction: DIRECTION = DIRECTION.UP if finish_cells[0].y == finish_cells[1].y else DIRECTION.RIGHT
+	var finish_axis_direction: DIRECTION = DIRECTION.UP if finish_cells[0].x == finish_cells[1].x else DIRECTION.RIGHT
 
 	finish_cells.append_array(
 		_get_finish_cells_in_direction(finish_cells[0],
@@ -103,6 +110,8 @@ func _compute_progress() -> void:
 		Vector2i(-1, 0) if finish_axis_direction == DIRECTION.RIGHT else Vector2i(0, 1))
 	)
 
+	print(finish_cells)
+	call_thread_safe("emit_signal", "_thread_ended")
 	# inicializar set de celdas con los vecinos apropiados de la meta (los que van en el sentido
 	# de las vueltas.
 	# asignar peso de 1 a todas esas celdas
@@ -115,16 +124,20 @@ func _compute_progress() -> void:
 
 func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i) -> Array[Vector2i]:
 	var done: bool = false
-	var current_cell = starting_cell
-	while not done:
-		var next_cell = current_cell + direction
-		# comprobar el id de la celda
-		# si es meta, ignorar y seguir
-		# si no es meta, comprobar si tiene obstáculo encima
-		# si obstáculo, ingorar y done = true
-		# si no obstáculo, añadir a finish_cells
+	var current_cell: Vector2i = starting_cell
+	var result: Array[Vector2i] = []
 
-	return []
+	while not done:
+		var next_cell: Vector2i = current_cell + direction
+		var atlas_coords = circuit_tileset.get_cell_atlas_coords(next_cell)
+		if not atlas_coords == ATLAS_FINISH_COORDS:
+			if atlas_coords == Vector2i(-1, -1) or decoration_tileset.get_cell_source_id(next_cell) != -1:
+				done = true
+			else:
+				result.append(next_cell)
+		current_cell = next_cell
+
+	return result
 
 func _get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
 	return []
