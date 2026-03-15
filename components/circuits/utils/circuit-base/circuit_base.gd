@@ -110,16 +110,19 @@ func _compute_progress() -> void:
 		Vector2i(-1, 0) if finish_axis_direction == DIRECTION.RIGHT else Vector2i(0, 1))
 	)
 
+	for cell in finish_cells:
+		progress_record.set(cell, 0.0) # set finish cells as 0 weight
+
+	var cell_queue = [] # cells to check, FIFO queue
+
+	# init cell_queue with cells at the oposite side of the finish lines
+	for finish_cell in finish_cells:
+		pass
+
+	# por cada celda en la cola, sacar sus vecinas y calcular pesos, añadir a resultados
+
 	print(finish_cells)
 	call_thread_safe("emit_signal", "_thread_ended")
-	# inicializar set de celdas con los vecinos apropiados de la meta (los que van en el sentido
-	# de las vueltas.
-	# asignar peso de 1 a todas esas celdas
-	# inicializar cola de celdas por registrar
-	# loop:
-	# si celda en set, ignorar
-	# si no, añadir a set con peso +1 de su padre.
-	# DEFINIR BIEN :D
 
 
 func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i) -> Array[Vector2i]:
@@ -139,8 +142,28 @@ func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i
 
 	return result
 
+# Get all cell neighbours that are not obstacles
 func _get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
-	return []
+	var neighbours: Array[Vector2i] = []
+
+	var directions = [
+		Vector2i(-1, 1), # top left
+		Vector2i(0, 1), # top
+		Vector2i(1, 1), # top right
+		Vector2i(-1, 0), # left
+		Vector2i(1, 0), # right
+		Vector2i(-1, -1), # bottom left
+		Vector2i(0, -1), # bottom
+		Vector2i(1, -1), # bottom right
+	]
+
+	for direction in directions:
+		var cell_to_check = cell_position + direction
+		var atlas_coords = circuit_tileset.get_cell_atlas_coords(cell_to_check)
+		if atlas_coords != Vector2i(-1, -1) and decoration_tileset.get_cell_source_id(cell_to_check) == -1:
+			neighbours.append(cell_to_check)
+
+	return neighbours
 
 """
 Returns the position coordinates of the given position of the StartingGrid
