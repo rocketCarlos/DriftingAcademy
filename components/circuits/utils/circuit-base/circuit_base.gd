@@ -7,7 +7,7 @@ var _progress_thread: Thread
 signal _thread_ended
 # tileset coordinate -> distance to end
 @export_storage var progress_record: Dictionary[Vector2i, float] = {}
-
+var sqrt2 = sqrt(2.0)
 
 @onready var circuit_tileset = $RoadLayout
 @onready var decoration_tileset = $RoadLayout/DecorationLayout
@@ -110,18 +110,52 @@ func _compute_progress() -> void:
 		Vector2i(-1, 0) if finish_axis_direction == DIRECTION.RIGHT else Vector2i(0, 1))
 	)
 
+	# set finish cells as 0 weight
 	for cell in finish_cells:
-		progress_record.set(cell, 0.0) # set finish cells as 0 weight
+		progress_record.set(cell, 0.0)
 
-	var cell_queue = [] # cells to check, FIFO queue
+	var initial_offset = (
+		Vector2i(1, 0) if initial_car_rotation == DIRECTION.LEFT else
+		Vector2i(-1, 0) if initial_car_rotation == DIRECTION.RIGHT else
+		Vector2i(0, 1) if initial_car_rotation == DIRECTION.DOWN else
+		Vector2i(0, -1)
+	)
+	# cells to check, FIFO queue. Array[Dictionary[Vector21, float]] -> list of coords and its weight
+	var cell_queue = []
 
 	# init cell_queue with cells at the oposite side of the finish lines
 	for finish_cell in finish_cells:
-		pass
+		var new_cell = finish_cell + initial_offset
+		if _is_cell_valid(new_cell):
+			cell_queue.append({new_cell: 1.0})
 
-	# por cada celda en la cola, sacar sus vecinas y calcular pesos, añadir a resultados
+	# compute weight of the full track
+	while len(cell_queue) > 0:
+		var parent_cell = cell_queue.pop_front()
+		var parent_cell_coords = parent_cell.keys()[0]
+
+		if progress_record.has(parent_cell_coords):
+			continue
+
+		var children_cells = _get_cell_neighbours(parent_cell_coords)
+		var children_array = [] # for performance, so that cell_queue is not resized once per child
+		for child in children_cells:
+			if not progress_record.has(child): # should always be true?
+				children_array.append(
+					{
+						child:
+							parent_cell[parent_cell_coords] + (
+								1.0 if parent_cell_coords.x == child.x or parent_cell_coords.y == child.y
+								else sqrt2
+							)
+					}
+				)
+
+		cell_queue.append_array(children_array)
+		progress_record.assign(parent_cell)
 
 	print(finish_cells)
+	print(cell_queue)
 	call_thread_safe("emit_signal", "_thread_ended")
 
 
@@ -134,15 +168,17 @@ func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i
 		var next_cell: Vector2i = current_cell + direction
 		var atlas_coords = circuit_tileset.get_cell_atlas_coords(next_cell)
 		if not atlas_coords == ATLAS_FINISH_COORDS:
-			if atlas_coords == Vector2i(-1, -1) or decoration_tileset.get_cell_source_id(next_cell) != -1:
-				done = true
-			else:
+			if _is_cell_valid(next_cell):
 				result.append(next_cell)
+			else:
+				done = true
 		current_cell = next_cell
 
 	return result
 
-# Get all cell neighbours that are not obstacles
+"""
+Get all cell neighbours that are not obstacles
+"""
 func _get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
 	var neighbours: Array[Vector2i] = []
 
@@ -159,11 +195,22 @@ func _get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
 
 	for direction in directions:
 		var cell_to_check = cell_position + direction
-		var atlas_coords = circuit_tileset.get_cell_atlas_coords(cell_to_check)
-		if atlas_coords != Vector2i(-1, -1) and decoration_tileset.get_cell_source_id(cell_to_check) == -1:
+		if _is_cell_valid(cell_to_check):
 			neighbours.append(cell_to_check)
 
 	return neighbours
+
+"""
+Returns true if cell is valid and has no obstacle above. False otherwise
+"""
+func _is_cell_valid(cell_position: Vector2i) -> bool:
+	return (
+		true if (
+			circuit_tileset.get_cell_atlas_coords(cell_position) != Vector2i(-1, -1) and
+			decoration_tileset.get_cell_source_id(cell_position) == -1
+		)
+		else false
+	)
 
 """
 Returns the position coordinates of the given position of the StartingGrid
