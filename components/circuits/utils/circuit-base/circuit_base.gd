@@ -8,6 +8,7 @@ signal _thread_ended
 # tileset coordinate -> distance to end
 @export_storage var progress_record: Dictionary[Vector2i, float] = {}
 var sqrt2 = sqrt(2.0)
+var max_weight: float = 0.0
 @export var CellWeightScene: PackedScene
 
 @onready var circuit_tileset = $RoadLayout
@@ -90,11 +91,13 @@ func _compute_progress_wrapper() -> void:
 	_progress_thread = Thread.new()
 	_progress_thread.start(_compute_progress)
 	await _thread_ended
-	var result = _progress_thread.wait_to_finish()
+	_progress_thread.wait_to_finish()
 	_computing = false
+	call_deferred("draw_cell_weights")
 	notify_property_list_changed()
 
 func _compute_progress() -> void:
+	progress_record = {}
 	var finish_cells: Array[Vector2i] = circuit_tileset.get_used_cells_by_id(ATLAS_ID, ATLAS_FINISH_COORDS)
 
 	# we need to add as finish cells those in the same axis with different atlas coords
@@ -132,7 +135,7 @@ func _compute_progress() -> void:
 			cell_queue.append({new_cell: 1.0})
 
 	# compute weight of the full track
-	var max_weight: float = 0.0
+	max_weight = 0.0
 	while len(cell_queue) > 0:
 		var parent_cell = cell_queue.pop_front()
 		var parent_cell_coords = parent_cell.keys()[0]
@@ -154,18 +157,6 @@ func _compute_progress() -> void:
 
 		cell_queue.append_array(children_array)
 		progress_record.merge(parent_cell)
-
-	print(progress_record)
-	print(len(progress_record))
-
-
-	# TODO: This fails because is not thread safe. Therefore, consider moving logic to _process function?
-	# Draw weight indicators
-	for key in progress_record.keys():
-		var indicator = CellWeightScene.instantiate()
-		indicator.set_weight(progress_record[key], max_weight)
-		indicator.position = circuit_tileset.to_global((circuit_tileset.map_to_local(key)))
-		debug_items.add_child(indicator)
 
 	call_thread_safe("emit_signal", "_thread_ended")
 
@@ -222,6 +213,18 @@ func _is_cell_valid(cell_position: Vector2i) -> bool:
 		)
 		else false
 	)
+
+"""
+Draws labels for cell weights
+"""
+func draw_cell_weights() -> void:
+	for child in debug_items.get_children():
+		child.queue_free()
+	for key in progress_record.keys():
+		var indicator = CellWeightScene.instantiate()
+		indicator.set_weight(progress_record[key], max_weight)
+		indicator.position = circuit_tileset.to_global((circuit_tileset.map_to_local(key))) + Vector2(-16.0, -16.0)
+		debug_items.call_deferred("add_child", indicator)
 
 """
 Returns the position coordinates of the given position of the StartingGrid

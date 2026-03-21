@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://bq0yvgtj6m6te"]
 
 [ext_resource type="Script" uid="uid://dk1wj4tv02fx1" path="res://components/circuits/utils/cell-weight-indicator/cell_weight_indicator.gd" id="1_eoxle"]
-[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="2_ooetl"]
+[ext_resource type="FontFile" uid="uid://ds238wktkms30" path="res://assets/label-settings/WenderFont2.ttf" id="2_eoxle"]
 
-[node name="ColorRect" type="ColorRect" unique_id=894498942]
-offset_left = -29.0
+[sub_resource type="LabelSettings" id="LabelSettings_ooetl"]
+font = ExtResource("2_eoxle")
+font_size = 10
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="ColorRect" unique_id=1770664818]
 offset_right = 32.0
-offset_bottom = 42.0
+offset_bottom = 32.0
 script = ExtResource("1_eoxle")
 
 [node name="Label" type="Label" parent="." unique_id=1046773324]
@@ -23,6 +28,6 @@ offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "23"
-label_settings = ExtResource("2_ooetl")
+label_settings = SubResource("LabelSettings_ooetl")
 horizontal_alignment = 1
 vertical_alignment = 1
