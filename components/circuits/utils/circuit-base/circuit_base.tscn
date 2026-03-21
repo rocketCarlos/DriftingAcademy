@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dlnrre818plta" path="res://components/circuits/utils/circuit-base/circuit_base.gd" id="1_tdoex"]
 [ext_resource type="PackedScene" uid="uid://dw24sbxjgn3pe" path="res://components/circuits/utils/race-checkpoints/race_checkpoints.tscn" id="2_8jp8p"]
+[ext_resource type="PackedScene" uid="uid://bq0yvgtj6m6te" path="res://components/circuits/utils/cell-weight-indicator/cell_weight_indicator.tscn" id="2_j3ebk"]
 [ext_resource type="PackedScene" uid="uid://e6qc8ysahfe1" path="res://components/Ghost/ghost.tscn" id="3_rf66w"]
 
 [node name="CircuitBase" type="Node2D" unique_id=1659019825]
 script = ExtResource("1_tdoex")
+CellWeightScene = ExtResource("2_j3ebk")
 
 [node name="RoadLayout" type="TileMapLayer" parent="." unique_id=1840842846]
 
@@ -21,3 +23,7 @@ collision_mask = 0
 
 [node name="Ghost" parent="." unique_id=315714770 instance=ExtResource("3_rf66w")]
 visible = false
+
+[node name="DebugItems" type="Control" parent="." unique_id=2087651676]
+layout_mode = 3
+anchors_preset = 0

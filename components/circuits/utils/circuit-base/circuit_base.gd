@@ -8,6 +8,7 @@ signal _thread_ended
 # tileset coordinate -> distance to end
 @export_storage var progress_record: Dictionary[Vector2i, float] = {}
 var sqrt2 = sqrt(2.0)
+@export var CellWeightScene: PackedScene
 
 @onready var circuit_tileset = $RoadLayout
 @onready var decoration_tileset = $RoadLayout/DecorationLayout
@@ -15,6 +16,7 @@ var sqrt2 = sqrt(2.0)
 @onready var starting_grid = $StartingGrid
 @onready var race_checkpoints = $RaceCheckpoints
 @onready var ghost = $Ghost
+@onready var debug_items = $DebugItems
 
 enum DIRECTION {LEFT, RIGHT, UP, DOWN}
 @export var initial_car_rotation: DIRECTION = DIRECTION.RIGHT
@@ -130,6 +132,7 @@ func _compute_progress() -> void:
 			cell_queue.append({new_cell: 1.0})
 
 	# compute weight of the full track
+	var max_weight: float = 0.0
 	while len(cell_queue) > 0:
 		var parent_cell = cell_queue.pop_front()
 		var parent_cell_coords = parent_cell.keys()[0]
@@ -141,21 +144,29 @@ func _compute_progress() -> void:
 		var children_array = [] # for performance, so that cell_queue is not resized once per child
 		for child in children_cells:
 			if not progress_record.has(child): # should always be true?
-				children_array.append(
-					{
-						child:
-							parent_cell[parent_cell_coords] + (
+				var cell_weight = parent_cell[parent_cell_coords] + (
 								1.0 if parent_cell_coords.x == child.x or parent_cell_coords.y == child.y
 								else sqrt2
 							)
-					}
-				)
+				children_array.append({ child: cell_weight })
+				if cell_weight > max_weight:
+					max_weight = cell_weight
 
 		cell_queue.append_array(children_array)
-		progress_record.assign(parent_cell)
+		progress_record.merge(parent_cell)
 
-	print(finish_cells)
-	print(cell_queue)
+	print(progress_record)
+	print(len(progress_record))
+
+
+	# TODO: This fails because is not thread safe. Therefore, consider moving logic to _process function?
+	# Draw weight indicators
+	for key in progress_record.keys():
+		var indicator = CellWeightScene.instantiate()
+		indicator.set_weight(progress_record[key], max_weight)
+		indicator.position = circuit_tileset.to_global((circuit_tileset.map_to_local(key)))
+		debug_items.add_child(indicator)
+
 	call_thread_safe("emit_signal", "_thread_ended")
 
 
