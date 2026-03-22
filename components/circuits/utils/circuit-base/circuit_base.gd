@@ -2,13 +2,14 @@
 extends Node2D
 
 @export_tool_button("Computar pesos") var compute_progress_button = _compute_progress_wrapper
+@export_tool_button("Dibujar pesos") var draw_progress_button = draw_cell_weights
 var _computing: bool = false
 var _progress_thread: Thread
 signal _thread_ended
 # tileset coordinate -> distance to end
 @export_storage var progress_record: Dictionary[Vector2i, float] = {}
+@export_storage var max_weight: float = 0.0
 var sqrt2 = sqrt(2.0)
-var max_weight: float = 0.0
 @export var CellWeightScene: PackedScene
 
 @onready var circuit_tileset = $RoadLayout
@@ -93,7 +94,6 @@ func _compute_progress_wrapper() -> void:
 	await _thread_ended
 	_progress_thread.wait_to_finish()
 	_computing = false
-	call_deferred("draw_cell_weights")
 	notify_property_list_changed()
 
 func _compute_progress() -> void:
