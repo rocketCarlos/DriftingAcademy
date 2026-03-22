@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccfgi5gd1l23n"]
+[gd_scene format=3 uid="uid://ccfgi5gd1l23n"]
 
 [ext_resource type="Script" uid="uid://bo5pwxgep71f6" path="res://components/bot/bot.gd" id="1_0u5lq"]
 [ext_resource type="PackedScene" uid="uid://dfkaap3lxani1" path="res://components/movement-controller/movement_controller.tscn" id="2_6a5r5"]
@@ -8,35 +8,35 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6a5r5"]
 size = Vector2(11, 20.5)
 
-[node name="Bot" type="CharacterBody2D"]
+[node name="Bot" type="CharacterBody2D" unique_id=2012145137]
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_0u5lq")
 
-[node name="MovementController" parent="." instance=ExtResource("2_6a5r5")]
+[node name="MovementController" parent="." unique_id=792339933 instance=ExtResource("2_6a5r5")]
 input_provider_path = NodePath("../BotInputController")
 
-[node name="BotInputController" parent="." instance=ExtResource("3_6a5r5")]
+[node name="BotInputController" parent="." unique_id=789719221 instance=ExtResource("3_6a5r5")]
 debug = true
 
-[node name="Skin" type="Sprite2D" parent="."]
+[node name="Skin" type="Sprite2D" parent="." unique_id=1083764777]
 texture = ExtResource("2_8r03p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1937989425]
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_6a5r5")
 
-[node name="Wheel1" type="Node2D" parent="."]
+[node name="Wheel1" type="Node2D" parent="." unique_id=1632761543]
 
-[node name="Wheel2" type="Node2D" parent="."]
+[node name="Wheel2" type="Node2D" parent="." unique_id=1066532208]
 
-[node name="Wheel3" type="Node2D" parent="."]
+[node name="Wheel3" type="Node2D" parent="." unique_id=1885632129]
 position = Vector2(5, 6)
 
-[node name="Wheel4" type="Node2D" parent="."]
+[node name="Wheel4" type="Node2D" parent="." unique_id=2114538821]
 position = Vector2(-5, 6)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1631716657]
 position = Vector2(5, -6)
 
 [editable path="BotInputController"]

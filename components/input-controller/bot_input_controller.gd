@@ -1,32 +1,37 @@
 class_name BotInputController
 extends InputControllerBase
 
-var points: Array
-var current_point = 0
 var input_tween: Tween = null
 @export var debug: bool = false
 
-func _ready() -> void:
-	points = get_tree().get_nodes_in_group("BotPoints")
-	current_point = 0
-	input = points[current_point].position
+var last_position_coordinate: Vector2i
 
+func _ready() -> void:
+	super()
 	if not debug:
 		$VirtualInputDebug.hide()
 
 func _physics_process(_delta: float) -> void:
+	if not last_position_coordinate:
+		last_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
+
 	if debug:
 		$VirtualInputDebug.global_position = input
 
+	var current_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
 
-func _on_points_detector_area_entered(_area: Area2D) -> void:
-	current_point = (current_point + 1) % points.size()
+	if current_position_coordinate != last_position_coordinate:
+		last_position_coordinate = current_position_coordinate
+		_update_virtual_input(current_position_coordinate, (parent as CharacterBody2D).velocity)
+
+
+func _update_virtual_input(position: Vector2, velocity: Vector2) -> void:
 	if input_tween:
 		input_tween.kill()
 
 	input_tween = create_tween()
 
-	var new_virtual_position = points[current_point].position
+	var new_virtual_position = _compute_virtual_input(position, velocity)
 	var interpolation_time: float
 	var min_interpolation: float = 0.2
 	var max_interpolation: float = 1
@@ -48,3 +53,15 @@ func _on_points_detector_area_entered(_area: Area2D) -> void:
 		.set_trans(Tween.TRANS_LINEAR)
 		.set_ease(Tween.EASE_OUT)
 	)
+
+
+func _compute_virtual_input(position: Vector2, velocity: Vector2) -> Vector2:
+	var neighbours: Array[Vector2i] = Globals.circuit.get_cell_neighbours(position)
+
+	var best_cell: Vector2 = neighbours[0]
+	for cell in neighbours:
+		if Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell]:
+			best_cell = cell
+
+
+	return Globals.circuit_tileset.to_global(Globals.circuit_tileset.map_to_local(best_cell))

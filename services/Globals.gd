@@ -21,6 +21,7 @@ const GAMEMODE_LABELS: Dictionary[GAME_MODE, String] = {
 """
 Node references
 """
+var circuit: Node
 var circuit_tileset: Node
 var car: Node
 

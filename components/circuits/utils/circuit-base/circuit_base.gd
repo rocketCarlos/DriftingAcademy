@@ -53,6 +53,7 @@ func initialize() -> void:
 
 func _ready() -> void:
 	if not Engine.is_editor_hint():
+		Globals.circuit = self
 		Globals.circuit_tileset = circuit_tileset
 		Globals.race_started.connect(_on_race_started)
 		Globals.race_restarted.connect(_on_race_restarted)
@@ -146,7 +147,7 @@ func _compute_progress() -> void:
 		if progress_record.has(parent_cell_coords):
 			continue
 
-		var children_cells = _get_cell_neighbours(parent_cell_coords)
+		var children_cells = get_cell_neighbours(parent_cell_coords)
 		for child in children_cells:
 			if not progress_record.has(child): # should always be true?
 				var cell_weight = parent_cell[parent_cell_coords] + (
@@ -190,7 +191,7 @@ func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i
 """
 Get all cell neighbours that are not obstacles
 """
-func _get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
+func get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
 	var neighbours: Array[Vector2i] = []
 
 	var directions = [
