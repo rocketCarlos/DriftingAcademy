@@ -140,22 +140,31 @@ func _compute_progress() -> void:
 		var parent_cell = cell_queue.pop_front()
 		var parent_cell_coords = parent_cell.keys()[0]
 
+		# TODO: checkear algoritmo. Se están produciendo mejores celdas y se están skipeando.
+		# contemplar tratar el cell queue con un set adicional para tener siempre en la cola la
+		# mejor versión de cada celda
 		if progress_record.has(parent_cell_coords):
 			continue
 
 		var children_cells = _get_cell_neighbours(parent_cell_coords)
-		var children_array = [] # for performance, so that cell_queue is not resized once per child
 		for child in children_cells:
 			if not progress_record.has(child): # should always be true?
 				var cell_weight = parent_cell[parent_cell_coords] + (
 								1.0 if parent_cell_coords.x == child.x or parent_cell_coords.y == child.y
 								else sqrt2
 							)
-				children_array.append({ child: cell_weight })
+				# insert in cell_queue treating it as a priority queue
+				cell_queue.insert(
+					cell_queue.bsearch_custom(
+							{ child: cell_weight },
+							func(a, b): return a[a.keys()[0]] < b[b.keys()[0]],
+							true
+						),
+						{ child: cell_weight }
+				)
 				if cell_weight > max_weight:
 					max_weight = cell_weight
 
-		cell_queue.append_array(children_array)
 		progress_record.merge(parent_cell)
 
 	call_thread_safe("emit_signal", "_thread_ended")
