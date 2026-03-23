@@ -32,24 +32,9 @@ func _update_virtual_input(position: Vector2, velocity: Vector2) -> void:
 	input_tween = create_tween()
 
 	var new_virtual_position = _compute_virtual_input(position, velocity)
-	var interpolation_time: float
-	var min_interpolation: float = 0.2
-	var max_interpolation: float = 1
-
-	interpolation_time = (
-		clampf(
-			lerpf(
-				min_interpolation,
-				max_interpolation,
-				inverse_lerp(0.0, 1500.0, input.distance_to(new_virtual_position))
-			),
-			min_interpolation,
-			max_interpolation
-		)
-	)
 
 	(input_tween
-		.tween_property(self, "input", new_virtual_position, interpolation_time)
+		.tween_property(self, "input", new_virtual_position, 0.1)
 		.set_trans(Tween.TRANS_LINEAR)
 		.set_ease(Tween.EASE_OUT)
 	)
@@ -60,8 +45,16 @@ func _compute_virtual_input(position: Vector2, velocity: Vector2) -> Vector2:
 
 	var best_cell: Vector2 = neighbours[0]
 	for cell in neighbours:
-		if Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell]:
+		if Globals.circuit.is_cell_road(best_cell):
+			if (
+				Globals.circuit.is_cell_road(cell)
+				and (Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+			):
+				best_cell = cell
+		elif (
+			(Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+			or Globals.circuit.is_cell_road(cell)
+		):
 			best_cell = cell
-
 
 	return Globals.circuit_tileset.to_global(Globals.circuit_tileset.map_to_local(best_cell))
