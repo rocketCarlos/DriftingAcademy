@@ -24,6 +24,8 @@ enum DIRECTION {LEFT, RIGHT, UP, DOWN}
 @export var initial_car_rotation: DIRECTION = DIRECTION.RIGHT
 @export_range(0, 100, 1, "or_greater") var ATLAS_ID: int = 0
 @export var ATLAS_FINISH_COORDS: Vector2i = Vector2i(6, 0)
+# TODO: instead of this, set this as a new custom property for cells
+@export var ROAD_ATLAS_COORDS: Array[Vector2i] = []
 
 """
 Circuit base -> use this as the base node for any circuit. You should rename the root node to get
@@ -223,6 +225,14 @@ func _is_cell_valid(cell_position: Vector2i) -> bool:
 		)
 		else false
 	)
+
+"""
+True if cell is in ROAD_ATLAS_COORDS and is valid (no obstacles above), false otherwise
+"""
+func is_cell_road(cell_position: Vector2i) -> bool:
+	var atlas_coords = circuit_tileset.get_cell_atlas_coords(cell_position)
+	return _is_cell_valid(cell_position) and atlas_coords in ROAD_ATLAS_COORDS
+
 
 """
 Draws labels for cell weights
