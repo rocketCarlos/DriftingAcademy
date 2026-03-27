@@ -23,9 +23,8 @@ var sqrt2 = sqrt(2.0)
 enum DIRECTION {LEFT, RIGHT, UP, DOWN}
 @export var initial_car_rotation: DIRECTION = DIRECTION.RIGHT
 @export_range(0, 100, 1, "or_greater") var ATLAS_ID: int = 0
-@export var ATLAS_FINISH_COORDS: Vector2i = Vector2i(6, 0)
-# TODO: instead of this, set this as a new custom property for cells
-@export var ROAD_ATLAS_COORDS: Array[Vector2i] = []
+var ATLAS_FINISH_COORDS: Vector2i
+
 
 """
 Circuit base -> use this as the base node for any circuit. You should rename the root node to get
@@ -54,6 +53,12 @@ func initialize() -> void:
 		initial_colliders.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _ready() -> void:
+	for tile_id in circuit_tileset.tile_set.get_source(ATLAS_ID).get_tiles_count():
+		var cell_coords = circuit_tileset.tile_set.get_source(ATLAS_ID).get_tile_id(tile_id)
+		if check_cell_boolean_property(cell_coords, 'is_finish'):
+			ATLAS_FINISH_COORDS = cell_coords
+			break
+
 	if not Engine.is_editor_hint():
 		Globals.circuit = self
 		Globals.circuit_tileset = circuit_tileset
@@ -101,6 +106,7 @@ func _compute_progress_wrapper() -> void:
 
 func _compute_progress() -> void:
 	progress_record = {}
+
 	var finish_cells: Array[Vector2i] = circuit_tileset.get_used_cells_by_id(ATLAS_ID, ATLAS_FINISH_COORDS)
 
 	# we need to add as finish cells those in the same axis with different atlas coords
@@ -143,9 +149,6 @@ func _compute_progress() -> void:
 		var parent_cell = cell_queue.pop_front()
 		var parent_cell_coords = parent_cell.keys()[0]
 
-		# TODO: checkear algoritmo. Se están produciendo mejores celdas y se están skipeando.
-		# contemplar tratar el cell queue con un set adicional para tener siempre en la cola la
-		# mejor versión de cada celda
 		if progress_record.has(parent_cell_coords):
 			continue
 
@@ -220,6 +223,7 @@ Returns true if cell is valid and has no obstacle above. False otherwise
 func _is_cell_valid(cell_position: Vector2i) -> bool:
 	return (
 		true if (
+			# TODO: change this for check boolean properties
 			circuit_tileset.get_cell_atlas_coords(cell_position) != Vector2i(-1, -1) and
 			decoration_tileset.get_cell_source_id(cell_position) == -1
 		)
@@ -227,11 +231,22 @@ func _is_cell_valid(cell_position: Vector2i) -> bool:
 	)
 
 """
-True if cell is in ROAD_ATLAS_COORDS and is valid (no obstacles above), false otherwise
+Checks a specific BOOLEAN custom property of a cell
 """
-func is_cell_road(cell_position: Vector2i) -> bool:
-	var atlas_coords = circuit_tileset.get_cell_atlas_coords(cell_position)
-	return _is_cell_valid(cell_position) and atlas_coords in ROAD_ATLAS_COORDS
+func check_cell_boolean_property(cell_position: Vector2i, property: String, check_in_decoration: bool = false) -> bool:
+	var tile_data = (
+		circuit_tileset.get_cell_tile_data(cell_position) if not check_in_decoration
+		else decoration_tileset.get_cell_tile_data(cell_position)
+	)
+
+	if tile_data:
+		var value = tile_data.get_custom_data(property)
+		if value is bool:
+			return value
+		else:
+			return false
+	else:
+		return false
 
 
 """
