@@ -52,7 +52,8 @@ func _compute_virtual_input(position: Vector2i, velocity: Vector2) -> Vector2:
 
 
 func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
-	cell_path = []
+	cell_path = [initial_position]
+	var initial_weight: float = Globals.circuit.progress_record[initial_position]
 	var best_cell: Vector2
 	for i in range(depth):
 		var neighbours: Array[Vector2i] = Globals.circuit.get_cell_neighbours(initial_position)
@@ -61,6 +62,24 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 			if cell in cell_path:
 				# skip already visited cells
 				continue
+
+			if abs(Globals.circuit.progress_record[cell] - initial_weight) > (depth + 1):
+				# special situation: finish line
+				if abs(Globals.circuit.progress_record[best_cell] - initial_weight) > (depth + 1):
+					if Globals.circuit.is_cell_road(best_cell):
+						if (
+							Globals.circuit.is_cell_road(cell)
+							and (Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+						):
+							best_cell = cell
+					elif (
+						(Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+						or Globals.circuit.is_cell_road(cell)
+					):
+						best_cell = cell
+				else:
+					best_cell = cell
+
 			if Globals.circuit.is_cell_road(best_cell):
 				if (
 					Globals.circuit.is_cell_road(cell)
@@ -72,6 +91,7 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 				or Globals.circuit.is_cell_road(cell)
 			):
 				best_cell = cell
+
 		initial_position = best_cell
 		cell_path.append(best_cell)
 
