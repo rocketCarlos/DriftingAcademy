@@ -53,9 +53,10 @@ func initialize() -> void:
 		initial_colliders.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _ready() -> void:
-	for tile_id in circuit_tileset.tile_set.get_source(ATLAS_ID).get_tiles_count():
-		var cell_coords = circuit_tileset.tile_set.get_source(ATLAS_ID).get_tile_id(tile_id)
-		if check_cell_boolean_property(cell_coords, 'is_finish'):
+	var source = circuit_tileset.tile_set.get_source(ATLAS_ID) as TileSetAtlasSource
+	for tile_id in source.get_tiles_count():
+		var cell_coords = source.get_tile_id(tile_id)
+		if source.get_tile_data(cell_coords, 0).get_custom_data('is_finish'):
 			ATLAS_FINISH_COORDS = cell_coords
 			break
 
@@ -152,6 +153,10 @@ func _compute_progress() -> void:
 		if progress_record.has(parent_cell_coords):
 			continue
 
+		if check_cell_boolean_property(parent_cell_coords, 'is_transitable_obstacle', true):
+			progress_record.merge({parent_cell_coords: INF})
+			continue
+
 		var children_cells = get_cell_neighbours(parent_cell_coords)
 		for child in children_cells:
 			if not progress_record.has(child): # should always be true?
@@ -194,7 +199,7 @@ func _get_finish_cells_in_direction(starting_cell: Vector2i, direction: Vector2i
 	return result
 
 """
-Get all cell neighbours that are not obstacles
+Get all cell neighbours that are not obstacles (or are transitable obstacles)
 """
 func get_cell_neighbours(cell_position: Vector2i) -> Array[Vector2i]:
 	var neighbours: Array[Vector2i] = []
@@ -223,9 +228,11 @@ Returns true if cell is valid and has no obstacle above. False otherwise
 func _is_cell_valid(cell_position: Vector2i) -> bool:
 	return (
 		true if (
-			# TODO: change this for check boolean properties
 			circuit_tileset.get_cell_atlas_coords(cell_position) != Vector2i(-1, -1) and
-			decoration_tileset.get_cell_source_id(cell_position) == -1
+			(
+				decoration_tileset.get_cell_source_id(cell_position) == -1 or
+				check_cell_boolean_property(cell_position, 'is_transitable_obstacle', true)
+			)
 		)
 		else false
 	)

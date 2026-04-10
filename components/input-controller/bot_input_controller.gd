@@ -66,29 +66,29 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 			if abs(Globals.circuit.progress_record[cell] - initial_weight) > (depth + 1):
 				# special situation: finish line
 				if abs(Globals.circuit.progress_record[best_cell] - initial_weight) > (depth + 1):
-					if Globals.circuit.is_cell_road(best_cell):
+					if Globals.circuit.check_cell_boolean_property(best_cell, 'is_road'):
 						if (
-							Globals.circuit.is_cell_road(cell)
+							Globals.circuit.check_cell_boolean_property(cell, 'is_road')
 							and (Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
 						):
 							best_cell = cell
 					elif (
 						(Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
-						or Globals.circuit.is_cell_road(cell)
+						or Globals.circuit.check_cell_boolean_property(cell, 'is_road')
 					):
 						best_cell = cell
 				else:
 					best_cell = cell
 
-			if Globals.circuit.is_cell_road(best_cell):
+			if Globals.circuit.check_cell_boolean_property(best_cell, 'is_road'):
 				if (
-					Globals.circuit.is_cell_road(cell)
+					Globals.circuit.check_cell_boolean_property(cell, 'is_road')
 					and (Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
 				):
 					best_cell = cell
 			elif (
 				(Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
-				or Globals.circuit.is_cell_road(cell)
+				or Globals.circuit.check_cell_boolean_property(cell, 'is_road')
 			):
 				best_cell = cell
 
