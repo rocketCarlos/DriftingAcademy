@@ -54,18 +54,21 @@ func _compute_virtual_input(position: Vector2i, velocity: Vector2) -> Vector2:
 func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 	cell_path = [initial_position]
 	var initial_weight: float = Globals.circuit.progress_record[initial_position]
-	var best_cell: Vector2
+	var best_cell: Vector2i
 	for i in range(depth):
 		var neighbours: Array[Vector2i] = Globals.circuit.get_cell_neighbours(initial_position)
-		best_cell = neighbours[0] if neighbours[0] not in cell_path else neighbours[1]
+		best_cell = Vector2i(INF, INF) # init with invalid values
 		for cell in neighbours:
-			if cell in cell_path:
-				# skip already visited cells
+			if cell in cell_path or Globals.circuit.progress_record[cell] == INF:
+				# skip already visited or invalid cells
 				continue
+			elif best_cell.x == INF and best_cell.y == INF :
+				best_cell = cell
 
-			if abs(Globals.circuit.progress_record[cell] - initial_weight) > (depth + 1):
-				# special situation: finish line
-				if abs(Globals.circuit.progress_record[best_cell] - initial_weight) > (depth + 1):
+			if Globals.circuit.progress_record[cell] - initial_weight > 100: # assuming 100 is a big enough gap
+				# special situation: car is right before the finish line and evaluating a cell
+				# on the other side (has a much higher weight but it's "better")
+				if Globals.circuit.progress_record[best_cell] - initial_weight > 100:
 					if Globals.circuit.check_cell_boolean_property(best_cell, 'is_road'):
 						if (
 							Globals.circuit.check_cell_boolean_property(cell, 'is_road')
@@ -80,17 +83,19 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 				else:
 					best_cell = cell
 
-			if Globals.circuit.check_cell_boolean_property(best_cell, 'is_road'):
-				if (
-					Globals.circuit.check_cell_boolean_property(cell, 'is_road')
-					and (Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+			# check if current cell is before finish line when we are already at the other side
+			elif not initial_weight - Globals.circuit.progress_record[cell] > 100:
+				if Globals.circuit.check_cell_boolean_property(best_cell, 'is_road'):
+					if (
+						Globals.circuit.check_cell_boolean_property(cell, 'is_road')
+						and (Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+					):
+						best_cell = cell
+				elif (
+					(Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
+					or Globals.circuit.check_cell_boolean_property(cell, 'is_road')
 				):
 					best_cell = cell
-			elif (
-				(Globals.circuit.progress_record[cell] < Globals.circuit.progress_record[best_cell])
-				or Globals.circuit.check_cell_boolean_property(cell, 'is_road')
-			):
-				best_cell = cell
 
 		initial_position = best_cell
 		cell_path.append(best_cell)
