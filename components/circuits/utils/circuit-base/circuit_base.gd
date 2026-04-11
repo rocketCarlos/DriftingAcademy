@@ -127,7 +127,7 @@ func _compute_progress() -> void:
 
 	# set finish cells as 0 weight
 	for cell in finish_cells:
-		progress_record.set(cell, 0.0)
+		progress_record.set(cell, circuit_tileset.get_cell_tile_data(cell).get_custom_data('terrain_resistance'))
 
 	var initial_offset = (
 		Vector2i(1, 0) if initial_car_rotation == DIRECTION.LEFT else
@@ -142,7 +142,12 @@ func _compute_progress() -> void:
 	for finish_cell in finish_cells:
 		var new_cell = finish_cell + initial_offset
 		if _is_cell_valid(new_cell):
-			cell_queue.append({new_cell: 1.0})
+			cell_queue.append(
+				{
+					new_cell:
+					1.0 + circuit_tileset.get_cell_tile_data(new_cell).get_custom_data('terrain_resistance')
+				}
+			)
 
 	# compute weight of the full track
 	max_weight = 0.0
@@ -163,7 +168,7 @@ func _compute_progress() -> void:
 				var cell_weight = parent_cell[parent_cell_coords] + (
 								1.0 if parent_cell_coords.x == child.x or parent_cell_coords.y == child.y
 								else sqrt2
-							)
+							) + circuit_tileset.get_cell_tile_data(child).get_custom_data('terrain_resistance')
 				# insert in cell_queue treating it as a priority queue
 				cell_queue.insert(
 					cell_queue.bsearch_custom(
