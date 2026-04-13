@@ -18,21 +18,22 @@ func _physics_process(_delta: float) -> void:
 
 	if debug:
 		$VirtualInputDebug.global_position = input
+		$VirtualInputDebug2.global_position = parent.global_position + parent.velocity
 
 	var current_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
 
 	if current_position_coordinate != last_position_coordinate:
 		last_position_coordinate = current_position_coordinate
-		_update_virtual_input(current_position_coordinate, (parent as CharacterBody2D).velocity)
+		_update_virtual_input(current_position_coordinate)
 
 
-func _update_virtual_input(position: Vector2i, velocity: Vector2) -> void:
+func _update_virtual_input(position: Vector2i) -> void:
 	if input_tween:
 		input_tween.kill()
 
 	input_tween = create_tween()
 
-	var new_virtual_position = _compute_virtual_input(position, velocity)
+	var new_virtual_position = _compute_virtual_input(position)
 
 	(input_tween
 		.tween_property(self, "input", new_virtual_position, 0.1)
@@ -41,14 +42,22 @@ func _update_virtual_input(position: Vector2i, velocity: Vector2) -> void:
 	)
 
 
-func _compute_virtual_input(position: Vector2i, velocity: Vector2) -> Vector2:
-	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, velocity.length()))), 1, 7)
+func _compute_virtual_input(position: Vector2i) -> Vector2:
+	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, parent.velocity.length()))), 1, 7)
 
-	return (
-		Globals.circuit_tileset.to_global(
+	var best_neighbour_global_position: Vector2 = Globals.circuit_tileset.to_global(
 			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
 		)
-	)
+
+	var u = best_neighbour_global_position - parent.global_position
+	var v = parent.velocity
+
+	var theta = rad_to_deg(acos(u.dot(v) / (u.length() * v.length())))
+
+	if theta >= 90.0:
+		print(theta)
+
+	return best_neighbour_global_position
 
 
 func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
