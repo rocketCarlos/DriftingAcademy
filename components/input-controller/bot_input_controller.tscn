@@ -9,9 +9,14 @@ gradient = SubResource("Gradient_0u5lq")
 
 [node name="BotInputController" type="Node2D" unique_id=1359192586]
 script = ExtResource("1_f278x")
+debug = true
 
 [node name="VirtualInputDebug" type="Sprite2D" parent="." unique_id=1155649125]
 modulate = Color(1, 0.39, 0.39, 1)
-position = Vector2(32.000004, -6.4999995)
+scale = Vector2(0.046874996, 10.999999)
+texture = SubResource("GradientTexture1D_f278x")
+
+[node name="VirtualInputDebug2" type="Sprite2D" parent="." unique_id=1747489311]
+modulate = Color(1, 1, 0.3882353, 1)
 scale = Vector2(0.046874996, 10.999999)
 texture = SubResource("GradientTexture1D_f278x")
