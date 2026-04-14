@@ -20,3 +20,8 @@ texture = SubResource("GradientTexture1D_f278x")
 modulate = Color(1, 1, 0.3882353, 1)
 scale = Vector2(0.046874996, 10.999999)
 texture = SubResource("GradientTexture1D_f278x")
+
+[node name="VirtualInputDebug3" type="Sprite2D" parent="." unique_id=1341595402]
+modulate = Color(0.31764707, 1, 0.3882353, 1)
+scale = Vector2(0.046874996, 10.999999)
+texture = SubResource("GradientTexture1D_f278x")

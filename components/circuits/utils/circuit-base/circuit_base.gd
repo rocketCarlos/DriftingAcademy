@@ -53,6 +53,7 @@ func initialize() -> void:
 		initial_colliders.process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _ready() -> void:
+	Engine.time_scale = 0.25
 	var source = circuit_tileset.tile_set.get_source(ATLAS_ID) as TileSetAtlasSource
 	for tile_id in source.get_tiles_count():
 		var cell_coords = source.get_tile_id(tile_id)

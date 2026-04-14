@@ -11,6 +11,8 @@ func _ready() -> void:
 	super()
 	if not debug:
 		$VirtualInputDebug.hide()
+		$VirtualInputDebug2.hide()
+		$VirtualInputDebug3.hide()
 
 func _physics_process(_delta: float) -> void:
 	if not last_position_coordinate:
@@ -43,21 +45,40 @@ func _update_virtual_input(position: Vector2i) -> void:
 
 
 func _compute_virtual_input(position: Vector2i) -> Vector2:
-	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, parent.velocity.length()))), 1, 7)
+	var speed =  parent.velocity.length()
+	print(speed)
+	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
 
+	# get desired cell that pushes us through the best path
 	var best_neighbour_global_position: Vector2 = Globals.circuit_tileset.to_global(
 			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
 		)
 
-	var u = best_neighbour_global_position - parent.global_position
-	var v = parent.velocity
+	var final_input = best_neighbour_global_position
+	if speed > 250.0:
+		# adjust input based on angle between desired cell and current velocity to counter inertia
+		var u: Vector2 = best_neighbour_global_position - parent.global_position
+		var v: Vector2 = parent.velocity
 
-	var theta = rad_to_deg(acos(u.dot(v) / (u.length() * v.length())))
+		var theta = acos(u.dot(v) / (u.length() * v.length()))
 
-	if theta >= 90.0:
-		print(theta)
+		# determine if u is left or right from v
+		var is_desired_direction_left: bool = v.cross(u) < 0.0
 
-	return best_neighbour_global_position
+		# get the new point by rotating u
+		# var overturn: float = theta + pow(theta, 2.0) * 0.2
+		var overturn: float = theta/4.0
+		if not is_desired_direction_left:
+			overturn = -overturn
+		final_input = Vector2(
+			best_neighbour_global_position.x*cos(overturn) - best_neighbour_global_position.y*sin(overturn),
+			best_neighbour_global_position.x*sin(overturn) + best_neighbour_global_position.y*cos(overturn)
+		)
+
+	if debug:
+		$VirtualInputDebug3.global_position = best_neighbour_global_position
+
+	return final_input
 
 
 func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
