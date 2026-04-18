@@ -2,26 +2,18 @@
 
 [ext_resource type="Script" uid="uid://r84vqgpep4me" path="res://components/input-controller/bot_input_controller.gd" id="1_f278x"]
 
-[sub_resource type="Gradient" id="Gradient_0u5lq"]
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_f278x"]
-gradient = SubResource("Gradient_0u5lq")
-
 [node name="BotInputController" type="Node2D" unique_id=1359192586]
 script = ExtResource("1_f278x")
 debug = true
 
-[node name="VirtualInputDebug" type="Sprite2D" parent="." unique_id=1155649125]
-modulate = Color(1, 0.39, 0.39, 1)
-scale = Vector2(0.046874996, 10.999999)
-texture = SubResource("GradientTexture1D_f278x")
+[node name="LineToInput" type="Line2D" parent="." unique_id=2018761283]
+width = 2.5
+default_color = Color(1, 0, 0, 1)
 
-[node name="VirtualInputDebug2" type="Sprite2D" parent="." unique_id=1747489311]
-modulate = Color(1, 1, 0.3882353, 1)
-scale = Vector2(0.046874996, 10.999999)
-texture = SubResource("GradientTexture1D_f278x")
+[node name="NeighbourPath" type="Line2D" parent="." unique_id=1973614872]
+width = 2.5
+default_color = Color(0, 1, 0, 1)
 
-[node name="VirtualInputDebug3" type="Sprite2D" parent="." unique_id=1341595402]
-modulate = Color(0.31764707, 1, 0.3882353, 1)
-scale = Vector2(0.046874996, 10.999999)
-texture = SubResource("GradientTexture1D_f278x")
+[node name="Velocity" type="Line2D" parent="." unique_id=809816677]
+width = 2.5
+default_color = Color(1, 1, 0, 1)

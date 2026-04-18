@@ -7,20 +7,36 @@ var input_tween: Tween = null
 var last_position_coordinate: Vector2i
 var cell_path: Array[Vector2i]
 
+@onready var line_to_input: Line2D = $LineToInput
+@onready var velocity: Line2D = $Velocity
+@onready var neighbour_path: Line2D = $NeighbourPath
+
 func _ready() -> void:
 	super()
+
+	line_to_input.add_point(Vector2(0.0, 0.0))
+	velocity.add_point(Vector2(0.0, 0.0))
+
 	if not debug:
-		$VirtualInputDebug.hide()
-		$VirtualInputDebug2.hide()
-		$VirtualInputDebug3.hide()
+		line_to_input.hide()
+		velocity.hide()
+		neighbour_path.hide()
+	else:
+		pass
 
 func _physics_process(_delta: float) -> void:
 	if not last_position_coordinate:
 		last_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
 
 	if debug:
-		$VirtualInputDebug.global_position = input
-		$VirtualInputDebug2.global_position = parent.global_position + parent.velocity
+		if line_to_input.get_point_count() > 1:
+			line_to_input.remove_point(1)
+		line_to_input.add_point(line_to_input.to_local(input))
+
+		if velocity.get_point_count() > 1:
+			velocity.remove_point(1)
+		velocity.add_point(parent.velocity)
+		velocity.global_rotation = 0
 
 	var current_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
 
@@ -46,7 +62,6 @@ func _update_virtual_input(position: Vector2i) -> void:
 
 func _compute_virtual_input(position: Vector2i) -> Vector2:
 	var speed =  parent.velocity.length()
-	print(speed)
 	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
 
 	# get desired cell that pushes us through the best path
@@ -74,9 +89,6 @@ func _compute_virtual_input(position: Vector2i) -> Vector2:
 			best_neighbour_global_position.x*cos(overturn) - best_neighbour_global_position.y*sin(overturn),
 			best_neighbour_global_position.x*sin(overturn) + best_neighbour_global_position.y*cos(overturn)
 		)
-
-	if debug:
-		$VirtualInputDebug3.global_position = best_neighbour_global_position
 
 	return final_input
 
@@ -130,5 +142,14 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 		initial_position = best_cell
 		cell_path.append(best_cell)
 
+
+	if debug:
+		neighbour_path.clear_points()
+		for cell in cell_path:
+			neighbour_path.add_point(
+				neighbour_path.to_local(
+					Globals.circuit_tileset.to_global(Globals.circuit_tileset.map_to_local(cell))
+				)
+			)
 
 	return best_cell
