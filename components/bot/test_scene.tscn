@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cu0ud7us0w8n" path="res://components/circuits/driftings-cradle/driftings_cradle.tscn" id="1_cbv5l"]
 [ext_resource type="PackedScene" uid="uid://ccfgi5gd1l23n" path="res://components/bot/bot.tscn" id="2_vy0lq"]
 [ext_resource type="PackedScene" uid="uid://b6okt6e314s81" path="res://components/car/car.tscn" id="2_whjrq"]
+[ext_resource type="Script" uid="uid://tu2mh38pags8" path="res://components/bot/camera_2d.gd" id="4_npgmm"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_vy0lq"]
 a = Vector2(0, -60)
@@ -3091,3 +3092,12 @@ position = Vector2(-328, -433)
 
 [node name="Bot5" parent="." index="11" unique_id=461369700 instance=ExtResource("2_vy0lq")]
 position = Vector2(-392, -495)
+
+[node name="Camera2D" type="Camera2D" parent="." index="13" unique_id=1195936642]
+zoom = Vector2(0.43, 0.43)
+limit_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+script = ExtResource("4_npgmm")
