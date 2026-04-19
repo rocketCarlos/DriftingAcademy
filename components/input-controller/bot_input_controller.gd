@@ -3,6 +3,8 @@ extends InputControllerBase
 
 var input_tween: Tween = null
 @export var debug: bool = false
+enum THINKING_MODES {NEXT_CELL_SIMULATION, CELL_PATH, ADJUSTED_CELL_PATH}
+@export var thinking_mode: THINKING_MODES = THINKING_MODES.NEXT_CELL_SIMULATION
 
 var last_position_coordinate: Vector2i
 var cell_path: Array[Vector2i]
@@ -11,8 +13,14 @@ var cell_path: Array[Vector2i]
 @onready var velocity: Line2D = $Velocity
 @onready var neighbour_path: Line2D = $NeighbourPath
 
+var movement_controller
+
 func _ready() -> void:
 	super()
+
+	movement_controller = parent.get_node("MovementController")
+
+	print(movement_controller)
 
 	line_to_input.add_point(Vector2(0.0, 0.0))
 	velocity.add_point(Vector2(0.0, 0.0))
@@ -24,7 +32,7 @@ func _ready() -> void:
 	else:
 		pass
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not last_position_coordinate:
 		last_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
 
@@ -42,16 +50,16 @@ func _physics_process(_delta: float) -> void:
 
 	if current_position_coordinate != last_position_coordinate:
 		last_position_coordinate = current_position_coordinate
-		_update_virtual_input(current_position_coordinate)
+		_update_virtual_input(current_position_coordinate, delta)
 
 
-func _update_virtual_input(position: Vector2i) -> void:
+func _update_virtual_input(position: Vector2i, delta: float) -> void:
 	if input_tween:
 		input_tween.kill()
 
 	input_tween = create_tween()
 
-	var new_virtual_position = _compute_virtual_input(position)
+	var new_virtual_position = _compute_virtual_input(position, delta)
 
 	(input_tween
 		.tween_property(self, "input", new_virtual_position, 0.1)
@@ -60,37 +68,18 @@ func _update_virtual_input(position: Vector2i) -> void:
 	)
 
 
-func _compute_virtual_input(position: Vector2i) -> Vector2:
-	var speed =  parent.velocity.length()
-	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
+func _compute_virtual_input(position: Vector2i, delta: float) -> Vector2:
+	match thinking_mode:
+		THINKING_MODES.NEXT_CELL_SIMULATION:
+			return _compute_next_cell_simulation(position, delta)
+		THINKING_MODES.CELL_PATH:
+			return _compute_cell_path(position)
+		THINKING_MODES.ADJUSTED_CELL_PATH:
+			return _compute_adjusted_cell_path(position)
+		_:
+			push_error("INVALID THINKING MODE")
+			return Vector2()
 
-	# get desired cell that pushes us through the best path
-	var best_neighbour_global_position: Vector2 = Globals.circuit_tileset.to_global(
-			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
-		)
-
-	var final_input = best_neighbour_global_position
-	if speed > 250.0:
-		# adjust input based on angle between desired cell and current velocity to counter inertia
-		var u: Vector2 = best_neighbour_global_position - parent.global_position
-		var v: Vector2 = parent.velocity
-
-		var theta = acos(u.dot(v) / (u.length() * v.length()))
-
-		# determine if u is left or right from v
-		var is_desired_direction_left: bool = v.cross(u) < 0.0
-
-		# get the new point by rotating u
-		# var overturn: float = theta + pow(theta, 2.0) * 0.2
-		var overturn: float = theta/4.0
-		if not is_desired_direction_left:
-			overturn = -overturn
-		final_input = Vector2(
-			best_neighbour_global_position.x*cos(overturn) - best_neighbour_global_position.y*sin(overturn),
-			best_neighbour_global_position.x*sin(overturn) + best_neighbour_global_position.y*cos(overturn)
-		)
-
-	return final_input
 
 
 func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
@@ -153,3 +142,84 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 			)
 
 	return best_cell
+
+
+func _compute_next_cell_simulation(position: Vector2i, delta: float) -> Vector2:
+	var best_neighbour_position = Globals.circuit_tileset.to_global(
+			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, 1))
+		)
+
+	var initial_direction = (best_neighbour_position-parent.global_position).normalized()
+
+	var best_direction = initial_direction
+	var best_distance = (
+		(
+			movement_controller.simulate_move(initial_direction, delta) +
+			parent.global_position
+		).distance_squared_to(best_neighbour_position) # squared bc is faster and just need to compare
+	)
+
+	var arc = (2*PI)/8
+	for i in range(7):
+		var arc_to_test = i * arc
+		var dist = (
+			(
+				movement_controller.simulate_move(initial_direction + arc_to_test) + #TODO: fix this sum. left is in polar coordinates, right in rads
+				parent.global.position
+			).distance_squared_to(best_neighbour_position)
+		)
+
+		if dist < best_distance:
+			best_distance = dist
+			best_direction = arc_to_test
+
+	return Vector2(
+			best_neighbour_position.x*cos(initial_direction + best_direction) -
+			best_neighbour_position.y*sin(initial_direction + best_direction),
+
+			best_neighbour_position.x*sin(initial_direction + best_direction) +
+			best_neighbour_position.y*cos(initial_direction + best_direction)
+		)
+
+
+func _compute_cell_path(position: Vector2i) -> Vector2:
+	var speed =  parent.velocity.length()
+	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
+
+	# get desired cell that pushes us through the best path
+	return Globals.circuit_tileset.to_global(
+			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
+		)
+
+
+func _compute_adjusted_cell_path(position: Vector2i) -> Vector2:
+	var speed =  parent.velocity.length()
+	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
+
+	# get desired cell that pushes us through the best path
+	var best_neighbour_global_position: Vector2 = Globals.circuit_tileset.to_global(
+			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
+		)
+
+	var final_input = best_neighbour_global_position
+	if speed > 250.0:
+		# adjust input based on angle between desired cell and current velocity to counter inertia
+		var u: Vector2 = best_neighbour_global_position - parent.global_position
+		var v: Vector2 = parent.velocity
+
+		var theta = acos(u.dot(v) / (u.length() * v.length()))
+
+		# determine if u is left or right from v
+		var is_desired_direction_left: bool = v.cross(u) < 0.0
+
+		# get the new point by rotating u
+		# var overturn: float = theta + pow(theta, 2.0) * 0.2
+		var overturn: float = theta/4.0
+		if not is_desired_direction_left:
+			overturn = -overturn
+		final_input = Vector2(
+			best_neighbour_global_position.x*cos(overturn) - best_neighbour_global_position.y*sin(overturn),
+			best_neighbour_global_position.x*sin(overturn) + best_neighbour_global_position.y*cos(overturn)
+		)
+
+	return final_input
