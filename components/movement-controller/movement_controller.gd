@@ -86,15 +86,7 @@ func _physics_process(delta: float) -> void:
 	# manage movement
 	# -----------------------------------------
 	if not disable_acceleration:
-		var force =  Vector2(0.0, 0.0)
-		# if Input.is_action_pressed("accelerate"):
-		var prev_velocity_length = body.velocity.length()
-		# the acceleration force input by the player
-		force = accel * mouse_direction
-		# apply the force to velocity
-		body.velocity += force
-
-		adjust_velocity(prev_velocity_length)
+		body.velocity = calculate_next_velocity(mouse_direction)
 
 		# ---------------------------------------------
 		# manage sprite rotation
@@ -125,22 +117,39 @@ func make_collision(origin_vel: Vector2, origin_object: Object) -> void:
 		var prev_vel = body.velocity.length()
 		body.velocity += origin_vel
 
-		adjust_velocity(prev_vel)
+		body.velocity = get_adjusted_velocity(body.velocity, prev_vel)
 
 
-func adjust_velocity(prev_velocity_length: float) -> void:
+func calculate_next_velocity(mouse_direction) -> Vector2:
+	var next_velocity: Vector2
+
+	var force =  Vector2(0.0, 0.0)
+	# if Input.is_action_pressed("accelerate"):
+	var prev_velocity_length = body.velocity.length()
+	# the acceleration force input by the player
+	force = accel * mouse_direction
+	# apply the force to velocity
+	next_velocity = body.velocity + force
+
+
+	return get_adjusted_velocity(next_velocity, prev_velocity_length)
+
+func get_adjusted_velocity(unadjusted_velocity: Vector2, prev_velocity_length: float) -> Vector2:
+	var adjusted_velocity: Vector2 = unadjusted_velocity
 	# Limit speed not to exceed max_speed
 	# If exceeding max_speed, use prev_velocity_length to smoothlty
 	# reduce velocity until max_speed is reached
-	if body.velocity.length() >= max_speed:
+	if unadjusted_velocity.length() >= max_speed:
 		if prev_velocity_length > max_speed:
 			# apply smooth deaccel
-			body.velocity = body.velocity.normalized() * prev_velocity_length - body.velocity.normalized() * deaccel
-			if body.velocity.length() < max_speed:
+			adjusted_velocity = unadjusted_velocity.normalized() * prev_velocity_length - unadjusted_velocity.normalized() * deaccel
+			if adjusted_velocity.length() < max_speed:
 				# correct if speed is decreased too much
-				body.velocity = body.velocity.normalized() * max_speed
+				adjusted_velocity = adjusted_velocity.normalized() * max_speed
 		else:
-			body.velocity = body.velocity.normalized() * max_speed
+			adjusted_velocity = unadjusted_velocity.normalized() * max_speed
+
+	return adjusted_velocity
 
 func get_wheels_resistance():
 	var total = 0
