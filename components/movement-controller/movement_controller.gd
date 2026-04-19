@@ -120,7 +120,7 @@ func make_collision(origin_vel: Vector2, origin_object: Object) -> void:
 		body.velocity = get_adjusted_velocity(body.velocity, prev_vel)
 
 
-func calculate_next_velocity(mouse_direction) -> Vector2:
+func calculate_next_velocity(mouse_direction: Vector2) -> Vector2:
 	var next_velocity: Vector2
 
 	var force =  Vector2(0.0, 0.0)
@@ -162,3 +162,10 @@ func get_wheels_resistance():
 	return total
 
 #endregion
+
+func simulate_move(input: Vector2, delta) -> Vector2:
+	var simulated_velocity = calculate_next_velocity(input)
+
+	var collision = body.move_and_collide(simulated_velocity * delta, true)
+
+	return collision.get_travel() if collision else simulated_velocity * delta
