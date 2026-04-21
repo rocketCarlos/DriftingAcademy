@@ -17,7 +17,6 @@ script = ExtResource("1_0u5lq")
 input_provider_path = NodePath("../BotInputController")
 
 [node name="BotInputController" parent="." unique_id=789719221 instance=ExtResource("3_6a5r5")]
-debug = true
 
 [node name="Skin" type="Sprite2D" parent="." unique_id=1083764777]
 texture = ExtResource("2_8r03p")
