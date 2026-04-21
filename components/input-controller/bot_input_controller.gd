@@ -20,8 +20,6 @@ func _ready() -> void:
 
 	movement_controller = parent.get_node("MovementController")
 
-	print(movement_controller)
-
 	line_to_input.add_point(Vector2(0.0, 0.0))
 	velocity.add_point(Vector2(0.0, 0.0))
 
@@ -46,11 +44,21 @@ func _physics_process(delta: float) -> void:
 		velocity.add_point(parent.velocity)
 		velocity.global_rotation = 0
 
-	var current_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
+		neighbour_path.clear_points()
+		for cell in cell_path:
+			neighbour_path.add_point(
+				neighbour_path.to_local(
+					Globals.circuit_tileset.to_global(Globals.circuit_tileset.map_to_local(cell))
+				)
+			)
 
-	if current_position_coordinate != last_position_coordinate:
-		last_position_coordinate = current_position_coordinate
-		_update_virtual_input(current_position_coordinate, delta)
+	var current_position_coordinate = (
+		Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
+	)
+
+	#if current_position_coordinate != last_position_coordinate:
+	last_position_coordinate = current_position_coordinate
+	_update_virtual_input(current_position_coordinate, delta)
 
 
 func _update_virtual_input(position: Vector2i, delta: float) -> void:
@@ -58,7 +66,7 @@ func _update_virtual_input(position: Vector2i, delta: float) -> void:
 		input_tween.kill()
 
 	input_tween = create_tween()
-
+#
 	var new_virtual_position = _compute_virtual_input(position, delta)
 
 	(input_tween
@@ -66,7 +74,6 @@ func _update_virtual_input(position: Vector2i, delta: float) -> void:
 		.set_trans(Tween.TRANS_LINEAR)
 		.set_ease(Tween.EASE_OUT)
 	)
-
 
 func _compute_virtual_input(position: Vector2i, delta: float) -> Vector2:
 	match thinking_mode:
@@ -88,12 +95,12 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 	var best_cell: Vector2i
 	for i in range(depth):
 		var neighbours: Array[Vector2i] = Globals.circuit.get_cell_neighbours(initial_position)
-		best_cell = Vector2i(INF, INF) # init with invalid values
+		best_cell = Vector2i(999999, 999999) # init with invalid values
 		for cell in neighbours:
 			if cell in cell_path or Globals.circuit.progress_record[cell] == INF:
 				# skip already visited or invalid cells
 				continue
-			elif best_cell.x == INF and best_cell.y == INF :
+			elif best_cell.x == 999999 and best_cell.y == 999999 :
 				best_cell = cell
 
 			if Globals.circuit.progress_record[cell] - initial_weight > 100: # assuming 100 is a big enough gap
@@ -131,55 +138,47 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 		initial_position = best_cell
 		cell_path.append(best_cell)
 
-
-	if debug:
-		neighbour_path.clear_points()
-		for cell in cell_path:
-			neighbour_path.add_point(
-				neighbour_path.to_local(
-					Globals.circuit_tileset.to_global(Globals.circuit_tileset.map_to_local(cell))
-				)
-			)
-
 	return best_cell
 
 
 func _compute_next_cell_simulation(position: Vector2i, delta: float) -> Vector2:
+	var speed =  parent.velocity.length()
+	var depth = clampi(int(lerp(0.0, 3.0, inverse_lerp(50, 300, speed))), 1, 3)
+
 	var best_neighbour_position = Globals.circuit_tileset.to_global(
-			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, 1))
+			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
 		)
 
 	var initial_direction = (best_neighbour_position-parent.global_position).normalized()
-
-	var best_direction = initial_direction
-	var best_distance = (
+	var best_distance: float = (
 		(
 			movement_controller.simulate_move(initial_direction, delta) +
 			parent.global_position
 		).distance_squared_to(best_neighbour_position) # squared bc is faster and just need to compare
 	)
-
-	var arc = (2*PI)/8
-	for i in range(7):
+	var initial_distance = best_distance
+	var best_arc: float = 0.0
+	var n_fragments = 16
+	var arc = (2*PI)/n_fragments
+	for i in range(n_fragments-1):
 		var arc_to_test = i * arc
 		var dist = (
 			(
-				movement_controller.simulate_move(initial_direction + arc_to_test) + #TODO: fix this sum. left is in polar coordinates, right in rads
-				parent.global.position
+				movement_controller.simulate_move(_rotate_vector(initial_direction, arc_to_test), delta) +
+				parent.global_position
 			).distance_squared_to(best_neighbour_position)
 		)
 
 		if dist < best_distance:
 			best_distance = dist
-			best_direction = arc_to_test
+			best_arc = arc_to_test
 
-	return Vector2(
-			best_neighbour_position.x*cos(initial_direction + best_direction) -
-			best_neighbour_position.y*sin(initial_direction + best_direction),
+	if initial_distance-best_distance < 3.0:
+		# if difference too low, return best neighbour to avoid jittering
+		return best_neighbour_position
 
-			best_neighbour_position.x*sin(initial_direction + best_direction) +
-			best_neighbour_position.y*cos(initial_direction + best_direction)
-		)
+	var final_direction = _rotate_vector(best_neighbour_position-parent.global_position, best_arc)
+	return final_direction + parent.global_position
 
 
 func _compute_cell_path(position: Vector2i) -> Vector2:
@@ -223,3 +222,13 @@ func _compute_adjusted_cell_path(position: Vector2i) -> Vector2:
 		)
 
 	return final_input
+
+
+func _rotate_vector(vector: Vector2, rads: float) -> Vector2:
+	"""
+	given a vector, rotate it `rads` radians
+	"""
+	return Vector2(
+			vector.x*cos(rads) - vector.y*sin(rads),
+			vector.x*sin(rads) + vector.y*cos(rads)
+		)
