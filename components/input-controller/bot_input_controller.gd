@@ -6,7 +6,7 @@ var input_tween: Tween = null
 enum THINKING_MODES {NEXT_CELL_SIMULATION, CELL_PATH, ADJUSTED_CELL_PATH}
 @export var thinking_mode: THINKING_MODES = THINKING_MODES.NEXT_CELL_SIMULATION
 
-var last_position_coordinate: Vector2i
+var last_position = null # Vector2 or null last position WHERE INPUT COMPUTING WAS DONE
 var cell_path: Array[Vector2i]
 
 @onready var line_to_input: Line2D = $LineToInput
@@ -31,9 +31,6 @@ func _ready() -> void:
 		pass
 
 func _physics_process(delta: float) -> void:
-	if not last_position_coordinate:
-		last_position_coordinate = Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
-
 	if debug:
 		if line_to_input.get_point_count() > 1:
 			line_to_input.remove_point(1)
@@ -56,9 +53,9 @@ func _physics_process(delta: float) -> void:
 		Globals.circuit_tileset.local_to_map(Globals.circuit_tileset.to_local(parent.global_position))
 	)
 
-	#if current_position_coordinate != last_position_coordinate:
-	last_position_coordinate = current_position_coordinate
-	_update_virtual_input(current_position_coordinate, delta)
+	if not last_position or abs(parent.global_position - last_position).length() > 8.0:
+		last_position = parent.global_position
+		_update_virtual_input(current_position_coordinate, delta)
 
 
 func _update_virtual_input(position: Vector2i, delta: float) -> void:
@@ -142,8 +139,9 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 
 
 func _compute_next_cell_simulation(position: Vector2i, delta: float) -> Vector2:
-	var speed =  parent.velocity.length()
-	var depth = clampi(int(lerp(0.0, 3.0, inverse_lerp(50, 300, speed))), 1, 3)
+	var speed: float =  parent.velocity.length()
+	var depth: int = int(lerp(0.0, 4.0, inverse_lerp(50, 300, speed)))
+	depth = depth if depth > 0 else 1
 
 	var best_neighbour_position = Globals.circuit_tileset.to_global(
 			Globals.circuit_tileset.map_to_local(_select_best_neighbour(position, depth))
@@ -193,7 +191,7 @@ func _compute_cell_path(position: Vector2i) -> Vector2:
 
 func _compute_adjusted_cell_path(position: Vector2i) -> Vector2:
 	var speed =  parent.velocity.length()
-	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
+	var depth = roundi(remap(max(speed, 75.0), 75.0, 300.0, 1.0, 5.0))
 
 	# get desired cell that pushes us through the best path
 	var best_neighbour_global_position: Vector2 = Globals.circuit_tileset.to_global(
@@ -201,25 +199,14 @@ func _compute_adjusted_cell_path(position: Vector2i) -> Vector2:
 		)
 
 	var final_input = best_neighbour_global_position
-	if speed > 250.0:
+	if depth > 3:
 		# adjust input based on angle between desired cell and current velocity to counter inertia
 		var u: Vector2 = best_neighbour_global_position - parent.global_position
 		var v: Vector2 = parent.velocity
 
-		var theta = acos(u.dot(v) / (u.length() * v.length()))
+		var theta = u.angle_to(v)
 
-		# determine if u is left or right from v
-		var is_desired_direction_left: bool = v.cross(u) < 0.0
-
-		# get the new point by rotating u
-		# var overturn: float = theta + pow(theta, 2.0) * 0.2
-		var overturn: float = theta/4.0
-		if not is_desired_direction_left:
-			overturn = -overturn
-		final_input = Vector2(
-			best_neighbour_global_position.x*cos(overturn) - best_neighbour_global_position.y*sin(overturn),
-			best_neighbour_global_position.x*sin(overturn) + best_neighbour_global_position.y*cos(overturn)
-		)
+		final_input = parent.global_position + u.rotated(-2.0*theta)
 
 	return final_input
 
