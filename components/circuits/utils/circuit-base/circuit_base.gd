@@ -302,7 +302,8 @@ func get_initial_rotation() -> float:
 func _on_race_started(object: Node2D) -> void:
 	if object == Globals.car:
 		initial_colliders.process_mode = Node.PROCESS_MODE_DISABLED
-		ghost.start()
+		if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
+			ghost.start()
 
 func _on_race_restarted() -> void:
 	initialize()

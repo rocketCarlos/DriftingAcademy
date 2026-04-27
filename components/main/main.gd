@@ -70,7 +70,8 @@ func _on_load_current_circuit() -> void:
 			instantiate_and_initialize_car(circuit_instance)
 			game_subviewport.add_child(circuit_instance)
 		Globals.GAME_MODE.VS_MACHINE:
-			push_error("NOT IMPLEMENTED YET")
+			instantiate_and_initialize_car(circuit_instance)
+			game_subviewport.add_child(circuit_instance)
 
 
 func _on_race_restarted() -> void:
@@ -108,7 +109,9 @@ func instantiate_and_initialize_car(circuit: Node) -> void:
 	car_instance.rotation = circuit.get_initial_rotation()
 	car_instance.set_skin(SkinHolder.get_current_skin())
 
-	if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
-		car_instance.position = circuit.get_grid_position(-1) # last grid position
+	car_instance.position = circuit.get_grid_position(-1) # last grid position
+
+	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
+		circuit.instantiate_bots() # TODO: this!!
 
 	circuit.add_child(car_instance)
