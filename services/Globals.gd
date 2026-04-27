@@ -15,7 +15,7 @@ var current_gamemode: GAME_MODE
 
 const GAMEMODE_LABELS: Dictionary[GAME_MODE, String] = {
 	GAME_MODE.TIME_TRIAL: "Time trial",
-	GAME_MODE.VS_MACHINE: "Vs. machine"
+	GAME_MODE.VS_MACHINE: "Vs. cpu"
 }
 
 """
