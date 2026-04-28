@@ -4,12 +4,15 @@ extends Node2D
 @onready var game_subviewport = $Game/SubViewportContainer/SubViewport
 
 @export var car_scene: PackedScene
+@export var bot_scene: PackedScene
 # A reference to the player's car. When set to null, it automatically frees the node
 var car_instance: CharacterBody2D:
 	set(value):
 		if value == null:
 			car_instance.queue_free()
 		car_instance = value
+
+var bots: Array[CharacterBody2D]
 
 # A reference to the currently displayed menu. When set to null, it automatically frees the node
 var current_menu: Control = null:
@@ -70,7 +73,7 @@ func _on_load_current_circuit() -> void:
 			instantiate_and_initialize_car(circuit_instance)
 			game_subviewport.add_child(circuit_instance)
 		Globals.GAME_MODE.VS_MACHINE:
-			instantiate_and_initialize_car(circuit_instance)
+			instantiate_and_initialize_car(circuit_instance, 9)
 			game_subviewport.add_child(circuit_instance)
 
 
@@ -103,15 +106,19 @@ func _on_race_ended() -> void:
 
 
 
-func instantiate_and_initialize_car(circuit: Node) -> void:
+func instantiate_and_initialize_car(circuit: Node, n_bots: int = 0) -> void:
 	# instantiate car and set vars
 	car_instance = car_scene.instantiate()
 	car_instance.rotation = circuit.get_initial_rotation()
 	car_instance.set_skin(SkinHolder.get_current_skin())
 
 	car_instance.position = circuit.get_grid_position(-1) # last grid position
-
-	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
-		circuit.instantiate_bots() # TODO: this!!
-
 	circuit.add_child(car_instance)
+
+	for i in range(n_bots):
+		var bot_instance = bot_scene.instantiate()
+		bot_instance.rotation = circuit.get_initial_rotation()
+		bot_instance.set_skin(SkinHolder.get_current_skin())
+
+		bot_instance.position = circuit.get_grid_position(i)
+		circuit.add_child(bot_instance)
