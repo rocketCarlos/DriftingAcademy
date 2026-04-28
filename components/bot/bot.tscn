@@ -1,14 +1,22 @@
 [gd_scene format=3 uid="uid://ccfgi5gd1l23n"]
 
 [ext_resource type="Script" uid="uid://bo5pwxgep71f6" path="res://components/bot/bot.gd" id="1_0u5lq"]
+[ext_resource type="Shader" uid="uid://c8gkuu3cmoedt" path="res://components/bot/bot.gdshader" id="1_5scxr"]
 [ext_resource type="PackedScene" uid="uid://dfkaap3lxani1" path="res://components/movement-controller/movement_controller.tscn" id="2_6a5r5"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_8r03p"]
 [ext_resource type="PackedScene" uid="uid://2tay2q5qwrem" path="res://components/input-controller/bot_input_controller.tscn" id="3_6a5r5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w20bd"]
+shader = ExtResource("1_5scxr")
+shader_parameter/clr = Color(0.99, 0.2574, 0.2574, 0.45490196)
+shader_parameter/type = 1
+shader_parameter/thickness = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6a5r5"]
 size = Vector2(11, 20.5)
 
 [node name="Bot" type="CharacterBody2D" unique_id=2012145137]
+material = SubResource("ShaderMaterial_w20bd")
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_0u5lq")
@@ -19,6 +27,7 @@ input_provider_path = NodePath("../BotInputController")
 [node name="BotInputController" parent="." unique_id=789719221 instance=ExtResource("3_6a5r5")]
 
 [node name="Skin" type="Sprite2D" parent="." unique_id=1083764777]
+use_parent_material = true
 texture = ExtResource("2_8r03p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1937989425]
