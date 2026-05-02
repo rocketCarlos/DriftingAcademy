@@ -3,6 +3,7 @@ extends Control
 @onready var time_label = $Time
 @onready var speed_label = $Speed
 @onready var lap_label = $Lap/Count
+@onready var restart_info = $RestartInfo
 
 var total_laps: int
 var current_lap = 1
@@ -20,6 +21,10 @@ func _ready() -> void:
 	Globals.race_ended.connect(restart)
 	total_laps = Globals.total_laps_gamemode[Globals.current_gamemode]
 	restart()
+
+	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
+		time_label.text = ''
+		restart_info.hide()
 
 
 func _process(delta: float) -> void:
