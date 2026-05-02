@@ -85,3 +85,8 @@ offset_bottom = -9.0
 grow_vertical = 0
 text = "R: restart"
 label_settings = SubResource("LabelSettings_bclms")
+
+[node name="Label" type="Label" parent="." unique_id=293988511]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
