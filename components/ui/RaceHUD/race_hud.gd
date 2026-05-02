@@ -68,3 +68,7 @@ func _on_race_started(object: Node2D) -> void:
 
 func _on_race_restarted() -> void:
 	restart()
+
+
+func start_race_countdown() -> void:
+	pass
