@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 var wheels: Array[Node] = [null, null, null, null]
+@onready var movement_controller = $MovementController
 
 func _ready() -> void:
 	wheels = find_children("Wheel?")
-
+	movement_controller.disable_acceleration = true
 
 func set_skin(new_skin: Node) -> void:
 	# set wheel relative positions

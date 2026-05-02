@@ -31,7 +31,7 @@ Info variables
 var car_speeed: float = 0
 const total_laps_gamemode: Dictionary[GAME_MODE, int] = {
 	GAME_MODE.TIME_TRIAL: 4,
-	GAME_MODE.VS_MACHINE: 0
+	GAME_MODE.VS_MACHINE: 4
 }
 
 """

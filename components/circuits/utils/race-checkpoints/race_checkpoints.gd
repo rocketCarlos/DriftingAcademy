@@ -29,7 +29,8 @@ func _ready() -> void:
 func _on_race_checkpoints_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, local_shape_index: int) -> void:
 	if local_shape_index == 0 and current_checkpoint.get(body) == null:
 		# first time this car has crossed the finish/start line
-		Globals.race_started.emit(body)
+		if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
+			Globals.race_started.emit(body)
 		current_checkpoint.set(body, 0)
 
 	var checkpoint_index: int = current_checkpoint.get(body)

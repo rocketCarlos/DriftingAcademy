@@ -97,6 +97,12 @@ func _physics_process(delta: float) -> void:
 		# 2. Adjust rotation to simulate drifting
 		var mouse_angle = body.velocity.angle_to(mouse_direction)
 		body.rotation = final_rotation + 2*mouse_angle/3
+	else:
+		if body.velocity.length() > 0:
+			body.velocity -= body.velocity.normalized() * deaccel
+			# Prevent overshooting and stop when speed is very low
+			if body.velocity.length() < 10.0:  # Threshold for stopping
+				body.velocity = Vector2(0, 0)
 
 	var collision: KinematicCollision2D = body.move_and_collide(body.velocity*delta)
 	if collision and not already_collided_with.has(collision.get_collider()):

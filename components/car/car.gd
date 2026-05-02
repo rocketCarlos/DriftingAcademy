@@ -27,11 +27,6 @@ func _physics_process(_delta: float) -> void:
 				movement_controller.disable_acceleration = false
 			else:
 				movement_controller.disable_acceleration = true
-				if velocity.length() > 0:
-					velocity -= velocity.normalized() * movement_controller.deaccel
-					# Prevent overshooting and stop when speed is very low
-					if velocity.length() < 10.0:  # Threshold for stopping
-						velocity = Vector2(0, 0)
 
 func _process(_delta: float) -> void:
 	engine_sound.pitch_scale = 1 + inverse_lerp(0, movement_controller.SPEED_ROAD, velocity.length()) * 1.5

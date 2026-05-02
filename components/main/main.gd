@@ -38,7 +38,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("restart"):
+	if Input.is_action_just_pressed("restart") and Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
 		Globals.race_restarted.emit()
 
 
