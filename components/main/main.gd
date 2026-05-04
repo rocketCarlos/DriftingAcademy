@@ -75,6 +75,10 @@ func _on_load_current_circuit() -> void:
 		Globals.GAME_MODE.VS_MACHINE:
 			instantiate_and_initialize_car(circuit_instance, 9)
 			game_subviewport.add_child(circuit_instance)
+			var semaphore = load("res://components/ui/Semaphore/semaphore.tscn").instantiate()
+			semaphore.position = ui_subviewport.size / 2.0
+			semaphore.position.y = semaphore.position.y / 3.0
+			ui_subviewport.add_child(semaphore)
 
 
 func _on_race_restarted() -> void:

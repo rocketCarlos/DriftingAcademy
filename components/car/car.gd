@@ -6,6 +6,7 @@ extends CharacterBody2D
 
 var last_speed: float
 var wheels: Array[Node] = [null, null, null, null]
+var can_accelerate: bool = false
 
 #region states
 enum STATE {
@@ -17,13 +18,15 @@ enum STATE {
 
 func _ready() -> void:
 	Globals.car = self
+	Globals.race_started.connect(_on_race_started)
 	wheels = find_children("Wheel?")
+	can_accelerate = Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL
 
 func _physics_process(_delta: float) -> void:
 	Globals.car_speeed = velocity.length()
 	match current_state:
 		STATE.PLAY:
-			if Input.is_action_pressed("accelerate"):
+			if Input.is_action_pressed("accelerate") and can_accelerate:
 				movement_controller.disable_acceleration = false
 			else:
 				movement_controller.disable_acceleration = true
@@ -52,3 +55,6 @@ func set_skin(new_skin: Node) -> void:
 
 
 #endregion
+
+func _on_race_started(_object: Node2D) -> void:
+	can_accelerate = true

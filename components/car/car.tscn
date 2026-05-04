@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6okt6e314s81"]
+[gd_scene format=3 uid="uid://b6okt6e314s81"]
 
 [ext_resource type="Script" uid="uid://cigewcuyyvues" path="res://components/car/car.gd" id="1_yhfra"]
 [ext_resource type="PackedScene" uid="uid://dfkaap3lxani1" path="res://components/movement-controller/movement_controller.tscn" id="2_o583d"]
@@ -15,7 +15,7 @@ stream_0/stream = ExtResource("7_u0012")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wq8g5"]
 size = Vector2(11, 20.5)
 
-[node name="Car" type="CharacterBody2D"]
+[node name="Car" type="CharacterBody2D" unique_id=1882632839]
 z_index = 1
 texture_filter = 1
 collision_mask = 3
@@ -23,14 +23,14 @@ motion_mode = 1
 wall_min_slide_angle = 0.0
 script = ExtResource("1_yhfra")
 
-[node name="MovementController" parent="." instance=ExtResource("2_o583d")]
+[node name="MovementController" parent="." unique_id=1071431285 instance=ExtResource("2_o583d")]
 input_provider_path = NodePath("../UserInputController")
 
-[node name="UserInputController" type="Node" parent="."]
+[node name="UserInputController" type="Node" parent="." unique_id=1526625856]
 script = ExtResource("3_d807o")
 metadata/_custom_type_script = "uid://b84woegrb4g2r"
 
-[node name="Camera" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="." unique_id=805527827]
 zoom = Vector2(2, 2)
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
@@ -39,26 +39,26 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
-[node name="Engine" type="AudioStreamPlayer" parent="."]
+[node name="Engine" type="AudioStreamPlayer" parent="." unique_id=1765219720]
 stream = ExtResource("6_b3ski")
 volume_db = -16.0
 autoplay = true
 
-[node name="Crash" type="AudioStreamPlayer" parent="."]
+[node name="Crash" type="AudioStreamPlayer" parent="." unique_id=1871571630]
 stream = SubResource("AudioStreamRandomizer_s371w")
 volume_db = -8.0
 
-[node name="Skin" type="Sprite2D" parent="."]
+[node name="Skin" type="Sprite2D" parent="." unique_id=964486418]
 texture = ExtResource("4_wq8g5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=585823044]
 position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_wq8g5")
 
-[node name="Wheel1" type="Node2D" parent="."]
+[node name="Wheel1" type="Node2D" parent="." unique_id=1297180736]
 
-[node name="Wheel2" type="Node2D" parent="."]
+[node name="Wheel2" type="Node2D" parent="." unique_id=1118361512]
 
-[node name="Wheel3" type="Node2D" parent="."]
+[node name="Wheel3" type="Node2D" parent="." unique_id=1818838044]
 
-[node name="Wheel4" type="Node2D" parent="."]
+[node name="Wheel4" type="Node2D" parent="." unique_id=495874769]
