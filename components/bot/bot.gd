@@ -4,6 +4,7 @@ var wheels: Array[Node] = [null, null, null, null]
 @onready var movement_controller = $MovementController
 
 func _ready() -> void:
+	Globals.race_started.connect(_on_race_started)
 	wheels = find_children("Wheel?")
 	movement_controller.disable_acceleration = true
 
@@ -15,3 +16,7 @@ func set_skin(new_skin: Node) -> void:
 	get_node("CollisionShape2D").shape = new_skin.find_child("CollisionShape2D").shape
 	# set skin
 	get_node("Skin").texture = new_skin.texture
+
+
+func _on_race_started(_object: Node2D) -> void:
+	movement_controller.disable_acceleration = false

@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cq540y5x2qebk"]
+
+[ext_resource type="Texture2D" uid="uid://celgfej0fbao5" path="res://assets/ui/semaphore-Sheet.png" id="1_y06xy"]
+[ext_resource type="Script" uid="uid://cs7knvjujsoms" path="res://components/ui/Semaphore/semaphore.gd" id="2_mxanx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxanx"]
+atlas = ExtResource("1_y06xy")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qcsb0"]
+atlas = ExtResource("1_y06xy")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxryg"]
+atlas = ExtResource("1_y06xy")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh4sb"]
+atlas = ExtResource("1_y06xy")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do71k"]
+atlas = ExtResource("1_y06xy")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jo1l6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxanx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qcsb0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxryg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh4sb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_do71k")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" unique_id=1495775987]
+sprite_frames = SubResource("SpriteFrames_jo1l6")
+autoplay = "default"
+script = ExtResource("2_mxanx")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
+[connection signal="frame_changed" from="." to="." method="_on_frame_changed"]
