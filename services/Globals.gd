@@ -23,7 +23,7 @@ Node references
 """
 var circuit: Node
 var circuit_tileset: Node
-var car: Node
+var car: Node2D
 
 """
 Info variables
@@ -33,6 +33,30 @@ const total_laps_gamemode: Dictionary[GAME_MODE, int] = {
 	GAME_MODE.TIME_TRIAL: 4,
 	GAME_MODE.VS_MACHINE: 4
 }
+
+# Key: car / bot
+# Value: v.x -> nº of laps, v.y = weight of current cell
+# Car in 1st position is the one with the lowest weight among those with the greatest nº of laps
+var race_scores: Dictionary[Node2D, Vector2]
+
+func get_user_race_position() -> int:
+	var user_laps = race_scores[car].x
+	var user_weight = race_scores[car].y
+
+	var position = 1
+
+	for other in race_scores.keys():
+		if other == car:
+			continue
+
+		var laps = race_scores[other].x
+		var weight = race_scores[other].y
+
+		if laps > user_laps or (laps == user_laps and weight < user_weight):
+			position += 1
+
+	return position
+
 
 """
 Flow control signals

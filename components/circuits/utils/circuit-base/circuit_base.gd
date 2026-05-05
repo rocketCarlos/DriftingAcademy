@@ -46,11 +46,14 @@ var car_initial_position
 var car_initial_rotation
 
 func initialize() -> void:
-	if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
-		if not initial_colliders:
+
+	if not initial_colliders:
 			initial_colliders = get_node("InitialColliders")
 
-		initial_colliders.process_mode = Node.PROCESS_MODE_ALWAYS
+	initial_colliders.process_mode = (
+		Node.PROCESS_MODE_ALWAYS if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL
+		else Node.PROCESS_MODE_DISABLED
+	)
 
 func _ready() -> void:
 	var source = circuit_tileset.tile_set.get_source(ATLAS_ID) as TileSetAtlasSource
@@ -241,6 +244,18 @@ func _is_cell_valid(cell_position: Vector2i) -> bool:
 		)
 		else false
 	)
+
+
+"""
+Gets the associated weight of a given position
+Asumes pos is a Global Position
+"""
+func get_position_weight(pos: Vector2) -> float:
+	return progress_record.get(
+		circuit_tileset.local_to_map(circuit_tileset.to_local(pos)),
+		INF
+	)
+
 
 """
 Checks a specific BOOLEAN custom property of a cell

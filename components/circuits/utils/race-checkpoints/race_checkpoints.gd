@@ -9,7 +9,7 @@ The first node will be considered the start/finish line
 """
 
 var total_checkpoints: int
-var current_checkpoint: Dictionary[Node2D, int]
+var all_checkpoints: Dictionary[Node2D, Dictionary]
 
 func _ready() -> void:
 	Globals.race_restarted.connect(_on_race_restarted)
@@ -27,6 +27,8 @@ func _ready() -> void:
 
 
 func _on_race_checkpoints_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, local_shape_index: int) -> void:
+	var current_checkpoint = all_checkpoints.get(body, {})
+
 	if local_shape_index == 0 and current_checkpoint.get(body) == null:
 		# first time this car has crossed the finish/start line
 		if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
@@ -43,5 +45,7 @@ func _on_race_checkpoints_body_shape_entered(_body_rid: RID, body: Node2D, _body
 			Globals.lap_completed.emit(body)
 			current_checkpoint.set(body, 0)
 
+	all_checkpoints[body] = current_checkpoint
+
 func _on_race_restarted() -> void:
-	current_checkpoint = {}
+	all_checkpoints = {}

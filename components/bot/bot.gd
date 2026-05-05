@@ -18,5 +18,10 @@ func set_skin(new_skin: Node) -> void:
 	get_node("Skin").texture = new_skin.texture
 
 
+func _physics_process(_delta: float) -> void:
+	var updated_score = Globals.race_scores.get(self, Vector2())
+	updated_score.y += Globals.circuit.get_position_weight(global_position)
+	Globals.race_scores[self] = updated_score
+
 func _on_race_started(_object: Node2D) -> void:
 	movement_controller.disable_acceleration = false
