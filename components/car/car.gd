@@ -24,7 +24,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	var updated_score = Globals.race_scores.get(self, Vector2())
-	updated_score.y += Globals.circuit.get_position_weight(global_position)
+	updated_score.y = Globals.circuit.get_position_weight(global_position)
 	Globals.race_scores[self] = updated_score
 
 	Globals.car_speeed = velocity.length()

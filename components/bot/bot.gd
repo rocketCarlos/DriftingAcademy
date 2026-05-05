@@ -20,7 +20,7 @@ func set_skin(new_skin: Node) -> void:
 
 func _physics_process(_delta: float) -> void:
 	var updated_score = Globals.race_scores.get(self, Vector2())
-	updated_score.y += Globals.circuit.get_position_weight(global_position)
+	updated_score.y = Globals.circuit.get_position_weight(global_position)
 	Globals.race_scores[self] = updated_score
 
 func _on_race_started(_object: Node2D) -> void:
