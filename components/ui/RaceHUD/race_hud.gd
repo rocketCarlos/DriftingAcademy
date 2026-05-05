@@ -4,6 +4,7 @@ extends Control
 @onready var speed_label = $Speed
 @onready var lap_label = $Lap/Count
 @onready var restart_info = $RestartInfo
+@onready var current_grid_position = $CurrentGridPosition
 
 var total_laps: int
 var current_lap = 1
@@ -25,6 +26,8 @@ func _ready() -> void:
 	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
 		time_label.text = ''
 		restart_info.hide()
+	else:
+		current_grid_position.hide()
 
 
 func _process(delta: float) -> void:
@@ -34,6 +37,9 @@ func _process(delta: float) -> void:
 		if Globals.car_speeed > 300:
 			Globals.car_speeed = 300
 		speed_label.text = str(ceili(Globals.car_speeed))
+
+	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
+		current_grid_position.text = 'Position: ' + str(Globals.get_user_race_position())
 
 
 func restart() -> void:
@@ -59,6 +65,11 @@ func _on_lap_completed(object: Node2D):
 			lap_label.text = str(current_lap) + '/' + str(total_laps)
 
 
+	var updated_score = Globals.race_scores.get(object, Vector2())
+	updated_score.x += 1
+	Globals.race_scores[object] = updated_score
+
+
 func _on_race_started(object: Node2D) -> void:
 	if object == Globals.car:
 		track_time = true
@@ -68,7 +79,3 @@ func _on_race_started(object: Node2D) -> void:
 
 func _on_race_restarted() -> void:
 	restart()
-
-
-func start_race_countdown() -> void:
-	pass

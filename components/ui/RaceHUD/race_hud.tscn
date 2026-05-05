@@ -86,7 +86,11 @@ grow_vertical = 0
 text = "R: restart"
 label_settings = SubResource("LabelSettings_bclms")
 
-[node name="Label" type="Label" parent="." unique_id=293988511]
+[node name="CurrentGridPosition" type="Label" parent="." unique_id=293988511]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 19.0
+offset_top = 15.0
+offset_right = 235.0
+offset_bottom = 51.0
+text = "Position"
+label_settings = ExtResource("1_7gec4")

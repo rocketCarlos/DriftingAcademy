@@ -23,6 +23,10 @@ func _ready() -> void:
 	can_accelerate = Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL
 
 func _physics_process(_delta: float) -> void:
+	var updated_score = Globals.race_scores.get(self, Vector2())
+	updated_score.y += Globals.circuit.get_position_weight(global_position)
+	Globals.race_scores[self] = updated_score
+
 	Globals.car_speeed = velocity.length()
 	match current_state:
 		STATE.PLAY:
