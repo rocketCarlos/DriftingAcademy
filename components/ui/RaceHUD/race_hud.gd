@@ -71,10 +71,9 @@ func _on_lap_completed(object: Node2D):
 
 
 func _on_race_started(object: Node2D) -> void:
-	if object == Globals.car:
-		track_time = true
-		elapsed_time = 0.0
-		total_time = 0.0
+	track_time = true
+	elapsed_time = 0.0
+	total_time = 0.0
 
 
 func _on_race_restarted() -> void:

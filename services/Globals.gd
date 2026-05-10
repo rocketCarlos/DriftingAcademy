@@ -40,6 +40,9 @@ const total_laps_gamemode: Dictionary[GAME_MODE, int] = {
 var race_scores: Dictionary[Node2D, Vector2]
 
 func get_user_race_position() -> int:
+	if not race_scores.get(car, null):
+		return -1
+
 	var user_laps = race_scores[car].x
 	var user_weight = race_scores[car].y
 
