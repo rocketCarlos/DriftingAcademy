@@ -20,6 +20,7 @@ func _process(delta: float) -> void:
 
 
 func populate_times(times: Array[float]) -> void:
+	# TODO: show position for race mode! and change layout (showing "record" is nonsense)
 	var times_container = get_node("TimesContainer")
 
 	var title_row = times_row_scene.instantiate()
@@ -53,12 +54,15 @@ func populate_times(times: Array[float]) -> void:
 	times_container.add_child(total_time)
 
 	if (
-		(not SaveManager.current_save)
-		or
-		(SaveManager.current_save.get_total_time() > acc)
-		or
-		(SaveManager.current_save.lap_times.size() != times.size())
-		):
+		(
+			(not SaveManager.current_save)
+			or
+			(SaveManager.current_save.get_total_time() > acc)
+			or
+			(SaveManager.current_save.lap_times.size() != times.size())
+		)
+		and Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL
+	):
 		new_record_label.show()
 	else:
 		new_record_label.hide()

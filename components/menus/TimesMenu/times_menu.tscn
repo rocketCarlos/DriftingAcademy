@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://djs0lutrxdt14"]
+[gd_scene format=3 uid="uid://djs0lutrxdt14"]
 
 [ext_resource type="Script" uid="uid://b4i28pme3b7vv" path="res://components/menus/TimesMenu/times_menu.gd" id="1_kmeix"]
 [ext_resource type="Texture2D" uid="uid://itqkn2bva6nq" path="res://assets/ui/play-menu.png" id="2_4gxy7"]
@@ -13,7 +13,7 @@ font_color = Color(1, 0.8333334, 0, 1)
 outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 
-[node name="TimesMenu" type="Control"]
+[node name="TimesMenu" type="Control" unique_id=2108933248]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ grow_vertical = 2
 script = ExtResource("1_kmeix")
 times_row_scene = ExtResource("4_cgf7o")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=209653798]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,7 +33,7 @@ grow_vertical = 2
 texture = ExtResource("2_4gxy7")
 expand_mode = 2
 
-[node name="TimesContainer" type="VBoxContainer" parent="."]
+[node name="TimesContainer" type="VBoxContainer" parent="." unique_id=235495232]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,10 +48,10 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TimesRow" parent="TimesContainer" instance=ExtResource("4_cgf7o")]
+[node name="TimesRow" parent="TimesContainer" unique_id=383338678 instance=ExtResource("4_cgf7o")]
 layout_mode = 2
 
-[node name="PlayAgain" parent="." instance=ExtResource("5_kty6d")]
+[node name="PlayAgain" parent="." unique_id=28309082 instance=ExtResource("5_kty6d")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -63,7 +63,7 @@ offset_bottom = -34.0
 grow_vertical = 0
 text = "Play again!"
 
-[node name="ChooseLevel" parent="." instance=ExtResource("5_kty6d")]
+[node name="ChooseLevel" parent="." unique_id=2039597710 instance=ExtResource("5_kty6d")]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -78,7 +78,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Choose level"
 
-[node name="NewRecord" type="Label" parent="."]
+[node name="NewRecord" type="Label" parent="." unique_id=751060251]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
