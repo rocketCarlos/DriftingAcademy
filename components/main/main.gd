@@ -61,6 +61,8 @@ func _on_load_current_circuit() -> void:
 	if CircuitHolder.current_circuit == CircuitHolder.CIRCUIT_NAME.UNDER_CONSTRUCTION:
 		return
 
+	Globals.race_scores = {}
+
 	Router.redirect_to.emit(Router.ROUTE_NAME.RACE_HUD)
 
 	# instantiate selected circuit
