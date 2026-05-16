@@ -1,22 +1,41 @@
 extends Control
 
 @export var times_row_scene: PackedScene
+@export var ranking_row_scene: PackedScene
 @onready var times_row_preview = $TimesContainer/TimesRow
 @onready var new_record_label = $NewRecord
+@onready var ranking_container = $Ranking
 
 func _ready() -> void:
 	times_row_preview.queue_free()
 
-	new_record_label.scale = Vector2(0.8, 0.8)
-	while true:
-		var tween = create_tween()
-		tween.tween_property(new_record_label, "scale", Vector2(1.3, 1.3), 0.5)
-		tween.tween_property(new_record_label, "scale", Vector2(0.8, 0.8), 0.5)
-		await tween.finished
+	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
+		for node in get_tree().get_nodes_in_group(&"TimeTrial"):
+			node.queue_free()
+
+		var p: int = 1
+		for node in Globals.race_scores.keys():
+			var row = ranking_row_scene.instantiate()
+			row.get_node("Position").text = str(p)
+			row.get_node("Name").text = str(node.display_name)
+			ranking_container.add_child(row)
+			p += 1
+
+	else:
+		for node in get_tree().get_nodes_in_group(&"VsCpu"):
+			node.queue_free()
+
+		new_record_label.scale = Vector2(0.8, 0.8)
+		while true:
+			var tween = create_tween()
+			tween.tween_property(new_record_label, "scale", Vector2(1.3, 1.3), 0.5)
+			tween.tween_property(new_record_label, "scale", Vector2(0.8, 0.8), 0.5)
+			await tween.finished
 
 
 func _process(delta: float) -> void:
-	new_record_label.pivot_offset = new_record_label.size / 2.0
+	if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
+		new_record_label.pivot_offset = new_record_label.size / 2.0
 
 
 func populate_times(times: Array[float]) -> void:

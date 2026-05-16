@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+var display_name = "Bot"
 var wheels: Array[Node] = [null, null, null, null]
 @onready var movement_controller = $MovementController
 
