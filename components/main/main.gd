@@ -94,9 +94,9 @@ func _on_race_ended() -> void:
 	# TODO: move time saving to other scene so that it is independent from current menu
 	var time_info = current_menu.all_times
 	Router.redirect_to.emit(Router.ROUTE_NAME.TIMES_MENU) # current menu is now times_menu
-	current_menu.populate_times(time_info)
-	# save game
+	# save game and show results
 	if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
+		current_menu.populate_times(time_info)
 		if (
 			(
 				SaveManager.current_save and

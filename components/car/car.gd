@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var display_name = "You"
+
 @onready var engine_sound = $Engine
 @onready var crash_sound = $Crash
 @onready var movement_controller = $MovementController

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://vggdum0ykhwl" path="res://components/menus/TimesMenu/times_row.tscn" id="4_cgf7o"]
 [ext_resource type="FontFile" uid="uid://ds238wktkms30" path="res://assets/label-settings/WenderFont2.ttf" id="5_ejx8k"]
 [ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="5_kty6d"]
+[ext_resource type="PackedScene" uid="uid://c10ybwfi08dnx" path="res://components/menus/TimesMenu/ranking_row.tscn" id="6_3wh6u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3wh6u"]
 font = ExtResource("5_ejx8k")
@@ -22,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kmeix")
 times_row_scene = ExtResource("4_cgf7o")
+ranking_row_scene = ExtResource("6_3wh6u")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=209653798]
 layout_mode = 1
@@ -33,7 +35,8 @@ grow_vertical = 2
 texture = ExtResource("2_4gxy7")
 expand_mode = 2
 
-[node name="TimesContainer" type="VBoxContainer" parent="." unique_id=235495232]
+[node name="TimesContainer" type="VBoxContainer" parent="." unique_id=235495232 groups=["TimeTrial"]]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -78,7 +81,8 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Choose level"
 
-[node name="NewRecord" type="Label" parent="." unique_id=751060251]
+[node name="NewRecord" type="Label" parent="." unique_id=751060251 groups=["TimeTrial"]]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -93,6 +97,20 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "New record!"
 label_settings = SubResource("LabelSettings_3wh6u")
+
+[node name="Ranking" type="VBoxContainer" parent="." unique_id=1089262474 groups=["VsCpu"]]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -503.0
+offset_top = -271.0
+offset_right = 505.0
+offset_bottom = 195.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="button_clicked" from="PlayAgain" to="." method="_on_play_again_button_clicked"]
 [connection signal="button_clicked" from="ChooseLevel" to="." method="_on_choose_level_button_clicked"]
