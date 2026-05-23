@@ -2,11 +2,14 @@ extends CharacterBody2D
 var display_name = "Bot"
 var wheels: Array[Node] = [null, null, null, null]
 @onready var movement_controller = $MovementController
+@onready var name_label = $Label
 
 func _ready() -> void:
 	Globals.race_started.connect(_on_race_started)
 	wheels = find_children("Wheel?")
 	movement_controller.disable_acceleration = true
+	display_name = Globals.bot_names.pick_random()
+	name_label.text = display_name
 
 func set_skin(new_skin: Node) -> void:
 	# set wheel relative positions
@@ -22,6 +25,12 @@ func _physics_process(_delta: float) -> void:
 	var updated_score = Globals.race_scores.get(self, Vector2())
 	updated_score.y = Globals.circuit.get_position_weight(global_position)
 	Globals.race_scores[self] = updated_score
+
+
+func _process(delta: float) -> void:
+	name_label.rotation = -rotation
+	name_label.global_position = global_position + Vector2(-26.0, -21.0)
+
 
 func _on_race_started(_object: Node2D) -> void:
 	movement_controller.disable_acceleration = false
