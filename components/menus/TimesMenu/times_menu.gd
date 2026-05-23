@@ -17,7 +17,9 @@ func _ready() -> void:
 
 		var nodes = Globals.race_scores.keys()
 		nodes.sort_custom(func(a, b):
-			return Globals.race_scores[a] < Globals.race_scores[b]
+			var score_a = Globals.race_scores[a]
+			var score_b = Globals.race_scores[b]
+			return score_a.x > score_b.x if score_a.x != score_b.x else score_a.y < score_b.y
 		)
 		for node in nodes:
 			var row = ranking_row_scene.instantiate()
