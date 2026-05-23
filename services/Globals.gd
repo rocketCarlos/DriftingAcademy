@@ -89,4 +89,11 @@ var bot_names = [
 	"Orion",
 	"Mantis",
 	"Zero",
+	"Electro",
+	"Bolt",
+	"Cloud",
+	"Panda",
+	"Snake",
+	"Wender",
+	"Gambit"
 ]
