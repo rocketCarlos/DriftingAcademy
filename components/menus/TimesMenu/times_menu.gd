@@ -14,7 +14,12 @@ func _ready() -> void:
 			node.queue_free()
 
 		var p: int = 1
-		for node in Globals.race_scores.keys():
+
+		var nodes = Globals.race_scores.keys()
+		nodes.sort_custom(func(a, b):
+			return Globals.race_scores[a] < Globals.race_scores[b]
+		)
+		for node in nodes:
 			var row = ranking_row_scene.instantiate()
 			row.get_node("Position").text = str(p)
 			row.get_node("Name").text = str(node.display_name)
@@ -39,7 +44,6 @@ func _process(delta: float) -> void:
 
 
 func populate_times(times: Array[float]) -> void:
-	# TODO: show position for race mode! and change layout (showing "record" is nonsense)
 	var times_container = get_node("TimesContainer")
 
 	var title_row = times_row_scene.instantiate()

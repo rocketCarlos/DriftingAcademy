@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dfkaap3lxani1" path="res://components/movement-controller/movement_controller.tscn" id="2_6a5r5"]
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="2_8r03p"]
 [ext_resource type="PackedScene" uid="uid://2tay2q5qwrem" path="res://components/input-controller/bot_input_controller.tscn" id="3_6a5r5"]
+[ext_resource type="FontFile" uid="uid://ds238wktkms30" path="res://assets/label-settings/WenderFont2.ttf" id="6_w20bd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w20bd"]
 shader = ExtResource("1_5scxr")
@@ -14,6 +15,11 @@ shader_parameter/thickness = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6a5r5"]
 size = Vector2(11, 20.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n110u"]
+font = ExtResource("6_w20bd")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Bot" type="CharacterBody2D" unique_id=2012145137]
 material = SubResource("ShaderMaterial_w20bd")
@@ -46,5 +52,21 @@ position = Vector2(-5, 6)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1631716657]
 position = Vector2(5, -6)
+
+[node name="Label" type="Label" parent="." unique_id=1177057864]
+modulate = Color(1, 1, 1, 0.21568628)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -26.0
+offset_top = -21.0
+offset_right = 76.0
+offset_bottom = -7.0
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
+text = "Neon"
+label_settings = SubResource("LabelSettings_n110u")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [editable path="BotInputController"]
