@@ -25,10 +25,8 @@ const DEACCEL_GRAVEL: float = 6.8
 var wheels: Array[Node] = [null, null, null, null]
 
 #region physics related
-# to guarantee collisions are only counted once per frame
-var already_collided_with: Dictionary[Object, Variant]
-const BOUNCE_FACTOR: float = 0.35 # 0 = inelastic collision, 1 = perfect elastic collision
-const MAX_BOUNCE: float = 120.0
+const BOUNCE_FACTOR: float = 0.25 # 0 = inelastic collision, 1 = perfect elastic collision
+const MAX_BOUNCE: float = 300.0
 const MIN_BOUNCE: float = 25.0
 #endregion
 
@@ -56,8 +54,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	already_collided_with.clear()
-
 	var mouse_direction = (input_provider.get_input()-body.global_position).normalized()
 
 	# -----------------------------------------
@@ -105,25 +101,30 @@ func _physics_process(delta: float) -> void:
 				body.velocity = Vector2(0, 0)
 
 	var collision: KinematicCollision2D = body.move_and_collide(body.velocity*delta)
-	if collision and not already_collided_with.has(collision.get_collider()):
+	if collision:
+		var normal_collision = collision.get_normal().normalized()
+		var relative_velocity = body.velocity
 		if collision.get_collider() is CharacterBody2D and collision.get_collider().get_node('MovementController'):
-			var relative_velocity = body.velocity - collision.get_collider_velocity()
-			var computed_collision = relative_velocity.normalized() * clampf(relative_velocity.length(), MIN_BOUNCE, MAX_BOUNCE)
-			collision.get_collider().get_node('MovementController').make_collision(computed_collision, self)
-			make_collision(computed_collision.bounce(collision.get_normal()), collision.get_collider())
+			var other_body = collision.get_collider().get_node('MovementController')
+			relative_velocity = body.velocity - other_body.body.velocity
+			other_body.make_collision(normal_collision, relative_velocity)
 
-		else:
-			body.velocity = (body.velocity.bounce(collision.get_normal()) * BOUNCE_FACTOR)
+		make_collision(normal_collision, relative_velocity)
+
 
 
 #region utility functions
-func make_collision(origin_vel: Vector2, origin_object: Object) -> void:
-	if not already_collided_with.has(origin_object):
-		already_collided_with[origin_object] = true
-		var prev_vel = body.velocity.length()
-		body.velocity += origin_vel
+func make_collision(normal_collision: Vector2, relative_velocity: Vector2) -> void:
+	if body == Globals.car:
+		print('')
+	var bounced_velocity = (body.velocity.bounce(normal_collision) * BOUNCE_FACTOR)
+	var transfered_velocity = (relative_velocity) * (1.0 - BOUNCE_FACTOR)
 
-		body.velocity = get_adjusted_velocity(body.velocity, prev_vel)
+	# ESTA ES LA CLAVE.
+	# bounced es el resultado de la colision, transfered tiene info de la
+	# inercia transferida, hay que combinarlo de alguna forma consistente...
+
+	body.velocity = bounced_velocity + transfered_velocity
 
 
 func calculate_next_velocity(mouse_direction: Vector2) -> Vector2:
