@@ -1,4 +1,5 @@
 extends Node
+class_name MovementController
 
 var disable_acceleration: bool = false
 
@@ -25,9 +26,11 @@ const DEACCEL_GRAVEL: float = 6.8
 var wheels: Array[Node] = [null, null, null, null]
 
 #region physics related
-const BOUNCE_FACTOR: float = 0.25 # 0 = inelastic collision, 1 = perfect elastic collision
+const BOUNCE_FACTOR: float = 0.65 # 0 = inelastic collision, 1 = perfect elastic collision
 const MAX_BOUNCE: float = 300.0
 const MIN_BOUNCE: float = 25.0
+
+var already_collided_this_frame: Dictionary[MovementController, bool]
 #endregion
 
 var body: CharacterBody2D
@@ -103,28 +106,32 @@ func _physics_process(delta: float) -> void:
 	var collision: KinematicCollision2D = body.move_and_collide(body.velocity*delta)
 	if collision:
 		var normal_collision = collision.get_normal().normalized()
-		var relative_velocity = body.velocity
+		var relative_velocity = body.velocity * 2.0 * BOUNCE_FACTOR
 		if collision.get_collider() is CharacterBody2D and collision.get_collider().get_node('MovementController'):
 			var other_body = collision.get_collider().get_node('MovementController')
-			relative_velocity = body.velocity - other_body.body.velocity
-			other_body.make_collision(normal_collision, relative_velocity)
+			if not already_collided_this_frame.get(other_body, false):
+				relative_velocity = body.velocity - other_body.body.velocity
+				other_body.make_collision(-normal_collision, other_body.body.velocity - body.velocity)
+				other_body.already_collided_this_frame[self] = true
 
 		make_collision(normal_collision, relative_velocity)
+
+	already_collided_this_frame.clear()
 
 
 
 #region utility functions
 func make_collision(normal_collision: Vector2, relative_velocity: Vector2) -> void:
-	if body == Globals.car:
-		print('')
-	var bounced_velocity = (body.velocity.bounce(normal_collision) * BOUNCE_FACTOR)
-	var transfered_velocity = (relative_velocity) * (1.0 - BOUNCE_FACTOR)
+	# physics formula for collisions between two puntual particles with equal mass
+	# disregarding friction and depending on elasticity
+	var impulse = normal_collision.x * relative_velocity.x + normal_collision.y * relative_velocity.y
 
-	# ESTA ES LA CLAVE.
-	# bounced es el resultado de la colision, transfered tiene info de la
-	# inercia transferida, hay que combinarlo de alguna forma consistente...
+	var final_velocity = Vector2(
+		body.velocity.x - impulse * normal_collision.x,
+		body.velocity.y - impulse * normal_collision.y
+	)
 
-	body.velocity = bounced_velocity + transfered_velocity
+	body.velocity = final_velocity
 
 
 func calculate_next_velocity(mouse_direction: Vector2) -> Vector2:
