@@ -11,16 +11,16 @@ const SPEED_GRASS: float = 150.0
 const SPEED_GRAVEL: float = 100.0
 
 var accel: float
-const ACCEL_ROAD: float = 8.5
-const ACCEL_CURBS: float = 6.8
-const ACCEL_GRASS: float = 4.25
-const ACCEL_GRAVEL: float = 1.7
+const ACCEL_ROAD: float = 510.0
+const ACCEL_CURBS: float = 408.0
+const ACCEL_GRASS: float = 255.0
+const ACCEL_GRAVEL: float = 102.0
 
 var deaccel: float
-const DEACCEL_ROAD: float = 4.675
-const DEACCEL_CURBS: float = 5.1
-const DEACCEL_GRASS: float = 5.95
-const DEACCEL_GRAVEL: float = 6.8
+const DEACCEL_ROAD: float = 280.5
+const DEACCEL_CURBS: float = 306.0
+const DEACCEL_GRASS: float = 357
+const DEACCEL_GRAVEL: float = 408.0
 #endregion
 
 var wheels: Array[Node] = [null, null, null, null]
@@ -81,6 +81,9 @@ func _physics_process(delta: float) -> void:
 		accel = ACCEL_GRAVEL
 		deaccel = DEACCEL_GRAVEL
 
+	accel = accel * delta
+	deaccel = deaccel * delta
+
 	# -----------------------------------------
 	# manage movement
 	# -----------------------------------------
@@ -123,7 +126,7 @@ func _physics_process(delta: float) -> void:
 #region utility functions
 func make_collision(normal_collision: Vector2, relative_velocity: Vector2) -> void:
 	# physics formula for collisions between two puntual particles with equal mass
-	# disregarding friction and depending on elasticity
+	# disregarding friction and assuming perfect elasticity
 	var impulse = normal_collision.x * relative_velocity.x + normal_collision.y * relative_velocity.y
 
 	var final_velocity = Vector2(
