@@ -22,7 +22,6 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="Ghost" parent="." unique_id=315714770 instance=ExtResource("3_rf66w")]
-visible = false
 
 [node name="DebugItems" type="Control" parent="." unique_id=2087651676]
 layout_mode = 3

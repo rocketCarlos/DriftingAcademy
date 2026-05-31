@@ -36,7 +36,6 @@ texture = ExtResource("2_4gxy7")
 expand_mode = 2
 
 [node name="TimesContainer" type="VBoxContainer" parent="." unique_id=235495232 groups=["TimeTrial"]]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -82,7 +81,6 @@ grow_vertical = 0
 text = "Choose level"
 
 [node name="NewRecord" type="Label" parent="." unique_id=751060251 groups=["TimeTrial"]]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
