@@ -34,8 +34,6 @@ func _process(delta: float) -> void:
 	if track_time:
 		elapsed_time += delta
 		time_label.text = str(elapsed_time).pad_decimals(2)
-		if Globals.car_speeed > 300:
-			Globals.car_speeed = 300
 		speed_label.text = str(ceili(Globals.car_speeed))
 
 	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:
