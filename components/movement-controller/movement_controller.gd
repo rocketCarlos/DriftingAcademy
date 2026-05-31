@@ -21,6 +21,10 @@ const DEACCEL_ROAD: float = 280.5
 const DEACCEL_CURBS: float = 306.0
 const DEACCEL_GRASS: float = 357
 const DEACCEL_GRAVEL: float = 408.0
+
+var slipstreaming: bool = false
+var slipstreamin_count: int = 0
+const SLIPSTREAMING_BONUS: float = 50.0
 #endregion
 
 var wheels: Array[Node] = [null, null, null, null]
@@ -80,6 +84,9 @@ func _physics_process(delta: float) -> void:
 		max_speed = SPEED_GRAVEL
 		accel = ACCEL_GRAVEL
 		deaccel = DEACCEL_GRAVEL
+
+	if slipstreaming:
+		max_speed += SLIPSTREAMING_BONUS
 
 	accel = accel * delta
 	deaccel = deaccel * delta
@@ -186,3 +193,16 @@ func simulate_move(input: Vector2, delta) -> Vector2:
 	var collision = body.move_and_collide(simulated_velocity * delta, true)
 
 	return collision.get_travel() if collision else simulated_velocity * delta
+
+
+func _on_area_2d_body_entered(other_body: Node2D) -> void:
+	if other_body == body:
+		return
+	slipstreaming = true
+	slipstreamin_count += 1
+
+
+func _on_area_2d_body_exited(_body: Node2D) -> void:
+	slipstreamin_count -= 1
+	if slipstreamin_count == 0:
+		slipstreaming = false

@@ -2,5 +2,14 @@
 
 [ext_resource type="Script" uid="uid://uvaelm5l7cg" path="res://components/movement-controller/movement_controller.gd" id="1_88qt4"]
 
-[node name="MovementController" type="Node" unique_id=2059386792]
+[node name="MovementController" type="Node2D" unique_id=1084330344]
 script = ExtResource("1_88qt4")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2034802650]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1475182281]
+polygon = PackedVector2Array(-4, 0, -17, -100, 17, -100, 4, 0)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
