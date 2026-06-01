@@ -1,6 +1,8 @@
 extends Node
 class_name MovementController
 
+@onready var slipstream: Area2D = $Slipstream
+
 var disable_acceleration: bool = false
 
 #region velocity related
@@ -23,7 +25,8 @@ const DEACCEL_GRASS: float = 357
 const DEACCEL_GRAVEL: float = 408.0
 
 var slipstreaming: bool = false
-var slipstreamin_count: int = 0
+var slipstreaming_count: int = 0
+var slipstreaming_acc: float = 0.0
 const SLIPSTREAMING_BONUS: float = 50.0
 #endregion
 
@@ -86,7 +89,8 @@ func _physics_process(delta: float) -> void:
 		deaccel = DEACCEL_GRAVEL
 
 	if slipstreaming:
-		max_speed += SLIPSTREAMING_BONUS
+		slipstreaming_acc += delta * 10.0
+		max_speed += slipstreaming_acc
 
 	accel = accel * delta
 	deaccel = deaccel * delta
@@ -127,6 +131,12 @@ func _physics_process(delta: float) -> void:
 		make_collision(normal_collision, relative_velocity)
 
 	already_collided_this_frame.clear()
+
+	# Slipstream management
+
+	if body.velocity.length_squared() > 0.0001:
+		slipstream.look_at(slipstream.global_position + body.velocity)
+		slipstream.rotation += PI / 2.0
 
 
 
@@ -195,14 +205,18 @@ func simulate_move(input: Vector2, delta) -> Vector2:
 	return collision.get_travel() if collision else simulated_velocity * delta
 
 
-func _on_area_2d_body_entered(other_body: Node2D) -> void:
-	if other_body == body:
+func _on_slipstram_detector_area_entered(other_area: Area2D) -> void:
+	if other_area == slipstream:
 		return
 	slipstreaming = true
-	slipstreamin_count += 1
+	slipstreaming_count += 1
 
 
-func _on_area_2d_body_exited(_body: Node2D) -> void:
-	slipstreamin_count -= 1
-	if slipstreamin_count == 0:
+
+func _on_slipstram_detector_area_exited(other_area: Area2D) -> void:
+	if other_area == slipstream:
+		return
+	slipstreaming_count -= 1
+	if slipstreaming_count <= 0:
 		slipstreaming = false
+		slipstreaming_acc = 0.0
