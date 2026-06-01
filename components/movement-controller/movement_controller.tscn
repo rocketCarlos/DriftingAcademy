@@ -2,14 +2,28 @@
 
 [ext_resource type="Script" uid="uid://uvaelm5l7cg" path="res://components/movement-controller/movement_controller.gd" id="1_88qt4"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_88qt4"]
+radius = 2.0
+height = 10.0
+
 [node name="MovementController" type="Node2D" unique_id=1084330344]
 script = ExtResource("1_88qt4")
 
-[node name="Area2D" type="Area2D" parent="." unique_id=2034802650]
+[node name="Slipstream" type="Area2D" parent="." unique_id=2034802650]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Slipstream" unique_id=1475182281]
+polygon = PackedVector2Array(-3, 9, -12, 90, 12, 90, 3, 9)
+
+[node name="SlipstramDetector" type="Area2D" parent="." unique_id=441912460]
 collision_layer = 0
+collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D" unique_id=1475182281]
-polygon = PackedVector2Array(-4, 0, -17, -100, 17, -100, 4, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlipstramDetector" unique_id=2129360909]
+position = Vector2(0, -14)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_88qt4")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="area_entered" from="SlipstramDetector" to="." method="_on_slipstram_detector_area_entered"]
+[connection signal="area_exited" from="SlipstramDetector" to="." method="_on_slipstram_detector_area_exited"]

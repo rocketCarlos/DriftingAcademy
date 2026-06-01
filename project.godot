@@ -74,6 +74,7 @@ toggle_game_speed={
 2d_physics/layer_1="car"
 2d_physics/layer_2="road_items"
 2d_physics/layer_3="bot_detection"
+2d_physics/layer_4="slipstream_tray"
 
 [physics]
 
