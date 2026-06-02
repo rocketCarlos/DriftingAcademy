@@ -2,6 +2,8 @@ extends Node
 class_name MovementController
 
 @onready var slipstream: Area2D = $Slipstream
+@onready var build_up_timer: Timer = $BuildUp
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var disable_acceleration: bool = false
 
@@ -90,7 +92,11 @@ func _physics_process(delta: float) -> void:
 
 	if slipstreaming:
 		slipstreaming_acc += delta * 10.0
-		max_speed += slipstreaming_acc
+	elif slipstreaming_acc > 0.0:
+		slipstreaming_acc -= delta * 10.0
+		slipstreaming_acc = max(slipstreaming_acc, 0.0)
+
+	max_speed += slipstreaming_acc
 
 	accel = accel * delta
 	deaccel = deaccel * delta
@@ -208,8 +214,19 @@ func simulate_move(input: Vector2, delta) -> Vector2:
 func _on_slipstram_detector_area_entered(other_area: Area2D) -> void:
 	if other_area == slipstream:
 		return
-	slipstreaming = true
 	slipstreaming_count += 1
+
+	if slipstreaming_count == 1:
+		# init slipstream
+		build_up_timer.start()
+		sprite.play("build-up")
+		await build_up_timer.timeout
+		if not slipstreaming:
+			slipstreaming = true
+			sprite.play("pre-peak")
+			await sprite.animation_finished
+			if slipstreaming:
+				sprite.play("peak")
 
 
 
@@ -219,4 +236,5 @@ func _on_slipstram_detector_area_exited(other_area: Area2D) -> void:
 	slipstreaming_count -= 1
 	if slipstreaming_count <= 0:
 		slipstreaming = false
-		slipstreaming_acc = 0.0
+		sprite.play("null")
+		build_up_timer.stop()

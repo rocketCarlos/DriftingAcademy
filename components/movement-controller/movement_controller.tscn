@@ -1,10 +1,149 @@
 [gd_scene format=3 uid="uid://dfkaap3lxani1"]
 
 [ext_resource type="Script" uid="uid://uvaelm5l7cg" path="res://components/movement-controller/movement_controller.gd" id="1_88qt4"]
+[ext_resource type="Texture2D" uid="uid://tptopyq3s2ya" path="res://assets/cars/slipstream_fx.png" id="2_cbcey"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_88qt4"]
 radius = 2.0
 height = 10.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7xos"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(0, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xalp"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(25, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x83jd"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(50, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh5vx"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(75, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uq1ix"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(100, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djglj"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(125, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x6x0d"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(150, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yegad"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(175, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ictcv"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(250, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqv5y"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(275, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1dkc"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(300, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5w07"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(200, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiuy4"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(225, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oq7is"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(250, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqpfv"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(275, 0, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rni5"]
+atlas = ExtResource("2_cbcey")
+region = Rect2(300, 0, 25, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uvuxm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7xos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xalp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x83jd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yh5vx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uq1ix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djglj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x6x0d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yegad")
+}],
+"loop": false,
+"name": &"build-up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"null",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ictcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqv5y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1dkc")
+}],
+"loop": true,
+"name": &"peak",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5w07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiuy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oq7is")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqpfv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rni5")
+}],
+"loop": false,
+"name": &"pre-peak",
+"speed": 5.0
+}]
 
 [node name="MovementController" type="Node2D" unique_id=1084330344]
 script = ExtResource("1_88qt4")
@@ -24,6 +163,15 @@ collision_mask = 8
 position = Vector2(0, -14)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_88qt4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=66248978]
+sprite_frames = SubResource("SpriteFrames_uvuxm")
+animation = &"null"
+autoplay = "null"
+
+[node name="BuildUp" type="Timer" parent="." unique_id=2063302628]
+wait_time = 1.5999999999999999
+one_shot = true
 
 [connection signal="area_entered" from="SlipstramDetector" to="." method="_on_slipstram_detector_area_entered"]
 [connection signal="area_exited" from="SlipstramDetector" to="." method="_on_slipstram_detector_area_exited"]
