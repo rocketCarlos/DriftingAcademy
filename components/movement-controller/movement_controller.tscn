@@ -165,12 +165,13 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_88qt4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=66248978]
+position = Vector2(0, -13.15)
 sprite_frames = SubResource("SpriteFrames_uvuxm")
 animation = &"null"
 autoplay = "null"
 
 [node name="BuildUp" type="Timer" parent="." unique_id=2063302628]
-wait_time = 1.5999999999999999
+wait_time = 1.6
 one_shot = true
 
 [connection signal="area_entered" from="SlipstramDetector" to="." method="_on_slipstram_detector_area_entered"]

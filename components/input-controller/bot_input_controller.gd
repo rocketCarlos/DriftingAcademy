@@ -4,7 +4,7 @@ extends InputControllerBase
 var input_tween: Tween = null
 @export var debug: bool = false
 enum THINKING_MODES {NEXT_CELL_SIMULATION, CELL_PATH, ADJUSTED_CELL_PATH}
-@export var thinking_mode: THINKING_MODES = THINKING_MODES.NEXT_CELL_SIMULATION
+@export var thinking_mode: THINKING_MODES = THINKING_MODES.ADJUSTED_CELL_PATH
 
 var last_position = null # Vector2 or null last position WHERE INPUT COMPUTING WAS DONE
 var cell_path: Array[Vector2i]
@@ -92,6 +92,7 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 	var best_cell: Vector2i
 	for i in range(depth):
 		var neighbours: Array[Vector2i] = Globals.circuit.get_cell_neighbours(initial_position)
+		neighbours = _reorder_cells(neighbours, initial_position)
 		best_cell = Vector2i(999999, 999999) # init with invalid values
 		for cell in neighbours:
 			if cell in cell_path or Globals.circuit.progress_record[cell] == INF:
@@ -119,7 +120,7 @@ func _select_best_neighbour(initial_position: Vector2i, depth: int) -> Vector2:
 					best_cell = cell
 
 			# check if current cell is before finish line when we are already at the other side
-			elif not initial_weight - Globals.circuit.progress_record[cell] > 100:
+			elif (not initial_weight - Globals.circuit.progress_record[cell] > 100) and (not Globals.circuit.progress_record[best_cell] - Globals.circuit.progress_record[cell] > 100):
 				if Globals.circuit.check_cell_boolean_property(best_cell, 'is_road'):
 					if (
 						Globals.circuit.check_cell_boolean_property(cell, 'is_road')
@@ -219,3 +220,24 @@ func _rotate_vector(vector: Vector2, rads: float) -> Vector2:
 			vector.x*cos(rads) - vector.y*sin(rads),
 			vector.x*sin(rads) + vector.y*cos(rads)
 		)
+
+func _reorder_cells(cells: Array[Vector2i], center: Vector2i) -> Array[Vector2i]:
+	"""
+	Given an array of center's cell adyacent cells, reorder it based on velocity's direction
+	"""
+	var effective_velocity = (
+		parent.velocity.normalized()
+		if parent.velocity.length_squared() > 0.001
+		else Vector2.UP.rotated(parent.rotation)
+	)
+
+	var dir = effective_velocity.normalized()
+
+	cells.sort_custom(func(a:Vector2i, b:Vector2i):
+		var da = (Vector2(a - center)).normalized().dot(dir)
+		var db = (Vector2(b - center)).normalized().dot(dir)
+
+		return da > db
+	)
+
+	return cells

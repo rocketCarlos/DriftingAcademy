@@ -4,7 +4,6 @@
 
 [node name="BotInputController" type="Node2D" unique_id=1359192586]
 script = ExtResource("1_f278x")
-thinking_mode = 2
 
 [node name="LineToInput" type="Line2D" parent="." unique_id=2018761283]
 width = 2.5

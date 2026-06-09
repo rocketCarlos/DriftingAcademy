@@ -75,7 +75,7 @@ func _on_load_current_circuit() -> void:
 			instantiate_and_initialize_car(circuit_instance)
 			game_subviewport.add_child(circuit_instance)
 		Globals.GAME_MODE.VS_MACHINE:
-			instantiate_and_initialize_car(circuit_instance, 9)
+			instantiate_and_initialize_car(circuit_instance, 5)
 			game_subviewport.add_child(circuit_instance)
 			var semaphore = load("res://components/ui/Semaphore/semaphore.tscn").instantiate()
 			semaphore.position = ui_subviewport.size / 2.0
@@ -121,7 +121,7 @@ func instantiate_and_initialize_car(circuit: Node, n_bots: int = 0) -> void:
 	car_instance.rotation = circuit.get_initial_rotation()
 	car_instance.set_skin(SkinHolder.get_current_skin())
 
-	car_instance.position = circuit.get_grid_position(-1) # last grid position
+	car_instance.position = circuit.get_grid_position(n_bots if n_bots > 0 else -1)
 	circuit.add_child(car_instance)
 
 	for i in range(n_bots):
