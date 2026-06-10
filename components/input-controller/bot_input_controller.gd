@@ -5,6 +5,7 @@ var input_tween: Tween = null
 @export var debug: bool = false
 enum THINKING_MODES {NEXT_CELL_SIMULATION, CELL_PATH, ADJUSTED_CELL_PATH}
 @export var thinking_mode: THINKING_MODES = THINKING_MODES.ADJUSTED_CELL_PATH
+@export_range(0.0, 500, 0.1) var random_offset: float = 100.0
 
 var last_position = null # Vector2 or null last position WHERE INPUT COMPUTING WAS DONE
 var cell_path: Array[Vector2i]
@@ -14,6 +15,7 @@ var cell_path: Array[Vector2i]
 @onready var neighbour_path: Line2D = $NeighbourPath
 
 var movement_controller
+var driving_bias: float
 
 func _ready() -> void:
 	super()
@@ -22,6 +24,7 @@ func _ready() -> void:
 
 	line_to_input.add_point(Vector2(0.0, 0.0))
 	velocity.add_point(Vector2(0.0, 0.0))
+	driving_bias = randf() * 10000
 
 	if not debug:
 		line_to_input.hide()
@@ -64,7 +67,7 @@ func _update_virtual_input(position: Vector2i, delta: float) -> void:
 
 	input_tween = create_tween()
 #
-	var new_virtual_position = _compute_virtual_input(position, delta)
+	var new_virtual_position = _apply_randomness(_compute_virtual_input(position, delta), random_offset)
 
 	(input_tween
 		.tween_property(self, "input", new_virtual_position, 0.1)
@@ -241,3 +244,17 @@ func _reorder_cells(cells: Array[Vector2i], center: Vector2i) -> Array[Vector2i]
 	)
 
 	return cells
+
+
+func _apply_randomness(target_position: Vector2, radius: float) -> Vector2:
+	"""
+	Apply random offset to input vector based on provided radius
+	"""
+	var from_body = target_position - parent.global_position
+	var perpendicular = from_body.normalized().orthogonal()
+
+	var noise = FastNoiseLite.new()
+	var offset = noise.get_noise_1d((Time.get_ticks_msec() + driving_bias) * 0.01) * radius
+	print(offset)
+
+	return target_position + perpendicular * offset

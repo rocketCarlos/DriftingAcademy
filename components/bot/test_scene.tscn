@@ -3070,13 +3070,9 @@ debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 position = Vector2(-456, -435)
 
 [node name="Bot" parent="." index="7" unique_id=775398003 instance=ExtResource("2_vy0lq")]
-process_mode = 4
-visible = false
 position = Vector2(-136, -498)
 
 [node name="Bot2" parent="." index="8" unique_id=302488205 instance=ExtResource("2_vy0lq")]
-process_mode = 4
-visible = false
 position = Vector2(-200, -435)
 wall_min_slide_angle = 3.1415927
 
@@ -3084,13 +3080,9 @@ wall_min_slide_angle = 3.1415927
 position = Vector2(-264, -494)
 
 [node name="Bot4" parent="." index="10" unique_id=1755277261 instance=ExtResource("2_vy0lq")]
-process_mode = 4
-visible = false
 position = Vector2(-328, -433)
 
 [node name="Bot5" parent="." index="11" unique_id=461369700 instance=ExtResource("2_vy0lq")]
-process_mode = 4
-visible = false
 position = Vector2(-392, -495)
 
 [node name="Camera2D" type="Camera2D" parent="." index="13" unique_id=1195936642]
