@@ -18,6 +18,23 @@ const GAMEMODE_LABELS: Dictionary[GAME_MODE, String] = {
 	GAME_MODE.VS_MACHINE: "Vs. cpu"
 }
 
+enum DIFFICULTY {
+	UNSET,
+	ROOKIE,
+	AMATEUR,
+	PROFESSIONAL,
+	CHAMPION,
+}
+
+var difficulty_names: Dictionary[DIFFICULTY, String] = {
+	DIFFICULTY.ROOKIE: "Rookie",
+	DIFFICULTY.AMATEUR: "Amateur",
+	DIFFICULTY.PROFESSIONAL: "Professional",
+	DIFFICULTY.CHAMPION: "Champion",
+}
+
+var current_difficulty: DIFFICULTY = DIFFICULTY.UNSET
+
 """
 Node references
 """
