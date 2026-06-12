@@ -7,7 +7,7 @@ enum THINKING_MODES {NEXT_CELL_SIMULATION, CELL_PATH, ADJUSTED_CELL_PATH}
 @export var thinking_mode: THINKING_MODES = THINKING_MODES.ADJUSTED_CELL_PATH
 @export var difficulty_override: Globals.DIFFICULTY = Globals.DIFFICULTY.CHAMPION
 var difficulty: Globals.DIFFICULTY
-@export_range(0.0, 500, 0.1) var random_offset: float = 100.0
+@export_range(0.0, 500, 0.1) var random_offset: float = 75.0
 
 var last_position = null # Vector2 or null last position WHERE INPUT COMPUTING WAS DONE
 var cell_path: Array[Vector2i]
@@ -81,8 +81,7 @@ func _update_virtual_input(position: Vector2i, delta: float) -> void:
 		input_tween.kill()
 
 	input_tween = create_tween()
-	# TODO: randomness depending on velocity
-	var new_virtual_position = _apply_randomness(_compute_virtual_input(position, delta), random_offset)
+	var new_virtual_position = _apply_randomness(_compute_virtual_input(position, delta), random_offset * min(parent.velocity.length() / 150.0, 1.0))
 
 	(input_tween
 		.tween_property(self, "input", new_virtual_position, 0.1)
@@ -200,8 +199,7 @@ func _compute_next_cell_simulation(position: Vector2i, delta: float) -> Vector2:
 
 func _compute_cell_path(position: Vector2i) -> Vector2:
 	var speed =  parent.velocity.length()
-	var max_depth = max_search_depth[difficulty]
-	var depth = clampi(int(lerp(0.0, float(max_depth), inverse_lerp(50, 300, speed))), 1, max_depth)
+	var depth = clampi(int(lerp(0.0, 7.0, inverse_lerp(50, 300, speed))), 1, 7)
 
 	# get desired cell that pushes us through the best path
 	return Globals.circuit_tileset.to_global(
@@ -211,8 +209,7 @@ func _compute_cell_path(position: Vector2i) -> Vector2:
 
 func _compute_adjusted_cell_path(position: Vector2i) -> Vector2:
 	var speed =  parent.velocity.length()
-	var max_depth = max_search_depth[difficulty]
-	var depth = roundi(remap(max(speed, 75.0), 75.0, 300.0, 1.0, float(max_depth)))
+	var depth = roundi(remap(max(speed, 75.0), 75.0, 300.0, 1.0, 5.0))
 
 	# get desired cell that pushes us through the best path
 	var best_neighbour_global_position: Vector2 = Globals.circuit_tileset.to_global(
