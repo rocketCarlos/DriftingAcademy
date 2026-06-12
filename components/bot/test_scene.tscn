@@ -3067,23 +3067,45 @@ shape = SubResource("SegmentShape2D_4gsuv")
 debug_color = Color(0.8069547, 0.0023156668, 0.9939198, 0.41960785)
 
 [node name="Car" parent="." index="6" unique_id=1962844715 instance=ExtResource("2_whjrq")]
-position = Vector2(-456, -435)
+position = Vector2(-77, -395)
+rotation = 1.5707964
 
 [node name="Bot" parent="." index="7" unique_id=775398003 instance=ExtResource("2_vy0lq")]
-position = Vector2(-136, -498)
+position = Vector2(-141, -496)
+rotation = 1.5707964
+metadata/_edit_group_ = true
 
 [node name="Bot2" parent="." index="8" unique_id=302488205 instance=ExtResource("2_vy0lq")]
-position = Vector2(-200, -435)
+position = Vector2(-206, -433)
+rotation = 1.5707964
 wall_min_slide_angle = 3.1415927
+metadata/_edit_group_ = true
+
+[node name="BotInputController" parent="Bot2" index="1" unique_id=789719221]
+difficulty_override = 2
 
 [node name="Bot3" parent="." index="9" unique_id=1108218149 instance=ExtResource("2_vy0lq")]
-position = Vector2(-264, -494)
+position = Vector2(-268, -496)
+rotation = 1.5707964
+metadata/_edit_group_ = true
+
+[node name="BotInputController" parent="Bot3" index="1" unique_id=789719221]
+difficulty_override = 3
 
 [node name="Bot4" parent="." index="10" unique_id=1755277261 instance=ExtResource("2_vy0lq")]
-position = Vector2(-328, -433)
+position = Vector2(-334, -433)
+rotation = 1.5707964
+metadata/_edit_group_ = true
+
+[node name="BotInputController" parent="Bot4" index="1" unique_id=789719221]
+difficulty_override = 4
 
 [node name="Bot5" parent="." index="11" unique_id=461369700 instance=ExtResource("2_vy0lq")]
-position = Vector2(-392, -495)
+process_mode = 4
+visible = false
+position = Vector2(-615, -467)
+rotation = 1.5707964
+metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="." index="13" unique_id=1195936642]
 process_mode = 3
@@ -3091,3 +3113,14 @@ zoom = Vector2(0.43, 0.43)
 limit_enabled = false
 editor_draw_screen = false
 script = ExtResource("4_npgmm")
+
+[editable path="Bot"]
+[editable path="Bot/BotInputController"]
+[editable path="Bot2"]
+[editable path="Bot2/BotInputController"]
+[editable path="Bot3"]
+[editable path="Bot3/BotInputController"]
+[editable path="Bot4"]
+[editable path="Bot4/BotInputController"]
+[editable path="Bot5"]
+[editable path="Bot5/BotInputController"]

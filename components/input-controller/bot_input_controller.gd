@@ -19,11 +19,11 @@ var cell_path: Array[Vector2i]
 var movement_controller
 var driving_bias: float
 
-var max_search_depth: Dictionary[Globals.DIFFICULTY, int] = {
-	Globals.DIFFICULTY.ROOKIE: 2,
-	Globals.DIFFICULTY.AMATEUR: 3,
-	Globals.DIFFICULTY.PROFESSIONAL: 4,
-	Globals.DIFFICULTY.CHAMPION: 5,
+var adjustment_angle: Dictionary[Globals.DIFFICULTY, float] = {
+	Globals.DIFFICULTY.ROOKIE: 0.25,
+	Globals.DIFFICULTY.AMATEUR: 0.5,
+	Globals.DIFFICULTY.PROFESSIONAL: 0.95,
+	Globals.DIFFICULTY.CHAMPION: 2.0,
 }
 
 func _ready() -> void:
@@ -223,8 +223,7 @@ func _compute_adjusted_cell_path(position: Vector2i) -> Vector2:
 		var v: Vector2 = parent.velocity
 
 		var theta = u.angle_to(v)
-		# TODO: difficulty is varying the -2.0
-		final_input = parent.global_position + u.rotated(-2.0*theta)
+		final_input = parent.global_position + u.rotated(-adjustment_angle[difficulty]*theta)
 
 	return final_input
 
