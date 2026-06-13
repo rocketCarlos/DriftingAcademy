@@ -26,7 +26,8 @@ enum DIFFICULTY {
 	CHAMPION,
 }
 
-var difficulty_names: Dictionary[DIFFICULTY, String] = {
+const DIFFICULTY_LABELS: Dictionary[DIFFICULTY, String] = {
+	DIFFICULTY.UNSET: "You shouldn't be seeing this",
 	DIFFICULTY.ROOKIE: "Rookie",
 	DIFFICULTY.AMATEUR: "Amateur",
 	DIFFICULTY.PROFESSIONAL: "Professional",

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bca7sctwvxlpg"]
+[gd_scene format=3 uid="uid://bca7sctwvxlpg"]
 
 [ext_resource type="Script" uid="uid://dek8uk6vi7dsx" path="res://components/ui/text-button/TextButton.gd" id="1_hhi3p"]
 [ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="1_mjfwy"]
@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bly0j7rwmipwd" path="res://assets/sfx/ui/hover.wav" id="4_kuv34"]
 [ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="4_mh4ua"]
 
-[node name="TextButton" type="Label"]
+[node name="TextButton" type="Label" unique_id=820925823]
 self_modulate = Color(1, 1, 1, 0)
 offset_right = 40.0
 offset_bottom = 23.0
@@ -15,7 +15,7 @@ text = "helloooo"
 label_settings = ExtResource("1_mjfwy")
 script = ExtResource("1_hhi3p")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=659700370]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
@@ -23,12 +23,12 @@ pivot_offset = Vector2(108, 18)
 text = "helloooo"
 label_settings = ExtResource("1_mjfwy")
 
-[node name="Click" type="AudioStreamPlayer" parent="."]
+[node name="Click" type="AudioStreamPlayer" parent="." unique_id=1803582124]
 stream = ExtResource("3_jd8f3")
 script = ExtResource("4_mh4ua")
 metadata/_custom_type_script = "uid://cawh3fqvtix6d"
 
-[node name="Hover" type="AudioStreamPlayer" parent="."]
+[node name="Hover" type="AudioStreamPlayer" parent="." unique_id=1225419333]
 stream = ExtResource("4_kuv34")
 script = ExtResource("4_mh4ua")
 metadata/_custom_type_script = "uid://cawh3fqvtix6d"

@@ -145,10 +145,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -201.01248
-offset_top = -11.095
-offset_right = 201.01205
-offset_bottom = 36.905
+offset_left = -201.01227
+offset_right = 201.01227
+offset_bottom = 48.0
 grow_horizontal = 2
 metadata/_edit_group_ = true
 
@@ -173,6 +172,54 @@ label_settings = ExtResource("6_n6lnb")
 horizontal_alignment = 1
 
 [node name="NextGameMode" parent="CircuitSelector/GameModeSelector" unique_id=1830470642 instance=ExtResource("2_vupem")]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 2
+text = ">"
+
+[node name="DifficultySelector" type="Control" parent="CircuitSelector" unique_id=1177640364]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -201.97546
+offset_top = -32.0
+offset_right = 200.04907
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_group_ = true
+
+[node name="PreviousDifficulty" parent="CircuitSelector/DifficultySelector" unique_id=820925823 instance=ExtResource("2_vupem")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 27.0
+offset_bottom = 0.0
+grow_vertical = 2
+text = "<"
+
+[node name="Difficulty" type="Label" parent="CircuitSelector/DifficultySelector" unique_id=374046820]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "difficulty"
+label_settings = ExtResource("6_n6lnb")
+horizontal_alignment = 1
+
+[node name="NextDifficulty" parent="CircuitSelector/DifficultySelector" unique_id=1003970157 instance=ExtResource("2_vupem")]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -218,5 +265,7 @@ text = "Go Drift!"
 [connection signal="button_clicked" from="CircuitSelector/NextCircuit" to="." method="_on_next_circuit_button_clicked"]
 [connection signal="button_clicked" from="CircuitSelector/GameModeSelector/PreviousGameMode" to="." method="_on_previous_game_mode_button_clicked"]
 [connection signal="button_clicked" from="CircuitSelector/GameModeSelector/NextGameMode" to="." method="_on_next_game_mode_button_clicked"]
+[connection signal="button_clicked" from="CircuitSelector/DifficultySelector/PreviousDifficulty" to="." method="_on_previous_game_difficulty_button_clicked"]
+[connection signal="button_clicked" from="CircuitSelector/DifficultySelector/NextDifficulty" to="." method="_on_next_game_difficulty_button_clicked"]
 [connection signal="button_clicked" from="Back" to="." method="_on_back_button_clicked"]
 [connection signal="button_clicked" from="GoDrift" to="." method="_on_go_drift_button_clicked"]

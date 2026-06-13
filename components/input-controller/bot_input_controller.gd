@@ -5,7 +5,7 @@ var input_tween: Tween = null
 @export var debug: bool = false
 enum THINKING_MODES {NEXT_CELL_SIMULATION, CELL_PATH, ADJUSTED_CELL_PATH}
 @export var thinking_mode: THINKING_MODES = THINKING_MODES.ADJUSTED_CELL_PATH
-@export var difficulty_override: Globals.DIFFICULTY = Globals.DIFFICULTY.CHAMPION
+@export var difficulty_override: Globals.DIFFICULTY = Globals.DIFFICULTY.UNSET
 var difficulty: Globals.DIFFICULTY
 @export_range(0.0, 500, 0.1) var random_offset: float = 75.0
 
@@ -31,7 +31,7 @@ func _ready() -> void:
 
 	difficulty = (
 		difficulty_override
-		if Globals.current_difficulty == Globals.DIFFICULTY.UNSET
+		if difficulty_override != Globals.DIFFICULTY.UNSET
 		else Globals.current_difficulty
 	)
 
