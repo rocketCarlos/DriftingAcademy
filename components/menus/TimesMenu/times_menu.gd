@@ -15,16 +15,16 @@ func _ready() -> void:
 
 		var p: int = 1
 
-		var nodes = Globals.race_scores.keys()
-		nodes.sort_custom(func(a, b):
+		var node_names = Globals.race_scores.keys()
+		node_names.sort_custom(func(a, b):
 			var score_a = Globals.race_scores[a]
 			var score_b = Globals.race_scores[b]
 			return score_a.x > score_b.x if score_a.x != score_b.x else score_a.y < score_b.y
 		)
-		for node in nodes:
+		for name in node_names:
 			var row = ranking_row_scene.instantiate()
 			row.get_node("Position").text = str(p)
-			row.get_node("Name").text = str(node.display_name)
+			row.get_node("Name").text = str(name)
 			ranking_container.add_child(row)
 			p += 1
 
