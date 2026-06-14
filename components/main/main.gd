@@ -5,6 +5,7 @@ extends Node2D
 
 @export var car_scene: PackedScene
 @export var bot_scene: PackedScene
+@export var pause_scene: PackedScene
 # A reference to the player's car. When set to null, it automatically frees the node
 var car_instance: CharacterBody2D:
 	set(value):
@@ -21,10 +22,10 @@ var current_menu: Control = null:
 			current_menu.queue_free()
 		current_menu = value
 
-# A reference to the currently displayed circuit. When set to null, it automatically frees the node
+# A reference to the currently displayed circuit. Automatically frees the previous circuit
 var circuit_instance: Node2D = null:
 	set(value):
-		if value == null:
+		if circuit_instance:
 			circuit_instance.queue_free()
 		circuit_instance = value
 
@@ -38,8 +39,10 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("restart") and Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
-		Globals.race_restarted.emit()
+	if Input.is_action_just_pressed("pause") and not get_tree().paused:
+		get_tree().paused = true
+		var pause_menu = pause_scene.instantiate()
+		ui_subviewport.add_child(pause_menu)
 
 
 
@@ -62,6 +65,7 @@ func _on_load_current_circuit() -> void:
 		return
 
 	Globals.race_scores = {}
+	Globals.used_names = []
 
 	Router.redirect_to.emit(Router.ROUTE_NAME.RACE_HUD)
 
@@ -90,10 +94,8 @@ func _on_race_restarted() -> void:
 
 
 func _on_race_ended() -> void:
-	# get time from current menu because the menu while racing is the race_hud
-	# TODO: move time saving to other scene so that it is independent from current menu
-	var time_info = current_menu.all_times
-	Router.redirect_to.emit(Router.ROUTE_NAME.TIMES_MENU) # current menu is now times_menu
+	var time_info = Globals.all_times
+	Router.redirect_to.emit(Router.ROUTE_NAME.TIMES_MENU)
 	# save game and show results
 	if Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL:
 		current_menu.populate_times(time_info)

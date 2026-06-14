@@ -8,7 +8,11 @@ func _ready() -> void:
 	Globals.race_started.connect(_on_race_started)
 	wheels = find_children("Wheel?")
 	movement_controller.disable_acceleration = true
-	display_name = Globals.bot_names.pick_random()
+	while true:
+		display_name = Globals.bot_names.pick_random()
+		if display_name not in Globals.used_names:
+			Globals.used_names.append(display_name)
+			break
 	name_label.text = display_name
 
 func set_skin(new_skin: Node) -> void:
@@ -22,9 +26,9 @@ func set_skin(new_skin: Node) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	var updated_score = Globals.race_scores.get(self, Vector2())
+	var updated_score = Globals.race_scores.get(display_name, Vector2())
 	updated_score.y = Globals.circuit.get_position_weight(global_position)
-	Globals.race_scores[self] = updated_score
+	Globals.race_scores[display_name] = updated_score
 
 
 func _process(delta: float) -> void:

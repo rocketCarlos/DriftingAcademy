@@ -5,6 +5,7 @@ var display_name = "You"
 @onready var engine_sound = $Engine
 @onready var crash_sound = $Crash
 @onready var movement_controller = $MovementController
+@onready var camera: Camera2D = $Camera
 
 var last_speed: float
 var wheels: Array[Node] = [null, null, null, null]
@@ -23,11 +24,12 @@ func _ready() -> void:
 	Globals.race_started.connect(_on_race_started)
 	wheels = find_children("Wheel?")
 	can_accelerate = Globals.current_gamemode == Globals.GAME_MODE.TIME_TRIAL
+	camera.make_current()
 
 func _physics_process(_delta: float) -> void:
-	var updated_score = Globals.race_scores.get(self, Vector2())
+	var updated_score = Globals.race_scores.get(display_name, Vector2())
 	updated_score.y = Globals.circuit.get_position_weight(global_position)
-	Globals.race_scores[self] = updated_score
+	Globals.race_scores[display_name] = updated_score
 
 	Globals.car_speeed = velocity.length()
 	match current_state:

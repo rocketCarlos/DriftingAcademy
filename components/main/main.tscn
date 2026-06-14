@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://c7y3fyqtapots" path="res://components/main/main.gd" id="1_63q0e"]
 [ext_resource type="PackedScene" uid="uid://b6okt6e314s81" path="res://components/car/car.tscn" id="2_4k17i"]
 [ext_resource type="PackedScene" uid="uid://ccfgi5gd1l23n" path="res://components/bot/bot.tscn" id="3_w5q67"]
+[ext_resource type="PackedScene" uid="uid://csw30vuhjcd66" path="res://components/ui/PauseMenu/pause_menu.tscn" id="4_wfiak"]
 
 [node name="Main" type="Node2D" unique_id=1170836837]
+process_mode = 3
 script = ExtResource("1_63q0e")
 car_scene = ExtResource("2_4k17i")
 bot_scene = ExtResource("3_w5q67")
+pause_scene = ExtResource("4_wfiak")
 
 [node name="Game" type="CanvasLayer" parent="." unique_id=1951018729]
 
@@ -20,6 +23,7 @@ grow_vertical = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Game/SubViewportContainer" unique_id=1432835948]
+process_mode = 1
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(1152, 648)

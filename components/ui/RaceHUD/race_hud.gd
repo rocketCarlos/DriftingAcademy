@@ -13,8 +13,6 @@ var track_time: bool = false
 var elapsed_time: float = 0.0
 var total_time: float = 0.0
 
-var all_times: Array[float]
-
 func _ready() -> void:
 	Globals.lap_completed.connect(_on_lap_completed)
 	Globals.race_started.connect(_on_race_started)
@@ -46,13 +44,13 @@ func restart() -> void:
 	speed_label.text = '0'
 	current_lap = 1
 	lap_label.text = '1/' + str(total_laps)
-	all_times = []
+	Globals.all_times = []
 
 
 func _on_lap_completed(object: Node2D):
 	if object == Globals.car:
 		print(time_label.text)
-		all_times.push_back(float(time_label.text))
+		Globals.all_times.push_back(float(time_label.text))
 		total_time += elapsed_time
 		elapsed_time = 0
 		if current_lap == total_laps:
@@ -63,9 +61,9 @@ func _on_lap_completed(object: Node2D):
 			lap_label.text = str(current_lap) + '/' + str(total_laps)
 
 
-	var updated_score = Globals.race_scores.get(object, Vector2())
+	var updated_score = Globals.race_scores.get(object.display_name, Vector2())
 	updated_score.x += 1
-	Globals.race_scores[object] = updated_score
+	Globals.race_scores[object.display_name] = updated_score
 
 
 func _on_race_started(object: Node2D) -> void:

@@ -55,19 +55,19 @@ const total_laps_gamemode: Dictionary[GAME_MODE, int] = {
 # Key: car / bot
 # Value: v.x -> nº of laps, v.y = weight of current cell
 # Car in 1st position is the one with the lowest weight among those with the greatest nº of laps
-var race_scores: Dictionary[Node2D, Vector2]
+var race_scores: Dictionary[String, Vector2]
 
 func get_user_race_position() -> int:
-	if not race_scores.get(car, null):
+	if not race_scores.get(car.display_name, null):
 		return -1
 
-	var user_laps = race_scores[car].x
-	var user_weight = race_scores[car].y
+	var user_laps = race_scores[car.display_name].x
+	var user_weight = race_scores[car.display_name].y
 
 	var position = 1
 
 	for other in race_scores.keys():
-		if other == car:
+		if other == car.display_name or not other:
 			continue
 
 		var laps = race_scores[other].x
@@ -78,7 +78,7 @@ func get_user_race_position() -> int:
 
 	return position
 
-
+var all_times: Array[float]
 """
 Flow control signals
 """
@@ -112,6 +112,10 @@ var bot_names = [
 	"Cloud",
 	"Panda",
 	"Snake",
+	"Chilli",
+	"Thunder",
+	"Silver",
 	"Wender",
 	"Gambit"
 ]
+var used_names: Array[String] = []

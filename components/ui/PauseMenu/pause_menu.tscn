@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://csw30vuhjcd66"]
+
+[ext_resource type="Script" uid="uid://cq0qv5injp7yw" path="res://components/ui/PauseMenu/pause_menu.gd" id="1_5rbr6"]
+[ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="2_5rbr6"]
+
+[node name="PauseMenu" type="Control" unique_id=918519564]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5rbr6")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1023343831]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.09019608)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1704029802]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.0
+offset_top = -20.0
+offset_right = 108.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Resume" parent="VBoxContainer" unique_id=820925823 instance=ExtResource("2_5rbr6")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Resume race"
+
+[node name="Restart" parent="VBoxContainer" unique_id=317391276 instance=ExtResource("2_5rbr6")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Restart race"
+
+[node name="ChooseLevel" parent="VBoxContainer" unique_id=596958014 instance=ExtResource("2_5rbr6")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "< Choose level"
+
+[connection signal="button_clicked" from="VBoxContainer/Resume" to="." method="_on_resume_button_clicked"]
+[connection signal="button_clicked" from="VBoxContainer/Restart" to="." method="_on_restart_button_clicked"]
+[connection signal="button_clicked" from="VBoxContainer/ChooseLevel" to="." method="_on_choose_level_button_clicked"]

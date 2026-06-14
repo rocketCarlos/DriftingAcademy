@@ -11,6 +11,7 @@ outline_size = 6
 outline_color = Color(0, 0, 0, 1)
 
 [node name="RaceHUD" type="Control" unique_id=668112054]
+process_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
