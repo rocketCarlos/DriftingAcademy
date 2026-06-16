@@ -47,6 +47,7 @@ animations = [{
 }]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" unique_id=1495775987]
+process_mode = 1
 sprite_frames = SubResource("SpriteFrames_jo1l6")
 autoplay = "default"
 script = ExtResource("2_mxanx")

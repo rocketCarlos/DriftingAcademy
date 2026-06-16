@@ -38,8 +38,8 @@ func _ready() -> void:
 	Globals.race_ended.connect(_on_race_ended)
 
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("pause") and not get_tree().paused:
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("pause") and not get_tree().paused and circuit_instance:
 		get_tree().paused = true
 		var pause_menu = pause_scene.instantiate()
 		ui_subviewport.add_child(pause_menu)

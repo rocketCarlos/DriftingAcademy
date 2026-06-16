@@ -13,3 +13,8 @@ func _on_choose_level_button_clicked() -> void:
 	Router.redirect_to.emit(Router.ROUTE_NAME.SKIN_CIRCUIT_SELECTOR)
 	get_tree().paused = false
 	queue_free()
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("pause"):
+		_on_resume_button_clicked()
