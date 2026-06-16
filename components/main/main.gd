@@ -36,6 +36,7 @@ func _ready() -> void:
 	CircuitHolder.load_current_circuit.connect(_on_load_current_circuit)
 	Globals.race_restarted.connect(_on_race_restarted)
 	Globals.race_ended.connect(_on_race_ended)
+	Globals.race_aborted.connect(_on_race_aborted)
 
 
 func _process(_delta: float) -> void:
@@ -115,6 +116,9 @@ func _on_race_ended() -> void:
 			)
 	circuit_instance = null
 
+
+func _on_race_aborted() -> void:
+	circuit_instance = null
 
 
 func instantiate_and_initialize_car(circuit: Node, n_bots: int = 0) -> void:

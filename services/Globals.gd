@@ -86,7 +86,7 @@ signal race_restarted
 signal lap_completed(object: Node2D)
 signal race_started(object: Node2D)
 signal race_ended
-
+signal race_aborted
 
 """
 Misc

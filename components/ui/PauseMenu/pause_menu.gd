@@ -11,6 +11,7 @@ func _on_restart_button_clicked() -> void:
 
 func _on_choose_level_button_clicked() -> void:
 	Router.redirect_to.emit(Router.ROUTE_NAME.SKIN_CIRCUIT_SELECTOR)
+	Globals.race_aborted.emit()
 	get_tree().paused = false
 	queue_free()
 
