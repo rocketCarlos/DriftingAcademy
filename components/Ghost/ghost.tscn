@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://e6qc8ysahfe1"]
+[gd_scene format=3 uid="uid://e6qc8ysahfe1"]
 
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="1_cj40i"]
 [ext_resource type="Script" uid="uid://cpe06ikwgyulc" path="res://components/Ghost/ghost.gd" id="2_153f1"]
 
-[node name="Ghost" type="Sprite2D"]
+[node name="Ghost" type="Sprite2D" unique_id=1660574634]
 modulate = Color(1, 1, 1, 0.33333334)
 texture = ExtResource("1_cj40i")
 script = ExtResource("2_153f1")

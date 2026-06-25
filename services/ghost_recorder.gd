@@ -13,6 +13,7 @@ func _ready() -> void:
 	Globals.race_started.connect(_on_race_started)
 	Globals.race_restarted.connect(_on_race_restarted)
 	Globals.race_ended.connect(_on_race_ended)
+	Globals.race_aborted.connect(_on_race_ended)
 
 
 func _process(delta):
