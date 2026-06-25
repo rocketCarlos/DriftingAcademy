@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://dk5e7h5nh5a03"]
+
+[ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="1_jm0j6"]
+[ext_resource type="Script" uid="uid://b1e4xg04oluum" path="res://components/ui/SettingsMenu/settings.gd" id="1_rtkeo"]
+[ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="2_1eh7a"]
+
+[node name="Settings" type="Control" unique_id=117599484]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rtkeo")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=756308737]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1447314099]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Master" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=15255183]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Master" unique_id=1644020314]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Master volume"
+label_settings = ExtResource("1_jm0j6")
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="Control" parent="MarginContainer/VBoxContainer/Master" unique_id=1895461660]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Master/CenterContainer" unique_id=1677181037]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+tick_count = 11
+ticks_on_borders = true
+ticks_position = 2
+
+[node name="SFX" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=463751677]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/SFX" unique_id=1749688889]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sound effects"
+label_settings = ExtResource("1_jm0j6")
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="Control" parent="MarginContainer/VBoxContainer/SFX" unique_id=866166148]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/VBoxContainer/SFX/CenterContainer" unique_id=1522080772]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+tick_count = 11
+ticks_on_borders = true
+ticks_position = 2
+
+[node name="TextButton" parent="MarginContainer/VBoxContainer" unique_id=820925823 instance=ExtResource("2_1eh7a")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "click me"
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/Master/CenterContainer/MasterSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/SFX/CenterContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]

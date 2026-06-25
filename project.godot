@@ -16,8 +16,12 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="DriftingAcademy"
 run/main_scene="uid://bpxam255aqm63"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://bhdei53gwncg1"
 
 [autoload]
 
@@ -28,6 +32,7 @@ CircuitHolder="*res://services/circuit-holder/circuit_holder.tscn"
 SaveManager="*res://services/save_manager.gd"
 AudioService="*res://services/audio-service/audio_service.tscn"
 GhostRecorder="*res://services/ghost_recorder.gd"
+Settings="*uid://lqr2wt2h3onn"
 
 [debug]
 

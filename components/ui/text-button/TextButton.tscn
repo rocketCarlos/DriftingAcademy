@@ -25,11 +25,13 @@ label_settings = ExtResource("1_mjfwy")
 
 [node name="Click" type="AudioStreamPlayer" parent="." unique_id=1803582124]
 stream = ExtResource("3_jd8f3")
+bus = &"SFXs"
 script = ExtResource("4_mh4ua")
 metadata/_custom_type_script = "uid://cawh3fqvtix6d"
 
 [node name="Hover" type="AudioStreamPlayer" parent="." unique_id=1225419333]
 stream = ExtResource("4_kuv34")
+bus = &"SFXs"
 script = ExtResource("4_mh4ua")
 metadata/_custom_type_script = "uid://cawh3fqvtix6d"
 
