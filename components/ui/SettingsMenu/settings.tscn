@@ -58,6 +58,34 @@ tick_count = 11
 ticks_on_borders = true
 ticks_position = 2
 
+[node name="Music" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1027535535]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Music" unique_id=1009138978]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music"
+label_settings = ExtResource("1_jm0j6")
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="Control" parent="MarginContainer/VBoxContainer/Music" unique_id=731919200]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Music/CenterContainer" unique_id=168659377]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+tick_count = 11
+ticks_on_borders = true
+ticks_position = 2
+
 [node name="SFX" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=463751677]
 layout_mode = 2
 
@@ -92,4 +120,5 @@ size_flags_horizontal = 4
 text = "click me"
 
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/Master/CenterContainer/MasterSlider" to="." method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/Music/CenterContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/SFX/CenterContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
