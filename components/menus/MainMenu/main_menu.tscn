@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bpfuekwshxnsq"]
+[gd_scene format=3 uid="uid://bpfuekwshxnsq"]
 
 [ext_resource type="Script" uid="uid://bsjgbgb7gdevs" path="res://components/menus/MainMenu/main_menu.gd" id="1_ln42q"]
 [ext_resource type="Texture2D" uid="uid://cffrm6l0qyf7h" path="res://assets/ui/coverpng.png" id="1_mqwq6"]
 [ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="2_ln42q"]
+[ext_resource type="AudioStream" uid="uid://dqyhsom0dsr71" path="res://assets/music/Menu music.ogg" id="4_8ebe6"]
+[ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="5_bv1nf"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=506630818]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ln42q")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=664708332]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_mqwq6")
 
-[node name="Play" parent="." instance=ExtResource("2_ln42q")]
+[node name="Play" parent="." unique_id=1877405426 instance=ExtResource("2_ln42q")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,7 +40,7 @@ grow_vertical = 2
 size_flags_horizontal = 6
 text = "Play"
 
-[node name="Credits" parent="." instance=ExtResource("2_ln42q")]
+[node name="Credits" parent="." unique_id=1928274344 instance=ExtResource("2_ln42q")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,6 +54,14 @@ offset_bottom = 150.70999
 grow_horizontal = 2
 grow_vertical = 2
 text = "Credits"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=1143709512]
+stream = ExtResource("4_8ebe6")
+bus = &"Music"
+script = ExtResource("5_bv1nf")
+audio_type = "Music"
+sound_name = "MainMenuMusic"
+metadata/_custom_type_script = "uid://cawh3fqvtix6d"
 
 [connection signal="button_clicked" from="Play" to="." method="_on_play_button_clicked"]
 [connection signal="button_clicked" from="Credits" to="." method="_on_credits_button_clicked"]

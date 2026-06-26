@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="3_0k5p6"]
 [ext_resource type="Texture2D" uid="uid://7reln3ydib10" path="res://assets/circuit-previews/under_construction.png" id="5_vbimx"]
 [ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="6_n6lnb"]
+[ext_resource type="AudioStream" uid="uid://dqyhsom0dsr71" path="res://assets/music/Menu music.ogg" id="7_lmh4g"]
+[ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="8_a26w4"]
 
 [node name="SkinCircuitSelector" type="Control" unique_id=636447487]
 layout_mode = 3
@@ -258,6 +260,14 @@ offset_bottom = -76.494995
 grow_horizontal = 2
 grow_vertical = 0
 text = "Go Drift!"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=197804051]
+stream = ExtResource("7_lmh4g")
+bus = &"Music"
+script = ExtResource("8_a26w4")
+audio_type = "Music"
+sound_name = "MainMenuMusic"
+metadata/_custom_type_script = "uid://cawh3fqvtix6d"
 
 [connection signal="button_clicked" from="SkinSelector/PreviousSkin" to="." method="_on_previous_skin_button_clicked"]
 [connection signal="button_clicked" from="SkinSelector/NextSkin" to="." method="_on_next_skin_button_clicked"]

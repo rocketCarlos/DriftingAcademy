@@ -7,6 +7,7 @@ extends Control
 @onready var ranking_container = $Ranking
 
 func _ready() -> void:
+	AudioService.remove_all_music()
 	times_row_preview.queue_free()
 
 	if Globals.current_gamemode == Globals.GAME_MODE.VS_MACHINE:

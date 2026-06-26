@@ -1,10 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxkr381vwi2bb"]
+[gd_scene format=3 uid="uid://bxkr381vwi2bb"]
 
 [ext_resource type="Script" uid="uid://bhqgbwoy3jxw8" path="res://services/audio-service/audio_service.gd" id="1_873u0"]
 
-[node name="AudioService" type="Node"]
+[node name="AudioService" type="Node" unique_id=1884432064]
 script = ExtResource("1_873u0")
 
-[node name="Sfx" type="Node" parent="."]
+[node name="Sfx" type="Node" parent="." unique_id=243957083]
 
-[node name="Music" type="Node" parent="."]
+[node name="Music" type="Node" parent="." unique_id=1777538724]

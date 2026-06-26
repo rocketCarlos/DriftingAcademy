@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://b63vgf7vlp7ys" path="res://components/circuits/utils/circuit-base/circuit_base.tscn" id="1_0ke8c"]
 [ext_resource type="TileSet" uid="uid://dq8qx8e3ba3np" path="res://assets/tile-sets/default-tileset/circuit_ts.tres" id="1_7h5ry"]
+[ext_resource type="AudioStream" uid="uid://bmedhmwddpiww" path="res://assets/music/First Circuit Theme.ogg" id="3_6285y"]
+[ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="3_etlcl"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_piuk2"]
 b = Vector2(0, 276)
@@ -2848,3 +2850,10 @@ shape = SubResource("SegmentShape2D_yim5h")
 position = Vector2(-759, -461)
 build_mode = 1
 polygon = PackedVector2Array(130.06421, -141.81339, -34.93579, -79.81339, -34.93579, 79.18661, 129.06421, 142.18661, -38.93579, 142.18661, -38.93579, -141.81339)
+
+[node name="CustomAudioStreamPlayer" type="AudioStreamPlayer" parent="." index="6" unique_id=2080342951]
+stream = ExtResource("3_6285y")
+script = ExtResource("3_etlcl")
+audio_type = "Music"
+sound_name = "DrriftingsCraddle"
+metadata/_custom_type_script = "uid://cawh3fqvtix6d"
