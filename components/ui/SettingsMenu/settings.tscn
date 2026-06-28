@@ -29,10 +29,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1447314099]
 layout_mode = 2
@@ -41,6 +41,7 @@ alignment = 1
 
 [node name="BackButton" parent="MarginContainer/VBoxContainer" unique_id=820925823 instance=ExtResource("2_1eh7a")]
 layout_mode = 2
+size_flags_horizontal = 0
 text = "< Back"
 
 [node name="Master" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1730255539]
@@ -51,10 +52,23 @@ alignment = 1
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Master" unique_id=1644020314]
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 4
 text = "Master volume"
 label_settings = ExtResource("1_jm0j6")
 horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Master/Label" unique_id=193564691]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_right = 121.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "999"
+label_settings = ExtResource("1_jm0j6")
 
 [node name="MasterSlider" type="HSlider" parent="MarginContainer/VBoxContainer/Master" unique_id=1677181037]
 layout_mode = 2
@@ -79,6 +93,21 @@ size_flags_horizontal = 3
 text = "Music"
 label_settings = ExtResource("1_jm0j6")
 horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Specifics/Music/Label" unique_id=1117508821]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = 2.0
+offset_right = -63.0
+offset_bottom = 2.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "999"
+label_settings = ExtResource("1_jm0j6")
 
 [node name="CenterContainer" type="Control" parent="MarginContainer/VBoxContainer/Specifics/Music" unique_id=731919200]
 layout_mode = 2
@@ -107,7 +136,19 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Sound effects"
 label_settings = ExtResource("1_jm0j6")
-horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Specifics/SFX/Label" unique_id=1669509680]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_right = -63.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "999"
+label_settings = ExtResource("1_jm0j6")
 
 [node name="CenterContainer" type="Control" parent="MarginContainer/VBoxContainer/Specifics/SFX" unique_id=866166148]
 layout_mode = 2
