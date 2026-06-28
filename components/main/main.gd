@@ -119,6 +119,7 @@ func _on_race_ended() -> void:
 
 
 func _on_race_aborted() -> void:
+	AudioService.remove_all_music()
 	circuit_instance = null
 
 
