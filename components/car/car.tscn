@@ -42,13 +42,13 @@ drag_bottom_margin = 0.1
 
 [node name="Engine" type="AudioStreamPlayer" parent="." unique_id=1765219720]
 stream = ExtResource("6_b3ski")
-volume_db = -16.0
+volume_db = -12.0
 autoplay = true
 bus = &"SFXs"
 
 [node name="Crash" type="AudioStreamPlayer" parent="." unique_id=1871571630]
 stream = SubResource("AudioStreamRandomizer_s371w")
-volume_db = -8.0
+volume_db = -2.0
 bus = &"SFXs"
 
 [node name="Skin" type="Sprite2D" parent="." unique_id=964486418]

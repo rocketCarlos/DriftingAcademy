@@ -38,6 +38,8 @@ func _ready() -> void:
 	Globals.race_ended.connect(_on_race_ended)
 	Globals.race_aborted.connect(_on_race_aborted)
 
+	Settings.music_volume = 0.5
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause") and not get_tree().paused and circuit_instance:

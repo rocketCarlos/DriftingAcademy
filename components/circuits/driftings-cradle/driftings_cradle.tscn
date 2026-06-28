@@ -2853,6 +2853,7 @@ polygon = PackedVector2Array(130.06421, -141.81339, -34.93579, -79.81339, -34.93
 
 [node name="CustomAudioStreamPlayer" type="AudioStreamPlayer" parent="." index="6" unique_id=2080342951]
 stream = ExtResource("3_6285y")
+bus = &"Music"
 script = ExtResource("3_etlcl")
 audio_type = "Music"
 sound_name = "DrriftingsCraddle"
