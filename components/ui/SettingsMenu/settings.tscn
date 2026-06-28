@@ -13,6 +13,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rtkeo")
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=280923457]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8901961)
+
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=756308737]
 layout_mode = 1
 anchors_preset = 15
@@ -30,7 +39,7 @@ layout_mode = 2
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="TextButton" parent="MarginContainer/VBoxContainer" unique_id=820925823 instance=ExtResource("2_1eh7a")]
+[node name="BackButton" parent="MarginContainer/VBoxContainer" unique_id=820925823 instance=ExtResource("2_1eh7a")]
 layout_mode = 2
 text = "< Back"
 
@@ -118,6 +127,7 @@ tick_count = 11
 ticks_on_borders = true
 ticks_position = 2
 
+[connection signal="button_clicked" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_button_clicked"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/Master/MasterSlider" to="." method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/Specifics/Music/CenterContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/Specifics/SFX/CenterContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]

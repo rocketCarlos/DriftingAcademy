@@ -6,3 +6,7 @@ func _on_play_button_clicked() -> void:
 
 func _on_credits_button_clicked() -> void:
 	pass
+
+
+func _on_settings_button_clicked() -> void:
+	add_child(Globals.settings_scene.instantiate())

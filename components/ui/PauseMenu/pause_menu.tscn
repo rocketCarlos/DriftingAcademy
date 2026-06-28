@@ -48,6 +48,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Restart race"
 
+[node name="Settings" parent="VBoxContainer" unique_id=86264522 instance=ExtResource("2_5rbr6")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Settings"
+
 [node name="ChooseLevel" parent="VBoxContainer" unique_id=596958014 instance=ExtResource("2_5rbr6")]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -55,4 +60,5 @@ text = "< Choose level"
 
 [connection signal="button_clicked" from="VBoxContainer/Resume" to="." method="_on_resume_button_clicked"]
 [connection signal="button_clicked" from="VBoxContainer/Restart" to="." method="_on_restart_button_clicked"]
+[connection signal="button_clicked" from="VBoxContainer/Settings" to="." method="_on_settings_button_clicked"]
 [connection signal="button_clicked" from="VBoxContainer/ChooseLevel" to="." method="_on_choose_level_button_clicked"]

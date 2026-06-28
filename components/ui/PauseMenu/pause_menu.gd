@@ -19,3 +19,7 @@ func _on_choose_level_button_clicked() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		_on_resume_button_clicked()
+
+
+func _on_settings_button_clicked() -> void:
+	add_child(Globals.settings_scene.instantiate())

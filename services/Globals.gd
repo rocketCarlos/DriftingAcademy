@@ -3,6 +3,7 @@ extends Node
 Script to hold global variables, signal and node references
 """
 
+const settings_scene: PackedScene =  preload("res://components/ui/SettingsMenu/settings.tscn")
 
 """
 Game state enums
