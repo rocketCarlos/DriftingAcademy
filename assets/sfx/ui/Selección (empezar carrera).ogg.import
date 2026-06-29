@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c54m1y21wdemo"
+path="res://.godot/imported/Selección (empezar carrera).ogg-dfb0c52ff11830c682d69fa09d7bca56.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/sfx/ui/Selección (empezar carrera).ogg"
+dest_files=["res://.godot/imported/Selección (empezar carrera).ogg-dfb0c52ff11830c682d69fa09d7bca56.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
