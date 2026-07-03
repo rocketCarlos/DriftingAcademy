@@ -6,6 +6,8 @@
 [ext_resource type="FontFile" uid="uid://ds238wktkms30" path="res://assets/label-settings/WenderFont2.ttf" id="5_ejx8k"]
 [ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="5_kty6d"]
 [ext_resource type="PackedScene" uid="uid://c10ybwfi08dnx" path="res://components/menus/TimesMenu/ranking_row.tscn" id="6_3wh6u"]
+[ext_resource type="AudioStream" uid="uid://c54m1y21wdemo" path="res://assets/sfx/ui/Selección (empezar carrera).ogg" id="6_17616"]
+[ext_resource type="AudioStream" uid="uid://8odxlulasdng" path="res://assets/sfx/ui/Cancelar.ogg" id="7_7oirq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3wh6u"]
 font = ExtResource("5_ejx8k")
@@ -64,6 +66,7 @@ offset_right = 309.0
 offset_bottom = -34.0
 grow_vertical = 0
 text = "Play again!"
+click = ExtResource("6_17616")
 
 [node name="ChooseLevel" parent="." unique_id=2039597710 instance=ExtResource("5_kty6d")]
 layout_mode = 1
@@ -79,6 +82,7 @@ offset_bottom = -34.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Choose level"
+click = ExtResource("7_7oirq")
 
 [node name="NewRecord" type="Label" parent="." unique_id=751060251 groups=["TimeTrial"]]
 layout_mode = 1

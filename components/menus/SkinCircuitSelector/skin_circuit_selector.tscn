@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dr2s0r3t777kg" path="res://assets/cars/sportscar1.png" id="3_0k5p6"]
 [ext_resource type="Texture2D" uid="uid://7reln3ydib10" path="res://assets/circuit-previews/under_construction.png" id="5_vbimx"]
 [ext_resource type="LabelSettings" uid="uid://b6fc638x7ek6q" path="res://assets/label-settings/default-font.tres" id="6_n6lnb"]
+[ext_resource type="AudioStream" uid="uid://8odxlulasdng" path="res://assets/sfx/ui/Cancelar.ogg" id="7_37osl"]
 [ext_resource type="AudioStream" uid="uid://dqyhsom0dsr71" path="res://assets/music/Menu music.ogg" id="7_lmh4g"]
 [ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="8_a26w4"]
+[ext_resource type="AudioStream" uid="uid://c54m1y21wdemo" path="res://assets/sfx/ui/Selección (empezar carrera).ogg" id="8_fnb75"]
 
 [node name="SkinCircuitSelector" type="Control" unique_id=636447487]
 layout_mode = 3
@@ -245,6 +247,7 @@ offset_right = 109.5
 offset_bottom = 77.955
 grow_horizontal = 2
 text = "< Go back"
+click = ExtResource("7_37osl")
 
 [node name="GoDrift" parent="." unique_id=1219507173 instance=ExtResource("2_vupem")]
 layout_mode = 1
@@ -260,6 +263,7 @@ offset_bottom = -76.494995
 grow_horizontal = 2
 grow_vertical = 0
 text = "Go Drift!"
+click = ExtResource("8_fnb75")
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=197804051]
 stream = ExtResource("7_lmh4g")

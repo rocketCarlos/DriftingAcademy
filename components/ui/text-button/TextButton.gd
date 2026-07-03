@@ -7,19 +7,13 @@ Accepts overrides for sounds and label settings through export variables
 """
 
 @onready var ChildLabel = $Label
-@onready var SoundClick = $Click
-@onready var SoundHover = $Hover
+@onready var SoundClick: CustomAudioStreamPlayer = $Click
+@onready var SoundHover: CustomAudioStreamPlayer = $Hover
 
 signal button_clicked
 
-@export var click: AudioStream = preload("res://assets/sfx/ui/click.ogg"):
-	set(value):
-		click = value
-		SoundClick.stream = click
-@export var hover: AudioStream = preload("res://assets/sfx/ui/hover.wav"):
-	set(value):
-		hover = value
-		SoundHover.stram = hover
+@export var click: AudioStream = preload("res://assets/sfx/ui/Selección.ogg")
+@export var hover: AudioStream = preload("res://assets/sfx/ui/Hover.ogg")
 @export var custom_label_settings: LabelSettings = preload("res://assets/label-settings/default-font.tres"):
 	set(value):
 		custom_label_settings = value
