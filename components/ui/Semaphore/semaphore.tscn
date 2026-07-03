@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://celgfej0fbao5" path="res://assets/ui/semaphore-Sheet.png" id="1_y06xy"]
 [ext_resource type="Script" uid="uid://cs7knvjujsoms" path="res://components/ui/Semaphore/semaphore.gd" id="2_mxanx"]
+[ext_resource type="AudioStream" uid="uid://dqwkpafa0gign" path="res://assets/sfx/semaphore.wav" id="3_qcsb0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mxanx"]
 atlas = ExtResource("1_y06xy")
@@ -38,7 +39,7 @@ animations = [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_sh4sb")
 }, {
-"duration": 1.0,
+"duration": 1.5,
 "texture": SubResource("AtlasTexture_do71k")
 }],
 "loop": 0,
@@ -51,6 +52,10 @@ process_mode = 1
 sprite_frames = SubResource("SpriteFrames_jo1l6")
 autoplay = "default"
 script = ExtResource("2_mxanx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1052665975]
+stream = ExtResource("3_qcsb0")
+bus = &"SFXs"
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
 [connection signal="frame_changed" from="." to="." method="_on_frame_changed"]

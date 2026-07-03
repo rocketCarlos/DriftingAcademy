@@ -32,5 +32,5 @@ func remove_music(sound_name: String) -> void:
 
 func remove_all_music() -> void:
 	for child in music.get_children():
+		already_playing.pop_at(already_playing.find((child as CustomAudioStreamPlayer).sound_name))
 		child.queue_free()
-	already_playing.clear()

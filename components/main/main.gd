@@ -64,10 +64,10 @@ func _on_redirect_to(route: Router.ROUTE_NAME) -> void:
 
 
 func _on_load_current_circuit() -> void:
-	AudioService.remove_all_music()
 	if CircuitHolder.current_circuit == CircuitHolder.CIRCUIT_NAME.UNDER_CONSTRUCTION:
 		return
 
+	AudioService.remove_all_music()
 	Globals.race_scores = {}
 	Globals.used_names = []
 
