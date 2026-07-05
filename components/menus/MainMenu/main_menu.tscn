@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsjgbgb7gdevs" path="res://components/menus/MainMenu/main_menu.gd" id="1_ln42q"]
 [ext_resource type="Texture2D" uid="uid://cffrm6l0qyf7h" path="res://assets/ui/coverpng.png" id="1_mqwq6"]
+[ext_resource type="PackedScene" uid="uid://c5irnmf8ojbgi" path="res://components/credits/credits.tscn" id="2_bv1nf"]
 [ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="2_ln42q"]
 [ext_resource type="AudioStream" uid="uid://dqyhsom0dsr71" path="res://assets/music/Menu music.ogg" id="4_8ebe6"]
 [ext_resource type="Script" uid="uid://cawh3fqvtix6d" path="res://components/audio/custom-audio-stream-player/custom_audio_stream_player.gd" id="5_bv1nf"]
@@ -14,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ln42q")
+credits_scene = ExtResource("2_bv1nf")
 
 [node name="Background" type="TextureRect" parent="." unique_id=664708332]
 layout_mode = 1

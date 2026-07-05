@@ -1,0 +1,242 @@
+[gd_scene format=3 uid="uid://c5irnmf8ojbgi"]
+
+[ext_resource type="Script" uid="uid://buredyfac4488" path="res://components/credits/credits.gd" id="1_5d6d7"]
+[ext_resource type="FontFile" uid="uid://ds238wktkms30" path="res://assets/label-settings/WenderFont2.ttf" id="1_mh2br"]
+[ext_resource type="Texture2D" uid="uid://bb3jqqj8hq2au" path="res://assets/SIROCO_LOGO.png" id="2_macje"]
+[ext_resource type="PackedScene" uid="uid://bca7sctwvxlpg" path="res://components/ui/text-button/TextButton.tscn" id="3_macje"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5d6d7"]
+font = ExtResource("1_mh2br")
+font_size = 64
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Credits" type="Control" unique_id=1380057511]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5d6d7")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1921616639]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.29, 0.32866663, 0.58, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1080129564]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+scroll_hint_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer" unique_id=237920747]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer" unique_id=1728004099]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1176321489]
+layout_mode = 2
+text = "A game by SIROCO"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=115316180]
+custom_minimum_size = Vector2(150, 150)
+custom_maximum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_macje")
+expand_mode = 3
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=659667947]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5" unique_id=1988192392]
+layout_mode = 2
+text = "Originally made for the OGA Spring Game Jam 2025"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label7" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer5" unique_id=775262500]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Ranked as the best game of the jam"
+uri = "https://itch.io/jam/opengameartorg-spring-game-jam-2025/results"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1722154706]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=223281942]
+layout_mode = 2
+text = "Game design and programming"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+
+[node name="Label3" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer" unique_id=137899445]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "wender"
+uri = "https://wender9.itch.io/"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=719475033]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=73555276]
+layout_mode = 2
+text = "Art"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+
+[node name="Label3" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=963078172]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "wender"
+uri = "https://wender9.itch.io/"
+
+[node name="Label4" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=955020217]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Agonuu"
+uri = "https://agonnu.itch.io/"
+
+[node name="Label5" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer2" unique_id=623814513]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Voidegart"
+uri = "https://voidegart.itch.io/"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1686524048]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=1730697876]
+layout_mode = 2
+text = "Music and sound"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+
+[node name="Label5" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer3" unique_id=959270665]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Voidegart"
+uri = "https://voidegart.itch.io/"
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1721358200]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4" unique_id=1908888369]
+layout_mode = 2
+text = "Other assets"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+
+[node name="Label5" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4" unique_id=1460041229]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Car engine loop - domasx2"
+uri = "https://opengameart.org/content/racing-car-engine-sound-loops"
+
+[node name="Label6" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4" unique_id=1118177758]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Hit - rubberduck"
+uri = "https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx"
+
+[node name="Label7" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer4" unique_id=630489093]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Race countdown - Pastew"
+uri = "https://freesound.org/people/Pastew/sounds/813525/"
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer" unique_id=1397566725]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Label2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6" unique_id=1990931346]
+layout_mode = 2
+text = "Source code"
+label_settings = SubResource("LabelSettings_5d6d7")
+horizontal_alignment = 1
+
+[node name="Label5" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6" unique_id=1654483330]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "OGA car sprites - wender"
+uri = "https://opengameart.org/content/sports-cars-pixelart-sprites"
+
+[node name="Label6" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6" unique_id=261589501]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "OGA circuit spritesheet - wender"
+uri = "https://opengameart.org/content/circuit-spritesheet-pixelart"
+
+[node name="Label7" type="LinkButton" parent="ScrollContainer/MarginContainer/VBoxContainer/VBoxContainer6" unique_id=517835735]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_mh2br")
+theme_override_font_sizes/font_size = 32
+text = "Source code"
+uri = "https://github.com/rocketCarlos/DriftingAcademy"
+
+[node name="TextButton" parent="." unique_id=820925823 instance=ExtResource("3_macje")]
+modulate = Color(1, 1, 1, 0.4862745)
+layout_mode = 0
+offset_left = 30.0
+offset_top = 26.0
+offset_right = 180.0
+offset_bottom = 62.0
+text = "< Back"
+
+[connection signal="button_clicked" from="TextButton" to="." method="_on_text_button_button_clicked"]
