@@ -17,6 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="DriftingAcademy"
 run/main_scene="uid://bpxam255aqm63"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/image="uid://bb3jqqj8hq2au"
 config/icon="res://icon.svg"
 
 [audio]
