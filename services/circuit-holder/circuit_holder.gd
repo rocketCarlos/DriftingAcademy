@@ -14,16 +14,19 @@ var current_circuit: CIRCUIT_NAME
 
 enum CIRCUIT_NAME {
 	DRIFTINGS_CRADLE,
+	SERPENTS_DESCENT,
 	UNDER_CONSTRUCTION,
 }
 
 @onready var circuits_thumbnails: Dictionary[CIRCUIT_NAME, Node] = {
 	CIRCUIT_NAME.DRIFTINGS_CRADLE: $DriftingsCradle,
+	CIRCUIT_NAME.SERPENTS_DESCENT: $SerpentsDescent,
 	CIRCUIT_NAME.UNDER_CONSTRUCTION: $UnderConstruction,
 }
 
 var circuit_scenes: Dictionary[CIRCUIT_NAME, Resource] = {
 	CIRCUIT_NAME.DRIFTINGS_CRADLE: preload("uid://cu0ud7us0w8n"),
+	CIRCUIT_NAME.SERPENTS_DESCENT: preload("uid://lqo8da81rpvg"),
 }
 
 """

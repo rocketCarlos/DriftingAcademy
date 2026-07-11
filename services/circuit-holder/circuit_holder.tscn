@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://i13py0uqgl15"]
+[gd_scene format=3 uid="uid://i13py0uqgl15"]
 
 [ext_resource type="Script" uid="uid://ismg6jblylak" path="res://services/circuit-holder/circuit_holder.gd" id="1_aum7n"]
 [ext_resource type="Texture2D" uid="uid://cvirbqlcuhixt" path="res://assets/circuit-previews/circuit1.png" id="1_g8eji"]
+[ext_resource type="Texture2D" uid="uid://b4seel3b444db" path="res://assets/circuit-previews/serpentsdescent.png" id="3_b1wcu"]
 [ext_resource type="Texture2D" uid="uid://7reln3ydib10" path="res://assets/circuit-previews/under_construction.png" id="4_b1wcu"]
 
-[node name="CircuitHolder" type="Node2D"]
+[node name="CircuitHolder" type="Node2D" unique_id=158799953]
 script = ExtResource("1_aum7n")
 
-[node name="DriftingsCradle" type="Sprite2D" parent="."]
+[node name="DriftingsCradle" type="Sprite2D" parent="." unique_id=157539071]
 texture = ExtResource("1_g8eji")
 
-[node name="UnderConstruction" type="Sprite2D" parent="."]
+[node name="SerpentsDescent" type="Sprite2D" parent="." unique_id=231784028]
+texture = ExtResource("3_b1wcu")
+
+[node name="UnderConstruction" type="Sprite2D" parent="." unique_id=1641640334]
 texture = ExtResource("4_b1wcu")
