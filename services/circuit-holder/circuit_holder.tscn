@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://7reln3ydib10" path="res://assets/circuit-previews/under_construction.png" id="4_b1wcu"]
 
 [node name="CircuitHolder" type="Node2D" unique_id=158799953]
+texture_filter = 4
 script = ExtResource("1_aum7n")
 
 [node name="DriftingsCradle" type="Sprite2D" parent="." unique_id=157539071]
